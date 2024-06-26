@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kyledle/constants.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
 import 'package:kyledle/src/view/home_view.dart';
@@ -13,6 +14,11 @@ void main() async {
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       supportedLocales: const [Locale('fr')],
       title: 'kyledle',
       theme: _theme(),

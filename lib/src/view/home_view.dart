@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
+import 'package:kyledle/src/view/Classic/classic_view.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.controller});
   final KyledleController controller;
+
+  @override
+  HomeViewState createState() => HomeViewState();
+}
+
+class HomeViewState extends State<HomeView> {
+  Widget? _currentView;
+  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -23,39 +32,77 @@ class HomeView extends StatelessWidget {
             ),
             SingleChildScrollView(
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // title image
-                    Image.asset(
-                      "assets/title.png",
-                      width: MediaQuery.of(context).size.width * 0.25,
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      "Tous les jours, devine un Monstre !",
-                      style: GoogleFonts.lobster(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                child: Container(
+                  constraints: BoxConstraints(
+                    maxWidth: MediaQuery.of(context).size.width * 0.25,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // title image
+                      MouseRegion(
+                        onEnter: (_) => _onHover(true),
+                        onExit: (_) => _onHover(false),
+                        child: InkWell(
+                          onTap: _resetView,
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                            width: _isHovered
+                                ? MediaQuery.of(context).size.width * 0.25
+                                : MediaQuery.of(context).size.width * 0.23,
+                            child: Image.asset(
+                              "assets/title.png",
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 40),
-
-                    // list of game modes
-                    GameModeButton(
-                      text: "CLASSIQUE",
-                      description: "Des indices à chaque essai",
-                      icon: Icons.lightbulb_outline,
-                      onPressed: () {},
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      Text(
+                        "Tous les jours, devine un Monstre !",
+                        style: GoogleFonts.lobster(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      _currentView ?? _buildGameModes(),
+                    ],
+                  ),
                 ),
               ),
             ),
           ],
         ),
       );
+
+  Widget _buildGameModes() => Column(
+        children: [
+          GameModeButton(
+            text: "CLASSIQUE",
+            description: "Des indices à chaque essai",
+            icon: Icons.lightbulb_outline,
+            onPressed: () {
+              setState(() {
+                _currentView = const ClassicView();
+              });
+            },
+          ),
+        ],
+      );
+
+  void _onHover(bool isHovered) {
+    setState(() {
+      _isHovered = isHovered;
+    });
+  }
+
+  void _resetView() {
+    setState(() {
+      _currentView = null;
+    });
+  }
 }
 
 class GameModeButton extends StatelessWidget {
