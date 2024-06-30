@@ -20,6 +20,7 @@ Future<Map<String, dynamic>?> getData(String game) async {
         await dio.get<Map<String, dynamic>>('/data?mode=classic&game=$game');
     return response.data;
   } catch (e) {
+    print('Fetch Data Fail: $e');
     return null;
   }
 }

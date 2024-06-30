@@ -7,11 +7,18 @@ class ClassicController extends StateXController {
 
   static ClassicController? _this;
   Map<String, dynamic> data = {};
+  List<String> attempts = [];
 
   @override
   Future<void> initState() async {
     super.initState();
     await _loadData();
+  }
+
+  addAttempt(String attempt) {
+    setState(() {
+      attempts.add(attempt);
+    });
   }
 
   Future<void> _loadData() async {

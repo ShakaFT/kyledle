@@ -19,7 +19,7 @@ void main() async {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [Locale('fr')],
-      title: 'kyledle',
+      title: 'Kyledle',
       home: Kyledle(controller: controller),
     ),
   );
