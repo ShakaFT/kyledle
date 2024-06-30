@@ -15,6 +15,7 @@ app = FlaskApp(
     "default",
     os.environ["GOOGLE_CLOUD_PROJECT"],
     allowed_origins=["https://kyledle.web.app"],
+    allowed_headers=[os.environ["KYLEDLE_API_KEY_HEADER"]],
 )
 app.api_key(os.environ["KYLEDLE_API_KEY_HEADER"], os.environ["KYLEDLE_API_KEY"])
 

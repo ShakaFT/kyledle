@@ -39,8 +39,10 @@ class _ClassicViewState extends StateX<ClassicView> {
   }
 
   void _onFocusChange() {
-    setState(() {
-      _showFilteredNames = _focusNode.hasFocus && _filteredNames.isNotEmpty;
+    Future.delayed(Duration(milliseconds: _focusNode.hasFocus ? 0 : 100), () {
+      setState(() {
+        _showFilteredNames = _focusNode.hasFocus && _filteredNames.isNotEmpty;
+      });
     });
   }
 
@@ -108,7 +110,9 @@ class _ClassicViewState extends StateX<ClassicView> {
                       ),
                       IconButton(
                         icon: const Icon(Icons.send, color: Colors.blueGrey),
-                        onPressed: () {},
+                        onPressed: () {
+                          // Logique pour l'envoi
+                        },
                       ),
                     ],
                   ),
@@ -134,14 +138,11 @@ class _ClassicViewState extends StateX<ClassicView> {
                                 ? Colors.grey[300]
                                 : Colors.transparent,
                             child: ListTile(
-                              title: Text(_filteredNames[index]),
                               onTap: () {
-                                _textEditingController.text =
-                                    _filteredNames[index];
-                                setState(() {
-                                  _showFilteredNames = false;
-                                });
+                                _controller.addAttempt(_filteredNames[index]);
+                                _focusNode.unfocus();
                               },
+                              title: Text(_filteredNames[index]),
                             ),
                           ),
                         ),
@@ -150,6 +151,16 @@ class _ClassicViewState extends StateX<ClassicView> {
                 ],
               ),
             ),
+            if (_controller.attempts.isNotEmpty)
+              Column(
+                children: _controller.attempts
+                    .map(
+                      (item) => Row(
+                        children: [Card(child: Text(item))],
+                      ),
+                    )
+                    .toList(),
+              ),
             const SizedBox(
               height: 10,
             ),
@@ -162,8 +173,9 @@ class _ClassicViewState extends StateX<ClassicView> {
     _textEditingController
       ..removeListener(_filterNames)
       ..dispose();
-    _focusNode.removeListener(_onFocusChange);
-    _focusNode.dispose();
+    _focusNode
+      ..removeListener(_onFocusChange)
+      ..dispose();
     super.dispose();
   }
 }
