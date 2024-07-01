@@ -7,6 +7,7 @@ dependencies:
   state_extended: ^4.18.0
   google_fonts: ^6.2.1
   dio: ^5.4.3+1
+  cached_network_image: ^3.3.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
