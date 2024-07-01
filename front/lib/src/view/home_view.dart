@@ -34,7 +34,7 @@ class HomeViewState extends State<HomeView> {
               child: Center(
                 child: Container(
                   constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.25,
+                    maxWidth: MediaQuery.of(context).size.width * 0.75,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
