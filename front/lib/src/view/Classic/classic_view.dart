@@ -32,7 +32,7 @@ class _ClassicViewState extends StateX<ClassicView> {
   void _filterNames() {
     final query = _textEditingController.text.toLowerCase();
     setState(() {
-      _filteredNames = _controller.data.keys
+      _filteredNames = _controller.monsters.keys
           .where((name) => name.toLowerCase().contains(query))
           .toList();
       _showFilteredNames = _filteredNames.isNotEmpty && _focusNode.hasFocus;
@@ -168,45 +168,44 @@ class _ClassicViewState extends StateX<ClassicView> {
               // Display headers once
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children:
-                    _controller.data[_controller.attempts.first]["columns"].keys
-                        .map<Widget>(
-                          (key) => Container(
-                            padding: const EdgeInsets.all(8.0),
-                            margin: const EdgeInsets.all(4.0),
-                            width: 150, // fixed width for each header
-                            decoration: BoxDecoration(
-                              color: Colors.yellow[700],
-                              borderRadius: BorderRadius.circular(8.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
+                children: _controller.columns
+                    .map<Widget>(
+                      (key) => Container(
+                        padding: const EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.all(4.0),
+                        width: 150, // fixed width for each header
+                        decoration: BoxDecoration(
+                          color: Colors.yellow[700],
+                          borderRadius: BorderRadius.circular(8.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: const Offset(0, 3),
                             ),
-                            child: Text(
-                              key,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
+                          ],
+                        ),
+                        child: Text(
+                          key,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
-                        )
-                        .toList(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
               const SizedBox(height: 10),
               // Display attempts
               Column(
-                children: _controller.attempts.map((attempt) {
-                  final columns = _controller.data[attempt]["columns"];
+                children: _controller.attempts.reversed.map((attempt) {
+                  final columns = _controller.monsters[attempt]["columns"];
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: columns.keys.map<Widget>((key) {
+                    children: _controller.columns.map<Widget>((key) {
                       final value = columns[key];
                       String displayValue;
                       if (value is List) {
@@ -235,14 +234,11 @@ class _ClassicViewState extends StateX<ClassicView> {
                         child: Center(
                           child: displayValue.startsWith('http')
                               ? CachedNetworkImage(
-                                  imageUrl:
-                                      "https://static.wikia.nocookie.net/mogapedia/images/6/6d/MHWI-Alatreon_Icon.png/revision/latest?cb=20200321134438&path-prefix=fr",
+                                  imageUrl: value,
                                   placeholder: (context, url) =>
                                       const CircularProgressIndicator(),
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.error),
-                                  width: 30,
-                                  height: 30,
                                 )
                               : Text(displayValue, textAlign: TextAlign.center),
                         ),

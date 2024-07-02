@@ -6,8 +6,9 @@ class ClassicController extends StateXController {
   ClassicController._() : super();
 
   static ClassicController? _this;
-  Map<String, dynamic> data = {};
   List<String> attempts = [];
+  List<dynamic> columns = [];
+  Map<String, dynamic> monsters = {};
 
   @override
   Future<void> initState() async {
@@ -22,7 +23,9 @@ class ClassicController extends StateXController {
   }
 
   Future<void> _loadData() async {
-    data = (await getData("mhdle"))!;
+    final data = (await getData("mhdle"))!;
+    columns = data["columns"];
+    monsters = data["monsters"];
     setState(() {});
   }
 }
