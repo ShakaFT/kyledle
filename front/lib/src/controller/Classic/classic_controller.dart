@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:kyledle/src/model/Classic/classic_network.dart';
 import 'package:state_extended/state_extended.dart';
 
@@ -9,6 +10,7 @@ class ClassicController extends StateXController {
   List<String> attempts = [];
   List<dynamic> columns = [];
   Map<String, dynamic> monsters = {};
+  String searchedMonster = "";
 
   @override
   Future<void> initState() async {
@@ -26,6 +28,9 @@ class ClassicController extends StateXController {
     final data = (await getData("mhdle"))!;
     columns = data["columns"];
     monsters = data["monsters"];
+    searchedMonster =
+        monsters.keys.elementAt(Random().nextInt(monsters.length));
+    print(searchedMonster);
     setState(() {});
   }
 }
