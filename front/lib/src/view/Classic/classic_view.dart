@@ -153,7 +153,21 @@ class _ClassicViewState extends StateX<ClassicView> {
                                   _controller.addAttempt(_filteredNames[index]);
                                   _focusNode.unfocus();
                                 },
-                                title: Text(_filteredNames[index]),
+                                title: Row(
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl: _controller
+                                              .monsters[_filteredNames[index]]
+                                          ["columns"]["Photo"],
+                                      placeholder: (context, url) =>
+                                          const CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    ),
+                                    const SizedBox(width: 30),
+                                    Text(_filteredNames[index]),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -205,22 +219,49 @@ class _ClassicViewState extends StateX<ClassicView> {
                   final columns = _controller.monsters[attempt]["columns"];
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: _controller.columns.map<Widget>((key) {
-                      final value = columns[key];
+                    children: _controller.columns
+                        .asMap()
+                        .entries
+                        .map<Widget>((entry) {
+                      final value = columns[entry.value];
+                      final searchedValue =
+                          _controller.monsters[_controller.searchedMonster]
+                              ["columns"][entry.value];
                       String displayValue;
+                      Color color;
+
                       if (value is List) {
+                        final valueSet = Set.from(value);
+                        final searchedValueSet = Set.from(searchedValue);
+
+                        if (valueSet.containsAll(searchedValueSet) &&
+                            searchedValueSet.containsAll(valueSet)) {
+                          color = Colors.green;
+                        } else if (valueSet
+                            .intersection(searchedValueSet)
+                            .isNotEmpty) {
+                          color = Colors.yellow;
+                        } else {
+                          color = Colors.red;
+                        }
                         displayValue = value.join(", ");
                       } else {
                         displayValue = value.toString().trim();
+                        color =
+                            value == searchedValue ? Colors.green : Colors.red;
                       }
+
+                      if (entry.key == 0) {
+                        color = Colors.white;
+                      }
+
                       return Container(
                         padding: const EdgeInsets.all(8.0),
                         margin: const EdgeInsets.all(4.0),
-                        width: 150, // fixed width for each cell
-                        height:
-                            maxHeight.toDouble(), // fixed height for each cell
+                        width: 150,
+                        height: maxHeight.toDouble(),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: color,
                           borderRadius: BorderRadius.circular(8.0),
                           boxShadow: [
                             BoxShadow(
