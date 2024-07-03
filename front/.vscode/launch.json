@@ -5,9 +5,13 @@
             "name": "Development local config",
             "request": "launch",
             "type": "dart",
-            "args":[
-				"--dart-define-from-file=env.json"
-			],
+            "args": [
+                "-d",
+                "chrome",
+                "--dart-define-from-file=env.json",
+                "--web-browser-flag",
+                "--disable-web-security",
+            ],
         }
     ]
 }
