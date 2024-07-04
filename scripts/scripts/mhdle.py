@@ -29,8 +29,8 @@ mhdle_classic = {
         "Type de monstre",
         "Éléments",
         "Faiblesses",
-        "Génération",
         "Afflictions",
+        "Génération",
     ],
     "monsters": defaultdict(dict),
 }

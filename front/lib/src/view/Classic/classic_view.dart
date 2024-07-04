@@ -30,10 +30,19 @@ class _ClassicViewState extends StateX<ClassicView> {
   }
 
   void _filterNames() {
-    final query = _textEditingController.text.toLowerCase();
+    final query = _textEditingController.text.toLowerCase().trim();
     setState(() {
+      if (query.isEmpty) {
+        _showFilteredNames = false;
+        return;
+      }
+
       _filteredNames = _controller.monsters.keys
-          .where((name) => name.toLowerCase().contains(query))
+          .where(
+            (name) =>
+                name.toLowerCase().startsWith(query) &&
+                !_controller.attempts.contains(name),
+          )
           .toList();
       _showFilteredNames = _filteredNames.isNotEmpty && _focusNode.hasFocus;
     });
@@ -49,7 +58,7 @@ class _ClassicViewState extends StateX<ClassicView> {
 
   @override
   Widget build(BuildContext context) {
-    const maxHeight = 100; // Define a fixed height for each item
+    const maxHeight = 100;
 
     return Center(
       child: SingleChildScrollView(
@@ -119,7 +128,9 @@ class _ClassicViewState extends StateX<ClassicView> {
                         IconButton(
                           icon: const Icon(Icons.send, color: Colors.blueGrey),
                           onPressed: () {
-                            // Logique pour l'envoi
+                            _controller
+                                .addAttempt(_textEditingController.text.trim());
+                            _textEditingController.text = "";
                           },
                         ),
                       ],
@@ -190,6 +201,7 @@ class _ClassicViewState extends StateX<ClassicView> {
                         width: 150, // fixed width for each header
                         decoration: BoxDecoration(
                           color: Colors.yellow[700],
+                          border: Border.all(width: 3),
                           borderRadius: BorderRadius.circular(8.0),
                           boxShadow: [
                             BoxShadow(
@@ -262,6 +274,7 @@ class _ClassicViewState extends StateX<ClassicView> {
                         height: maxHeight.toDouble(),
                         decoration: BoxDecoration(
                           color: color,
+                          border: Border.all(width: 3),
                           borderRadius: BorderRadius.circular(8.0),
                           boxShadow: [
                             BoxShadow(
@@ -281,7 +294,14 @@ class _ClassicViewState extends StateX<ClassicView> {
                                   errorWidget: (context, url, error) =>
                                       const Icon(Icons.error),
                                 )
-                              : Text(displayValue, textAlign: TextAlign.center),
+                              : Text(
+                                  displayValue,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                         ),
                       );
                     }).toList(),
