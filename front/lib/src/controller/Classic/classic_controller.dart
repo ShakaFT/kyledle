@@ -19,6 +19,10 @@ class ClassicController extends StateXController {
   }
 
   addAttempt(String attempt) {
+    if (!monsters.containsKey(attempt.trim()) || attempts.contains(attempt)) {
+      return;
+    }
+
     setState(() {
       attempts.add(attempt);
     });
