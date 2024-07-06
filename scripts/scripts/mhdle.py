@@ -31,11 +31,12 @@ mhdle_classic = {
         "Faiblesses",
         "Afflictions",
         "Génération",
+        "Sous-espèce",
     ],
     "monsters": defaultdict(dict),
 }
 for _, row in df.iterrows():
-    monster = row["Nom"]
+    monster = row["Nom"].strip()
     console.log(f"[bold green]{monster} [blue]processing...")
     blob = bucket.blob(f"mhdle/{monster}.png")
 
@@ -46,7 +47,7 @@ for _, row in df.iterrows():
     mhdle_classic["monsters"][monster] = {
         "columns": {
             "Photo": blob.public_url,
-            "Type de monstre": row["Type de monstre"],
+            "Type de monstre": row["Type de monstre"].strip(),
             "Éléments": [
                 element.strip()
                 for element in row["Éléments"].split("/")
@@ -57,12 +58,13 @@ for _, row in df.iterrows():
                 for element in row["Faiblesses"].split("/")
                 if element.strip().lower() != "x"
             ],
-            "Génération": row["Génération"],
+            "Génération": row["Génération"].strip(),
             "Afflictions": [
                 element.strip()
                 for element in row["Afflictions"].split("/")
                 if element.strip().lower() != "x"
             ],
+            "Sous-espèce": row["Sous-espèce"].strip(),
         },
         "indices": [row["Titre"], str(row["Taille Moyenne"])],
     }

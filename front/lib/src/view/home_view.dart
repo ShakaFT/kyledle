@@ -32,44 +32,39 @@ class HomeViewState extends State<HomeView> {
             ),
             SingleChildScrollView(
               child: Center(
-                child: Container(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width * 0.75,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // title image
-                      MouseRegion(
-                        onEnter: (_) => _onHover(true),
-                        onExit: (_) => _onHover(false),
-                        child: InkWell(
-                          onTap: _resetView,
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeInOut,
-                            width: _isHovered
-                                ? MediaQuery.of(context).size.width * 0.25
-                                : MediaQuery.of(context).size.width * 0.23,
-                            child: Image.asset(
-                              "assets/title.png",
-                            ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // title image
+                    MouseRegion(
+                      onEnter: (_) => _onHover(true),
+                      onExit: (_) => _onHover(false),
+                      child: InkWell(
+                        onTap: _resetView,
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                          width: _isHovered
+                              ? MediaQuery.of(context).size.width * 0.25
+                              : MediaQuery.of(context).size.width * 0.23,
+                          child: Image.asset(
+                            "assets/title.png",
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "Tous les jours, devine un Monstre !",
-                        style: GoogleFonts.lobster(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      "Tous les jours, devine un Monstre !",
+                      style: GoogleFonts.lobster(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
-                      const SizedBox(height: 40),
-                      _currentView ?? _buildGameModes(),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 40),
+                    _currentView ?? _buildGameModes(),
+                  ],
                 ),
               ),
             ),
