@@ -108,14 +108,14 @@ class _ClassicViewState extends StateX<ClassicView> {
                           if (textEditingValue.text.isEmpty) {
                             return const Iterable<String>.empty();
                           }
-                          return _controller.monsters.keys.where(
-                            (monster) =>
-                                monster.toLowerCase().startsWith(
+                          return _controller.characters.keys.where(
+                            (character) =>
+                                character.toLowerCase().startsWith(
                                       textEditingValue.text
                                           .toLowerCase()
                                           .trim(),
                                     ) &&
-                                !_controller.attempts.contains(monster),
+                                !_controller.attempts.contains(character),
                           );
                         },
                         optionsViewBuilder: (context, onSelected, options) =>
@@ -174,7 +174,7 @@ class _ClassicViewState extends StateX<ClassicView> {
                                           children: [
                                             CachedNetworkImage(
                                               imageUrl:
-                                                  _controller.monsters[option]
+                                                  _controller.characters[option]
                                                       ["columns"]["Photo"],
                                               placeholder: (context, url) =>
                                                   const CircularProgressIndicator(),

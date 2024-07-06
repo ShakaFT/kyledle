@@ -1,7 +1,10 @@
 {
     "files.exclude": {
-        ".venv/": false, 
+        "**/.venv": true,
         "**/__pycache__": true
     },
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src/"
+    ]
 }

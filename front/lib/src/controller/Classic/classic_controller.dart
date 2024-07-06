@@ -10,8 +10,9 @@ class ClassicController extends StateXController {
   bool animationInProgress = false;
   List<String> attempts = [];
   List<dynamic> columns = [];
-  Map<String, dynamic> monsters = {};
-  String searchedMonster = "";
+  List<dynamic> indices = [];
+  Map<String, dynamic> characters = {};
+  String target = "";
   bool userWin = false;
 
   @override
@@ -21,7 +22,7 @@ class ClassicController extends StateXController {
   }
 
   addAttempt(String attempt) {
-    if (!monsters.containsKey(attempt.trim()) || attempts.contains(attempt)) {
+    if (!characters.containsKey(attempt.trim()) || attempts.contains(attempt)) {
       return;
     }
 
@@ -34,18 +35,23 @@ class ClassicController extends StateXController {
     setState(() {
       animationInProgress = inProgress;
       if (!animationInProgress) {
-        userWin = attempts[0] == searchedMonster;
+        userWin = attempts[0] == target;
       }
     });
   }
 
   Future<void> _loadData() async {
     final data = (await getData("mhdle"))!;
-    columns = data["columns"];
-    monsters = data["monsters"];
-    searchedMonster =
-        monsters.keys.elementAt(Random().nextInt(monsters.length));
-    print(searchedMonster);
+    final classicData = data["data"];
+    target = data["target"];
+
+    columns = classicData["columns"];
+    characters = classicData["characters"];
+    indices = classicData["indices"];
+
+    target = characters.keys.elementAt(Random().nextInt(characters.length));
+    print(target);
+
     setState(() {});
   }
 }
