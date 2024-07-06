@@ -2,13 +2,16 @@
 This module contains main endpoints of default services.
 """
 
-import json
+from datetime import datetime, timedelta
 import os
+import random
 
-from firebase_admin import storage
 from flask import jsonify, request
 
 from restAPI.FlaskApp import FlaskApp
+
+from models.History import HistoryItem
+from models.KyledleData import KyledleData
 
 
 app = FlaskApp(
@@ -27,14 +30,48 @@ def get_data():
     """
     args = dict(request.args)
     try:
-        mode = args["mode"]
         game = args["game"]
+        mode = args["mode"]
     except KeyError as e:
-        return jsonify(error=f"missing {str(e)}"), 400
+        return jsonify(error=f"Invalid args: missing {e}"), 400
 
-    bucket = storage.bucket(f"{os.environ['GOOGLE_CLOUD_PROJECT']}.appspot.com")
-    blob = bucket.get_blob(f"{game}_{mode}.json")
-    return jsonify(json.loads(blob.download_as_string()))  # type: ignore
+    data = KyledleData.from_database(game, mode)
+    item = HistoryItem.from_database(datetime.now())
+    assert item, "Missing History Item!"
+
+    return jsonify(data=data.to_dict(), target=item.target(game, mode))
+
+
+@app.post("/schedule")
+def schedule():
+    """
+    This endpoint schedules levels.
+    """
+    now = datetime.now()
+    tomorrow = now + timedelta(days=1)
+
+    if HistoryItem.from_database(tomorrow):
+        raise ValueError(f"{tomorrow} already scheduled!")
+
+    game = "mhdle"
+    mode = "classic"
+
+    kyledle_data = KyledleData.from_database(game, mode)
+
+    already_scheduled_characters = []
+    for i in range(5):
+        if item := HistoryItem.from_database(now - timedelta(days=i)):
+            already_scheduled_characters.append(item.target(game, mode))
+
+    characters = [
+        character
+        for character in kyledle_data.characters
+        if character not in already_scheduled_characters
+    ]
+
+    history_item = HistoryItem(tomorrow, {game: {mode: random.choice(characters)}})
+    history_item.update_database()
+    return jsonify(), 204
 
 
 if __name__ == "__main__":

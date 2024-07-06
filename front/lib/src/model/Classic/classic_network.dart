@@ -17,7 +17,7 @@ final dio = Dio(
 Future<Map<String, dynamic>?> getData(String game) async {
   try {
     final response =
-        await dio.get<Map<String, dynamic>>('/data?mode=classic&game=$game');
+        await dio.get<Map<String, dynamic>>('/data?game=$game&mode=classic');
     return response.data;
   } catch (e) {
     print('Fetch Data Fail: $e');

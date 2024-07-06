@@ -52,8 +52,7 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
               children: [
                 CachedNetworkImage(
                   imageUrl: widget.controller
-                          .monsters[widget.controller.searchedMonster]
-                      ["columns"]["Photo"],
+                      .characters[widget.controller.target]["columns"]["Photo"],
                   placeholder: (context, url) =>
                       const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -61,7 +60,7 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    "Vous avez trouvé ${widget.controller.searchedMonster} en ${widget.controller.attempts.length} tentatives.",
+                    "Vous avez trouvé ${widget.controller.target} en ${widget.controller.attempts.length} tentatives.",
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24.0,

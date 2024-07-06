@@ -23,11 +23,10 @@ class AttemptState extends State<Attempt> {
         mainAxisAlignment: MainAxisAlignment.center,
         children:
             widget.controller.columns.asMap().entries.map<Widget>((entry) {
-          final value = widget.controller.monsters[widget.attempt]["columns"]
+          final value = widget.controller.characters[widget.attempt]["columns"]
               [entry.value];
-          final searchedValue =
-              widget.controller.monsters[widget.controller.searchedMonster]
-                  ["columns"][entry.value];
+          final searchedValue = widget.controller
+              .characters[widget.controller.target]["columns"][entry.value];
           String displayValue;
           Color color;
 
