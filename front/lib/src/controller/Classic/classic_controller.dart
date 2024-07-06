@@ -7,6 +7,7 @@ class ClassicController extends StateXController {
   ClassicController._() : super();
 
   static ClassicController? _this;
+  final List<int> animatedKeys = [];
   List<String> attempts = [];
   List<dynamic> columns = [];
   Map<String, dynamic> monsters = {};
@@ -24,7 +25,7 @@ class ClassicController extends StateXController {
     }
 
     setState(() {
-      attempts.add(attempt);
+      attempts.insert(0, attempt);
     });
   }
 

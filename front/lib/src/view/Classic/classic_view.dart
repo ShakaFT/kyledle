@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kyledle/src/controller/Classic/classic_controller.dart';
+import 'package:kyledle/src/view/Classic/attempt_widget.dart';
 import 'package:state_extended/state_extended.dart';
 
 class ClassicView extends StatefulWidget {
@@ -15,50 +16,16 @@ class _ClassicViewState extends StateX<ClassicView> {
     _controller = controller! as ClassicController;
   }
   late ClassicController _controller;
-
-  final TextEditingController _textEditingController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
-  List<String> _filteredNames = [];
-  bool _showFilteredNames = false;
-  String _hoveredItem = '';
+  String _hoveredItem = "";
 
   @override
   void initState() {
     super.initState();
-    _textEditingController.addListener(_filterNames);
-    _focusNode.addListener(_onFocusChange);
-  }
-
-  void _filterNames() {
-    final query = _textEditingController.text.toLowerCase().trim();
-    setState(() {
-      if (query.isEmpty) {
-        _showFilteredNames = false;
-        return;
-      }
-
-      _filteredNames = _controller.monsters.keys
-          .where(
-            (name) =>
-                name.toLowerCase().startsWith(query) &&
-                !_controller.attempts.contains(name),
-          )
-          .toList();
-      _showFilteredNames = _filteredNames.isNotEmpty && _focusNode.hasFocus;
-    });
-  }
-
-  void _onFocusChange() {
-    Future.delayed(Duration(milliseconds: _focusNode.hasFocus ? 0 : 100), () {
-      setState(() {
-        _showFilteredNames = _focusNode.hasFocus && _filteredNames.isNotEmpty;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    const maxHeight = 100;
+    late TextEditingController textEditingController;
 
     return Center(
       child: SingleChildScrollView(
@@ -113,78 +80,120 @@ class _ClassicViewState extends StateX<ClassicView> {
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.25,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _textEditingController,
-                            focusNode: _focusNode,
-                            decoration: const InputDecoration(
-                              hintText: "Tape le nom du monstre",
-                              border: InputBorder.none,
-                            ),
+                    child: Autocomplete<String>(
+                      fieldViewBuilder: (
+                        context,
+                        fieldTextEditingController,
+                        fieldFocusNode,
+                        onFieldSubmitted,
+                      ) {
+                        textEditingController = fieldTextEditingController;
+                        return TextField(
+                          controller: fieldTextEditingController,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Tape le nom du monstre',
                           ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.send, color: Colors.blueGrey),
-                          onPressed: () {
-                            _controller
-                                .addAttempt(_textEditingController.text.trim());
-                            _textEditingController.text = "";
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (_showFilteredNames)
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: Container(
-                        constraints: const BoxConstraints(maxHeight: 200),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: _filteredNames.length,
-                          itemBuilder: (context, index) => MouseRegion(
-                            onEnter: (_) {
-                              setState(() {
-                                _hoveredItem = _filteredNames[index];
-                              });
-                            },
-                            onExit: (_) {
-                              setState(() {
-                                _hoveredItem = '';
-                              });
-                            },
-                            child: Container(
-                              color: _hoveredItem == _filteredNames[index]
-                                  ? Colors.grey[300]
-                                  : Colors.transparent,
-                              child: ListTile(
-                                onTap: () {
-                                  _controller.addAttempt(_filteredNames[index]);
-                                  _focusNode.unfocus();
-                                },
-                                title: Row(
-                                  children: [
-                                    CachedNetworkImage(
-                                      imageUrl: _controller
-                                              .monsters[_filteredNames[index]]
-                                          ["columns"]["Photo"],
-                                      placeholder: (context, url) =>
-                                          const CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
+                          focusNode: fieldFocusNode,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        );
+                      },
+                      optionsBuilder: (textEditingValue) {
+                        if (textEditingValue.text.isEmpty) {
+                          return const Iterable<String>.empty();
+                        }
+                        return _controller.monsters.keys.where(
+                          (monster) =>
+                              monster.toLowerCase().startsWith(
+                                    textEditingValue.text.toLowerCase().trim(),
+                                  ) &&
+                              !_controller.attempts.contains(monster),
+                        );
+                      },
+                      optionsViewBuilder: (context, onSelected, options) =>
+                          Align(
+                        alignment: Alignment.topLeft,
+                        child: Material(
+                          elevation: 4.0,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.25,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            constraints: const BoxConstraints(
+                              maxHeight: 300.0,
+                            ),
+                            child: ListView.builder(
+                              padding: const EdgeInsets.all(8.0),
+                              itemCount: options.length,
+                              shrinkWrap:
+                                  true, // This will make the ListView adapt its height
+                              itemBuilder: (context, index) {
+                                final option = options.elementAt(index);
+                                return MouseRegion(
+                                  onEnter: (event) {
+                                    setState(() {
+                                      _hoveredItem = option;
+                                    });
+                                  },
+                                  onExit: (event) {
+                                    setState(() {
+                                      _hoveredItem = "";
+                                    });
+                                  },
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      _controller.addAttempt(option);
+                                      textEditingController.clear();
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 10.0,
+                                        horizontal: 15.0,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.grey.shade300,
+                                          ),
+                                        ),
+                                        color: _hoveredItem == option
+                                            ? Colors.grey.shade300
+                                            : Colors.white,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          CachedNetworkImage(
+                                            imageUrl:
+                                                _controller.monsters[option]
+                                                    ["columns"]["Photo"],
+                                            placeholder: (context, url) =>
+                                                const CircularProgressIndicator(),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    const Icon(Icons.error),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            option,
+                                            style: const TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    const SizedBox(width: 30),
-                                    Text(_filteredNames[index]),
-                                  ],
-                                ),
-                              ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
                       ),
                     ),
+                  ),
                 ],
               ),
             ),
@@ -227,86 +236,15 @@ class _ClassicViewState extends StateX<ClassicView> {
               const SizedBox(height: 10),
               // Display attempts
               Column(
-                children: _controller.attempts.reversed.map((attempt) {
-                  final columns = _controller.monsters[attempt]["columns"];
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _controller.columns
-                        .asMap()
-                        .entries
-                        .map<Widget>((entry) {
-                      final value = columns[entry.value];
-                      final searchedValue =
-                          _controller.monsters[_controller.searchedMonster]
-                              ["columns"][entry.value];
-                      String displayValue;
-                      Color color;
-
-                      if (value is List) {
-                        final valueSet = Set.from(value);
-                        final searchedValueSet = Set.from(searchedValue);
-
-                        if (valueSet.containsAll(searchedValueSet) &&
-                            searchedValueSet.containsAll(valueSet)) {
-                          color = Colors.green;
-                        } else if (valueSet
-                            .intersection(searchedValueSet)
-                            .isNotEmpty) {
-                          color = Colors.yellow;
-                        } else {
-                          color = Colors.red;
-                        }
-                        displayValue = value.join(", ");
-                      } else {
-                        displayValue = value.toString().trim();
-                        color =
-                            value == searchedValue ? Colors.green : Colors.red;
-                      }
-
-                      if (entry.key == 0) {
-                        color = Colors.white;
-                      }
-
-                      return Container(
-                        padding: const EdgeInsets.all(8.0),
-                        margin: const EdgeInsets.all(4.0),
-                        width: 150,
-                        height: maxHeight.toDouble(),
-                        decoration: BoxDecoration(
-                          color: color,
-                          border: Border.all(width: 3),
-                          borderRadius: BorderRadius.circular(8.0),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2,
-                              blurRadius: 5,
-                              offset: const Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: displayValue.startsWith('http')
-                              ? CachedNetworkImage(
-                                  imageUrl: value,
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                )
-                              : Text(
-                                  displayValue,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                }).toList(),
+                children: _controller.attempts
+                    .map(
+                      (attempt) => Attempt(
+                        key: ValueKey(attempt),
+                        attempt: attempt,
+                        controller: _controller,
+                      ),
+                    )
+                    .toList(),
               ),
             ],
             const SizedBox(height: 10),
@@ -314,16 +252,5 @@ class _ClassicViewState extends StateX<ClassicView> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _textEditingController
-      ..removeListener(_filterNames)
-      ..dispose();
-    _focusNode
-      ..removeListener(_onFocusChange)
-      ..dispose();
-    super.dispose();
   }
 }
