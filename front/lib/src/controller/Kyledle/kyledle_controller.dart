@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:state_extended/state_extended.dart';
 
 class KyledleController extends StateXController {
@@ -5,6 +6,7 @@ class KyledleController extends StateXController {
   KyledleController._() : super();
 
   static KyledleController? _this;
+  final ScrollController scrollController = ScrollController();
 
   Future<void> initialize() async {}
 }

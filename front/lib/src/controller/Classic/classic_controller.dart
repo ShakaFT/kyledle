@@ -7,11 +7,12 @@ class ClassicController extends StateXController {
   ClassicController._() : super();
 
   static ClassicController? _this;
-  final List<int> animatedKeys = [];
+  bool animationInProgress = false;
   List<String> attempts = [];
   List<dynamic> columns = [];
   Map<String, dynamic> monsters = {};
   String searchedMonster = "";
+  bool userWin = false;
 
   @override
   Future<void> initState() async {
@@ -26,6 +27,15 @@ class ClassicController extends StateXController {
 
     setState(() {
       attempts.insert(0, attempt);
+    });
+  }
+
+  setAnimationInProgress({bool inProgress = true}) {
+    setState(() {
+      animationInProgress = inProgress;
+      if (!animationInProgress) {
+        userWin = attempts[0] == searchedMonster;
+      }
     });
   }
 

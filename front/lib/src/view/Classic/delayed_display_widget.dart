@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:kyledle/src/controller/Classic/classic_controller.dart';
 
 class DelayedDisplay extends StatefulWidget {
   const DelayedDisplay({
     super.key,
     required this.child,
+    required this.controller,
     required this.delay,
-    required this.monster,
+    required this.isFirst,
+    required this.isLast,
   });
   final Widget child;
+  final ClassicController controller;
   final Duration delay;
-  final String monster;
+  final bool isFirst;
+  final bool isLast;
 
   @override
   DelayedDisplayState createState() => DelayedDisplayState();
@@ -28,8 +33,14 @@ class DelayedDisplayState extends State<DelayedDisplay>
       duration: const Duration(milliseconds: 500),
     );
     _opacity = Tween<double>(begin: 0, end: 1).animate(_controller);
-    Future.delayed(widget.delay, () {
-      _controller.forward();
+    Future.delayed(widget.delay, () async {
+      if (widget.isFirst) {
+        widget.controller.setAnimationInProgress();
+      }
+      await _controller.forward();
+      if (widget.isLast) {
+        widget.controller.setAnimationInProgress(inProgress: false);
+      }
     });
   }
 
