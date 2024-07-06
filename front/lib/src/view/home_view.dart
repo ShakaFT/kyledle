@@ -31,6 +31,7 @@ class HomeViewState extends State<HomeView> {
               ),
             ),
             SingleChildScrollView(
+              controller: widget.controller.scrollController,
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +81,8 @@ class HomeViewState extends State<HomeView> {
             icon: Icons.lightbulb_outline,
             onPressed: () {
               setState(() {
-                _currentView = const ClassicView();
+                _currentView =
+                    ClassicView(kyledleController: widget.controller);
               });
             },
           ),

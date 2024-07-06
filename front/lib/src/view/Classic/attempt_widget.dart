@@ -57,8 +57,10 @@ class AttemptState extends State<Attempt> {
             key: ValueKey(
               widget.attempt + widget.controller.columns[entry.key],
             ),
-            monster: widget.attempt,
+            controller: widget.controller,
             delay: Duration(milliseconds: 500 * entry.key),
+            isFirst: entry.key == 0,
+            isLast: entry.key + 1 == widget.controller.columns.length,
             child: Container(
               padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.all(4.0),
