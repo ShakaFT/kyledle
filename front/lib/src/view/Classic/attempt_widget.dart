@@ -44,7 +44,7 @@ class AttemptState extends State<Attempt> {
                 searchedValueSet.containsAll(valueSet)) {
               color = Colors.green;
             } else if (valueSet.intersection(searchedValueSet).isNotEmpty) {
-              color = Colors.yellow[700];
+              color = Colors.yellow.shade700;
             } else {
               color = Colors.red;
             }

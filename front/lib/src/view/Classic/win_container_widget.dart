@@ -36,7 +36,11 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
         margin: const EdgeInsets.symmetric(vertical: 20.0),
         width: MediaQuery.of(context).size.width * 0.25,
         decoration: BoxDecoration(
-          color: Colors.green.shade700,
+          gradient: LinearGradient(
+            colors: [Colors.green.shade700, Colors.green.shade500],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(15.0),
           border: Border.all(color: Colors.yellow.shade700, width: 4.0),
         ),
@@ -60,6 +64,8 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
                   placeholder: (context, url) =>
                       const CircularProgressIndicator(),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
+                  width: 50,
+                  height: 50,
                 ),
                 const SizedBox(width: 10),
                 Expanded(
@@ -67,7 +73,7 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
                     "Vous avez trouvé ${widget.controller.target} en ${widget.controller.attempts.length} tentatives.",
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 24.0,
+                      fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
