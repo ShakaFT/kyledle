@@ -40,9 +40,9 @@ class _ClassicViewState extends StateX<ClassicView> {
               padding: const EdgeInsets.all(16.0),
               margin: const EdgeInsets.symmetric(vertical: 20.0),
               decoration: BoxDecoration(
-                color: const Color(0xFF241c04),
+                color: Colors.black,
                 borderRadius: BorderRadius.circular(15.0),
-                border: Border.all(color: const Color(0xFFFFD700), width: 4.0),
+                border: Border.all(color: Colors.yellow.shade700, width: 4.0),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,9 +151,9 @@ class _ClassicViewState extends StateX<ClassicView> {
                                     },
                                     cursor: SystemMouseCursors.click,
                                     child: GestureDetector(
-                                      onTap: () {
-                                        _controller.addAttempt(option);
+                                      onTap: () async {
                                         textEditingController.clear();
+                                        await _controller.addAttempt(option);
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
@@ -217,7 +217,7 @@ class _ClassicViewState extends StateX<ClassicView> {
                         margin: const EdgeInsets.all(4.0),
                         width: 150, // fixed width for each header
                         decoration: BoxDecoration(
-                          color: Colors.yellow[700],
+                          color: Colors.yellow.shade700,
                           border: Border.all(width: 3),
                           borderRadius: BorderRadius.circular(8.0),
                           boxShadow: [
@@ -249,6 +249,7 @@ class _ClassicViewState extends StateX<ClassicView> {
                     .map(
                       (attempt) => Attempt(
                         key: ValueKey(attempt),
+                        animate: _controller.shouldAnimate,
                         attempt: attempt,
                         controller: _controller,
                       ),
@@ -266,5 +267,11 @@ class _ClassicViewState extends StateX<ClassicView> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.shouldAnimate = false;
+    super.dispose();
   }
 }

@@ -20,9 +20,13 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final scrollController = widget.kyledleController.scrollController;
-      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      await scrollController.animateTo(
+        scrollController.position.maxScrollExtent,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeInOut,
+      );
     });
   }
 
@@ -34,7 +38,7 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
         decoration: BoxDecoration(
           color: Colors.green.shade700,
           borderRadius: BorderRadius.circular(15.0),
-          border: Border.all(color: const Color(0xFFFFD700), width: 4.0),
+          border: Border.all(color: Colors.yellow.shade700, width: 4.0),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
