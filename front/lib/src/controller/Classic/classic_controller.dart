@@ -1,5 +1,7 @@
-import 'dart:math';
+import 'dart:async';
+
 import 'package:kyledle/src/model/Classic/classic_network.dart';
+import 'package:kyledle/src/shared_preferences/attemps.dart';
 import 'package:state_extended/state_extended.dart';
 
 class ClassicController extends StateXController {
@@ -12,23 +14,26 @@ class ClassicController extends StateXController {
   List<dynamic> columns = [];
   List<dynamic> indices = [];
   Map<String, dynamic> characters = {};
+  bool shouldAnimate = false;
   String target = "";
   bool userWin = false;
 
   @override
   Future<void> initState() async {
-    super.initState();
     await _loadData();
+    super.initState();
   }
 
-  addAttempt(String attempt) {
+  addAttempt(String attempt) async {
     if (!characters.containsKey(attempt.trim()) || attempts.contains(attempt)) {
       return;
     }
 
     setState(() {
+      shouldAnimate = true;
       attempts.insert(0, attempt);
     });
+    await setAttempts("mhdle", "classic", attempts);
   }
 
   setAnimationInProgress({bool inProgress = true}) {
@@ -49,9 +54,8 @@ class ClassicController extends StateXController {
     characters = classicData["characters"];
     indices = classicData["indices"];
 
-    target = characters.keys.elementAt(Random().nextInt(characters.length));
-    print(target);
-
+    attempts = await getAttempts("mhdle", "classic");
+    userWin = attempts[0] == target;
     setState(() {});
   }
 }
