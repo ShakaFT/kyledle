@@ -55,7 +55,7 @@ class ClassicController extends StateXController {
     indices = classicData["indices"];
 
     attempts = await getAttempts("mhdle", "classic");
-    userWin = attempts[0] == target;
+    userWin = (attempts.isEmpty ? "" : attempts[0]) == target;
     setState(() {});
   }
 }
