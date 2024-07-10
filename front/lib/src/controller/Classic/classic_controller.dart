@@ -53,6 +53,7 @@ class ClassicController extends StateXController {
     columns = classicData["columns"];
     characters = classicData["characters"];
     indices = classicData["indices"];
+    print(characters[target]["indices"]["icon"]);
 
     attempts = await getAttempts("mhdle", "classic");
     userWin = attempts[0] == target;
