@@ -70,7 +70,7 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    "Vous avez trouvé ${widget.controller.target} en ${widget.controller.attempts.length} tentatives.",
+                    "Vous avez trouvé ${widget.controller.target} en ${widget.controller.attempts.length} ${widget.controller.attempts.length > 1 ? 'tentatives' : 'tentative'}.",
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
