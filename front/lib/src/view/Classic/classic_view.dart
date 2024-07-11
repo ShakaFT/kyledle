@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kyledle/src/controller/Classic/classic_controller.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
 import 'package:kyledle/src/view/Classic/attempt_widget.dart';
+import 'package:kyledle/src/view/Classic/indice_widget.dart';
 import 'package:kyledle/src/view/Classic/win_container_widget.dart';
 import 'package:state_extended/state_extended.dart';
 
@@ -37,6 +38,9 @@ class _ClassicViewState extends StateX<ClassicView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.25,
+              ),
               padding: const EdgeInsets.all(16.0),
               margin: const EdgeInsets.symmetric(vertical: 20.0),
               decoration: BoxDecoration(
@@ -44,10 +48,9 @@ class _ClassicViewState extends StateX<ClassicView> {
                 borderRadius: BorderRadius.circular(15.0),
                 border: Border.all(color: Colors.yellow.shade700, width: 4.0),
               ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
                 children: [
-                  Text(
+                  const Text(
                     "Devine le Monstre d'aujourd'hui !",
                     style: TextStyle(
                       color: Colors.white,
@@ -55,14 +58,77 @@ class _ClassicViewState extends StateX<ClassicView> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    "Tape n'importe quel monstre pour commencer.",
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16.0,
+                  const SizedBox(height: 10),
+                  if (_controller.attempts.isEmpty)
+                    const Text(
+                      "Tape n'importe quel monstre pour commencer.",
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16.0,
+                      ),
+                    )
+                  else
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        _controller
+                            .characters[_controller.target]["indices"].length,
+                        (i) => IndiceWidget(
+                          controller: _controller,
+                          indice: _controller.characters[_controller.target]
+                              ["indices"][i],
+                          attemptsRemaining:
+                              5 * (i + 1) - _controller.attempts.length,
+                        ),
+                      ),
                     ),
-                  ),
+                  if (_controller.displayedIndice.isNotEmpty)
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      decoration: BoxDecoration(
+                        color: const Color(
+                          0xFFF9F5E3,
+                        ), // Couleur de fond du container
+                        borderRadius:
+                            BorderRadius.circular(20), // Bords arrondis
+                        border: Border.all(
+                          width: 3,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            offset: const Offset(2, 2), // Décalage de l'ombre
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            _controller.displayedIndice["name"],
+                            style: const TextStyle(
+                              fontFamily:
+                                  'PixelFont', // Police personnalisée, assure-toi de l'ajouter à ton projet
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            _controller.displayedIndice["value"] is List
+                                ? _controller.displayedIndice["value"]
+                                    .join(", ")
+                                : _controller.displayedIndice["value"],
+                            style: const TextStyle(
+                              fontFamily: 'PixelFont', // Police personnalisée
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                 ],
               ),
             ),
