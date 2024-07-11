@@ -1,11 +1,11 @@
 {
-    "name": "kyledle",
-    "short_name": "kyledle",
+    "name": "Kyledle",
+    "short_name": "Kyledle",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Mini jeux sur les jeux favoris de Kylekilleur",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
