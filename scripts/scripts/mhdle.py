@@ -50,7 +50,6 @@ def main():
             "Génération",
             "Sous-espèce",
         ],
-        "indices": ["Taille Moyenne", "Couleurs"],
     }
     for _, row in df.iterrows():
         monster = row["Nom"].strip()
@@ -73,8 +72,16 @@ def main():
                 "Sous-espèce": row["Sous-espèce"].strip(),
             },
             "indices": [
-                str(row["Taille Moyenne"]).strip(),
-                string_to_list(row["Afflictions"]),
+                {
+                    "icon": "crown",
+                    "name": "Taille Moyenne",
+                    "value": str(row["Taille Moyenne"]).strip(),
+                },
+                {
+                    "icon": "palette",
+                    "name": "Couleurs",
+                    "value": string_to_list(row["Couleurs"]),
+                },
             ],
         }
 
