@@ -56,7 +56,7 @@ class IndiceWidgetState extends State<IndiceWidget> {
                     ),
                   ),
                   Text(
-                    "Encore ${widget.attemptsRemaining} essais",
+                    "Encore ${widget.attemptsRemaining} ${widget.attemptsRemaining > 1 ? 'essais' : 'essai'}",
                     style: TextStyle(
                       color: widget.attemptsRemaining > 0
                           ? Colors.white70
