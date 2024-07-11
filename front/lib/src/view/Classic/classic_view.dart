@@ -49,7 +49,6 @@ class _ClassicViewState extends StateX<ClassicView> {
                 border: Border.all(color: Colors.yellow.shade700, width: 4.0),
               ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     "Devine le Monstre d'aujourd'hui !",
@@ -81,6 +80,53 @@ class _ClassicViewState extends StateX<ClassicView> {
                           attemptsRemaining:
                               5 * (i + 1) - _controller.attempts.length,
                         ),
+                      ),
+                    ),
+                  if (_controller.displayedIndice.isNotEmpty)
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      width: MediaQuery.of(context).size.width * 0.2,
+                      decoration: BoxDecoration(
+                        color: const Color(
+                          0xFFF9F5E3,
+                        ), // Couleur de fond du container
+                        borderRadius:
+                            BorderRadius.circular(20), // Bords arrondis
+                        border: Border.all(
+                          width: 3,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            offset: const Offset(2, 2), // Décalage de l'ombre
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            _controller.displayedIndice["name"],
+                            style: const TextStyle(
+                              fontFamily:
+                                  'PixelFont', // Police personnalisée, assure-toi de l'ajouter à ton projet
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            _controller.displayedIndice["value"] is List
+                                ? _controller.displayedIndice["value"]
+                                    .join(", ")
+                                : _controller.displayedIndice["value"],
+                            style: const TextStyle(
+                              fontFamily: 'PixelFont', // Police personnalisée
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                 ],

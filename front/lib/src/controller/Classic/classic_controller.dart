@@ -12,8 +12,9 @@ class ClassicController extends StateXController {
   bool animationInProgress = false;
   List<String> attempts = [];
   List<dynamic> columns = [];
-  List<dynamic> indices = [];
   Map<String, dynamic> characters = {};
+  Map displayedIndice = {};
+  List<dynamic> indices = [];
   bool shouldAnimate = false;
   String target = "";
   bool userWin = false;
@@ -24,7 +25,7 @@ class ClassicController extends StateXController {
     super.initState();
   }
 
-  addAttempt(String attempt) async {
+  Future<void> addAttempt(String attempt) async {
     if (!characters.containsKey(attempt.trim()) || attempts.contains(attempt)) {
       return;
     }
@@ -36,12 +37,19 @@ class ClassicController extends StateXController {
     await setAttempts("mhdle", "classic", attempts);
   }
 
-  setAnimationInProgress({bool inProgress = true}) {
+  void setAnimationInProgress({bool inProgress = true}) {
     setState(() {
       animationInProgress = inProgress;
       if (!animationInProgress) {
         userWin = attempts[0] == target;
       }
+    });
+  }
+
+  void updateDisplayedIndice(Map indice) {
+    final newIndice = displayedIndice == indice ? {} : indice;
+    setState(() {
+      displayedIndice = newIndice;
     });
   }
 
@@ -53,7 +61,6 @@ class ClassicController extends StateXController {
     columns = classicData["columns"];
     characters = classicData["characters"];
     indices = classicData["indices"];
-    print(characters[target]["indices"]["icon"]);
 
     attempts = await getAttempts("mhdle", "classic");
     userWin = attempts[0] == target;
