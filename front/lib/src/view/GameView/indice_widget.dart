@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:kyledle/src/controller/Classic/classic_controller.dart';
+import 'package:kyledle/src/controller/Game/game_controller.dart';
+import 'package:kyledle/utils.dart';
+import 'package:state_extended/state_extended.dart';
 
 class IndiceWidget extends StatefulWidget {
   const IndiceWidget({
     super.key,
-    required this.controller,
+    required this.gameController,
     required this.indice,
     required this.attemptsRemaining,
   });
-  final ClassicController controller;
+  final GameController gameController;
   final Map<String, dynamic> indice;
   final int attemptsRemaining;
 
@@ -17,13 +19,8 @@ class IndiceWidget extends StatefulWidget {
   IndiceWidgetState createState() => IndiceWidgetState();
 }
 
-class IndiceWidgetState extends State<IndiceWidget> {
+class IndiceWidgetState extends StateX<IndiceWidget> {
   bool _isHovered = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -42,7 +39,7 @@ class IndiceWidgetState extends State<IndiceWidget> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: FaIcon(
-                      _getIcon(widget.indice["icon"]),
+                      getIcon(widget.indice["icon"]),
                       color: widget.attemptsRemaining <= 0
                           ? Colors.amber
                           : Colors.grey,
@@ -71,17 +68,6 @@ class IndiceWidgetState extends State<IndiceWidget> {
         ),
       );
 
-  IconData _getIcon(String icon) {
-    switch (icon) {
-      case 'crown':
-        return FontAwesomeIcons.crown;
-      case 'palette':
-        return FontAwesomeIcons.palette;
-      default:
-        return FontAwesomeIcons.question;
-    }
-  }
-
   void _onHover(bool isHovered) {
     if (widget.attemptsRemaining > 0) {
       return;
@@ -95,6 +81,6 @@ class IndiceWidgetState extends State<IndiceWidget> {
     if (widget.attemptsRemaining > 0) {
       return;
     }
-    widget.controller.updateDisplayedIndice(widget.indice);
+    widget.gameController.updateDisplayedIndice(widget.indice);
   }
 }

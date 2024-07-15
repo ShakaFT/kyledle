@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kyledle/config.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
-import 'package:kyledle/src/view/home_view.dart';
+import 'package:kyledle/src/view/HomeView/home_view.dart';
 import 'package:state_extended/state_extended.dart';
 
 void main() async {

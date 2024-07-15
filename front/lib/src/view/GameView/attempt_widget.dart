@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:kyledle/src/controller/Classic/classic_controller.dart';
-import 'package:kyledle/src/view/Classic/delayed_display_widget.dart';
+import 'package:kyledle/src/controller/Game/game_controller.dart';
+import 'package:kyledle/src/view/GameView/delayed_display_widget.dart';
 
 class Attempt extends StatefulWidget {
   const Attempt({
@@ -12,7 +12,7 @@ class Attempt extends StatefulWidget {
   });
   final bool animate;
   final String attempt;
-  final ClassicController controller;
+  final GameController controller;
 
   @override
   AttemptState createState() => AttemptState();

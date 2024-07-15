@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:kyledle/src/controller/Classic/classic_controller.dart';
+import 'package:kyledle/src/controller/Game/game_controller.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
 
 class WinContainerWidget extends StatefulWidget {
@@ -9,7 +9,7 @@ class WinContainerWidget extends StatefulWidget {
     required this.kyledleController,
     required this.controller,
   });
-  final ClassicController controller;
+  final GameController controller;
   final KyledleController kyledleController;
 
   @override

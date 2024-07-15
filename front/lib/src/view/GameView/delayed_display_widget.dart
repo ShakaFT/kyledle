@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kyledle/src/controller/Classic/classic_controller.dart';
+import 'package:kyledle/src/controller/Game/game_controller.dart';
 
 class DelayedDisplay extends StatefulWidget {
   const DelayedDisplay({
@@ -13,7 +13,7 @@ class DelayedDisplay extends StatefulWidget {
   });
   final bool animate;
   final Widget child;
-  final ClassicController controller;
+  final GameController controller;
   final Duration delay;
   final bool isFirst;
   final bool isLast;
