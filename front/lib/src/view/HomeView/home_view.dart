@@ -77,7 +77,7 @@ class HomeViewState extends StateX<HomeView> {
 
   Widget _buildGameModes() => Column(
         children: [
-          GameModeButton(
+          GameModeButtonWidget(
             kyledleController: widget.controller,
             title: "CLASSIQUE",
             description: "Des indices à chaque essai",

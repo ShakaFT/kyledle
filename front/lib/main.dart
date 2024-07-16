@@ -39,14 +39,7 @@ class _KyledleState extends AppStateX<Kyledle> {
   _KyledleState._() : super();
   static _KyledleState? _this;
 
-  late KyledleController _controller;
-
   @override
-  void initState() {
-    super.initState();
-    _controller = widget.controller;
-  }
-
-  @override
-  Widget buildIn(BuildContext context) => HomeView(controller: _controller);
+  Widget buildIn(BuildContext context) =>
+      HomeView(controller: widget.controller);
 }

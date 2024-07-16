@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kyledle/src/controller/Game/game_controller.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
-import 'package:kyledle/src/view/GameView/indice_widget.dart';
+import 'package:kyledle/src/view/GameView/indices/indice_widget.dart';
 import 'package:state_extended/state_extended.dart';
 
 class IndicesWidget extends StatefulWidget {

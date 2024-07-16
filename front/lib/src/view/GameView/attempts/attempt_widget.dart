@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kyledle/src/controller/Game/game_controller.dart';
-import 'package:kyledle/src/view/GameView/delayed_display_widget.dart';
+import 'package:kyledle/src/view/GameView/attempts/delayed_display_widget.dart';
+import 'package:state_extended/state_extended.dart';
 
-class Attempt extends StatefulWidget {
-  const Attempt({
+class AttemptWidget extends StatefulWidget {
+  const AttemptWidget({
     super.key,
     required this.animate,
     required this.attempt,
@@ -15,15 +16,10 @@ class Attempt extends StatefulWidget {
   final GameController controller;
 
   @override
-  AttemptState createState() => AttemptState();
+  AttemptWidgetState createState() => AttemptWidgetState();
 }
 
-class AttemptState extends State<Attempt> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class AttemptWidgetState extends StateX<AttemptWidget> {
   @override
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +54,7 @@ class AttemptState extends State<Attempt> {
             color = Colors.white;
           }
 
-          return DelayedDisplay(
+          return DelayedDisplayWidget(
             key: ValueKey(
               widget.attempt + widget.controller.columns[entry.key],
             ),

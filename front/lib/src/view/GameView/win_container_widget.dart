@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kyledle/src/controller/Game/game_controller.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
+import 'package:state_extended/state_extended.dart';
 
 class WinContainerWidget extends StatefulWidget {
   const WinContainerWidget({
@@ -16,7 +17,7 @@ class WinContainerWidget extends StatefulWidget {
   WinContainerWidgetState createState() => WinContainerWidgetState();
 }
 
-class WinContainerWidgetState extends State<WinContainerWidget> {
+class WinContainerWidgetState extends StateX<WinContainerWidget> {
   @override
   void initState() {
     super.initState();
@@ -34,7 +35,7 @@ class WinContainerWidgetState extends State<WinContainerWidget> {
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.all(16.0),
         margin: const EdgeInsets.symmetric(vertical: 20.0),
-        width: MediaQuery.of(context).size.width * 0.25,
+        width: widget.kyledleController.maxWidth(context),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.green.shade700, Colors.green.shade500],

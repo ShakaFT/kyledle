@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
 
-class GameModeButton extends StatelessWidget {
-  const GameModeButton({
+class GameModeButtonWidget extends StatelessWidget {
+  const GameModeButtonWidget({
     super.key,
     required this.kyledleController,
     required this.title,
