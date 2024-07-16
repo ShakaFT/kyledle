@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kyledle/src/controller/Game/game_controller.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
 import 'package:kyledle/src/view/GameView/indices/indice_widget.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:state_extended/state_extended.dart';
 
 class IndicesWidget extends StatefulWidget {
@@ -68,6 +69,14 @@ class IndicesWidgetState extends StateX<IndicesWidget> {
                     attemptsRemaining:
                         5 * (i + 1) - widget.gameController.attempts.length,
                   ),
+                ),
+              ),
+            if (widget.gameController.characters.isEmpty)
+              Center(
+                child: LoadingAnimationWidget.twistingDots(
+                  leftDotColor: Colors.yellow.shade700,
+                  rightDotColor: Colors.yellow.shade700,
+                  size: 50,
                 ),
               ),
             if (widget.gameController.displayedIndice.isNotEmpty)

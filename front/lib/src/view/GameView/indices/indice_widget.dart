@@ -40,9 +40,7 @@ class IndiceWidgetState extends StateX<IndiceWidget> {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: FaIcon(
                       getIcon(widget.indice["icon"]),
-                      color: widget.attemptsRemaining <= 0
-                          ? Colors.amber
-                          : Colors.grey,
+                      color: _indiceAvailable() ? Colors.amber : Colors.grey,
                     ),
                   ),
                   Text(
@@ -55,9 +53,7 @@ class IndiceWidgetState extends StateX<IndiceWidget> {
                   Text(
                     "Encore ${widget.attemptsRemaining} ${widget.attemptsRemaining > 1 ? 'essais' : 'essai'}",
                     style: TextStyle(
-                      color: widget.attemptsRemaining > 0
-                          ? Colors.white70
-                          : Colors.black,
+                      color: _indiceAvailable() ? Colors.black : Colors.white70,
                       fontSize: 16.0,
                     ),
                   ),
@@ -68,19 +64,24 @@ class IndiceWidgetState extends StateX<IndiceWidget> {
         ),
       );
 
-  void _onHover(bool isHovered) {
-    if (widget.attemptsRemaining > 0) {
-      return;
-    }
-    setState(() {
-      _isHovered = isHovered;
-    });
-  }
-
   void _displayIndice() {
-    if (widget.attemptsRemaining > 0) {
+    if (!_indiceAvailable()) {
       return;
     }
     widget.gameController.updateDisplayedIndice(widget.indice);
+  }
+
+  bool _indiceAvailable() =>
+      widget.attemptsRemaining <= 0 || widget.gameController.userWin;
+
+  void _onHover(bool isHovered) {
+    if (!_indiceAvailable()) {
+      print("return");
+      return;
+    }
+    print("go");
+    setState(() {
+      _isHovered = isHovered;
+    });
   }
 }

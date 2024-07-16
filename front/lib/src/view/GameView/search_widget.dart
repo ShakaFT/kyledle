@@ -55,7 +55,8 @@ class SearchWidgetState extends StateX<SearchWidget> {
                       border: InputBorder.none,
                       hintText: widget.hintText,
                     ),
-                    enabled: !widget.gameController.animationInProgress,
+                    enabled: !widget.gameController.animationInProgress &&
+                        widget.gameController.dataLoaded,
                     focusNode: fieldFocusNode,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   );

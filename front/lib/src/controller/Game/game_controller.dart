@@ -13,8 +13,8 @@ class GameController extends StateXController {
   List<String> attempts = [];
   List<dynamic> columns = [];
   Map<String, dynamic> characters = {};
+  bool dataLoaded = false;
   Map displayedIndice = {};
-  List<dynamic> indices = [];
   bool shouldAnimate = false;
   String target = "";
   bool userWin = false;
@@ -54,16 +54,17 @@ class GameController extends StateXController {
   }
 
   Future<void> _loadData() async {
+    await Future.delayed(const Duration(seconds: 3));
     final data = (await getData("mhdle"))!;
     final classicData = data["data"];
     target = data["target"];
 
     columns = classicData["columns"];
     characters = classicData["characters"];
-    indices = classicData["indices"];
 
     attempts = await getAttempts("mhdle", "classic");
     userWin = (attempts.isEmpty ? "" : attempts[0]) == target;
+    dataLoaded = true;
     setState(() {});
   }
 }
