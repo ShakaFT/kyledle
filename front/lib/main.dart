@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kyledle/config.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
-import 'package:kyledle/src/view/home_view.dart';
+import 'package:kyledle/src/view/HomeView/home_view.dart';
 import 'package:state_extended/state_extended.dart';
 
 void main() async {
@@ -39,14 +39,7 @@ class _KyledleState extends AppStateX<Kyledle> {
   _KyledleState._() : super();
   static _KyledleState? _this;
 
-  late KyledleController _controller;
-
   @override
-  void initState() {
-    super.initState();
-    _controller = widget.controller;
-  }
-
-  @override
-  Widget buildIn(BuildContext context) => HomeView(controller: _controller);
+  Widget buildIn(BuildContext context) =>
+      HomeView(controller: widget.controller);
 }

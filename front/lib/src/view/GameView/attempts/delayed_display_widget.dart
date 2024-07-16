@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kyledle/src/controller/Classic/classic_controller.dart';
+import 'package:kyledle/src/controller/Game/game_controller.dart';
+import 'package:state_extended/state_extended.dart';
 
-class DelayedDisplay extends StatefulWidget {
-  const DelayedDisplay({
+class DelayedDisplayWidget extends StatefulWidget {
+  const DelayedDisplayWidget({
     super.key,
     required this.animate,
     required this.child,
@@ -13,16 +14,16 @@ class DelayedDisplay extends StatefulWidget {
   });
   final bool animate;
   final Widget child;
-  final ClassicController controller;
+  final GameController controller;
   final Duration delay;
   final bool isFirst;
   final bool isLast;
 
   @override
-  DelayedDisplayState createState() => DelayedDisplayState();
+  DelayedDisplayWidgetState createState() => DelayedDisplayWidgetState();
 }
 
-class DelayedDisplayState extends State<DelayedDisplay>
+class DelayedDisplayWidgetState extends StateX<DelayedDisplayWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacity;

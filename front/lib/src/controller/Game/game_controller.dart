@@ -4,11 +4,11 @@ import 'package:kyledle/src/model/Classic/classic_network.dart';
 import 'package:kyledle/src/shared_preferences/attemps.dart';
 import 'package:state_extended/state_extended.dart';
 
-class ClassicController extends StateXController {
-  factory ClassicController() => _this ??= ClassicController._();
-  ClassicController._() : super();
+class GameController extends StateXController {
+  factory GameController() => _this ??= GameController._();
+  GameController._() : super();
 
-  static ClassicController? _this;
+  static GameController? _this;
   bool animationInProgress = false;
   List<String> attempts = [];
   List<dynamic> columns = [];

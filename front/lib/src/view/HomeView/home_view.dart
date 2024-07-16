@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kyledle/src/controller/Kyledle/kyledle_controller.dart';
-import 'package:kyledle/src/view/Classic/classic_view.dart';
+import 'package:kyledle/src/view/GameView/game_view.dart';
+import 'package:kyledle/src/view/HomeView/game_button.dart';
+import 'package:state_extended/state_extended.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.controller});
@@ -11,7 +13,7 @@ class HomeView extends StatefulWidget {
   HomeViewState createState() => HomeViewState();
 }
 
-class HomeViewState extends State<HomeView> {
+class HomeViewState extends StateX<HomeView> {
   Widget? _currentView;
   bool _isHovered = false;
 
@@ -46,8 +48,8 @@ class HomeViewState extends State<HomeView> {
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
                           width: _isHovered
-                              ? MediaQuery.of(context).size.width * 0.25
-                              : MediaQuery.of(context).size.width * 0.23,
+                              ? widget.controller.maxWidth(context)
+                              : widget.controller.maxWidth(context) * 0.95,
                           child: Image.asset(
                             "assets/title.png",
                           ),
@@ -75,14 +77,14 @@ class HomeViewState extends State<HomeView> {
 
   Widget _buildGameModes() => Column(
         children: [
-          GameModeButton(
-            text: "CLASSIQUE",
+          GameModeButtonWidget(
+            kyledleController: widget.controller,
+            title: "CLASSIQUE",
             description: "Des indices à chaque essai",
             icon: Icons.lightbulb_outline,
             onPressed: () {
               setState(() {
-                _currentView =
-                    ClassicView(kyledleController: widget.controller);
+                _currentView = GameView(kyledleController: widget.controller);
               });
             },
           ),
@@ -100,60 +102,4 @@ class HomeViewState extends State<HomeView> {
       _currentView = null;
     });
   }
-}
-
-class GameModeButton extends StatelessWidget {
-  const GameModeButton({
-    super.key,
-    required this.text,
-    required this.description,
-    required this.icon,
-    required this.onPressed,
-  });
-
-  final String text;
-  final String description;
-  final IconData icon;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) => SizedBox(
-        width: MediaQuery.of(context).size.width * 0.25,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.all(16),
-            backgroundColor: Colors.white.withOpacity(0.8),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          onPressed: onPressed,
-          child: Row(
-            children: [
-              Icon(icon, color: Colors.black),
-              const SizedBox(width: 10),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    text,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  Text(
-                    description,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
 }
