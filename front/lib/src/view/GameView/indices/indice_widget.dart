@@ -76,10 +76,8 @@ class IndiceWidgetState extends StateX<IndiceWidget> {
 
   void _onHover(bool isHovered) {
     if (!_indiceAvailable()) {
-      print("return");
       return;
     }
-    print("go");
     setState(() {
       _isHovered = isHovered;
     });

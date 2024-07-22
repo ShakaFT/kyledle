@@ -61,18 +61,7 @@ class SearchWidgetState extends StateX<SearchWidget> {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   );
                 },
-                optionsBuilder: (textEditingValue) {
-                  if (textEditingValue.text.isEmpty) {
-                    return const Iterable<String>.empty();
-                  }
-                  return widget.gameController.characters.keys.where(
-                    (character) =>
-                        character.toLowerCase().startsWith(
-                              textEditingValue.text.toLowerCase().trim(),
-                            ) &&
-                        !widget.gameController.attempts.contains(character),
-                  );
-                },
+                optionsBuilder: _searchCharacter,
                 optionsViewBuilder: (context, onSelected, options) => Align(
                   alignment: Alignment.topLeft,
                   child: Material(
@@ -157,6 +146,29 @@ class SearchWidgetState extends StateX<SearchWidget> {
   void _hoverItem(String item) {
     setState(() {
       hoveredItem = item;
+    });
+  }
+
+  Iterable<String> _searchCharacter(TextEditingValue textEditingValue) {
+    if (textEditingValue.text.isEmpty) {
+      return const Iterable<String>.empty();
+    }
+
+    return widget.gameController.characters.keys.where((character) {
+      final words = character.toLowerCase().split(RegExp(r'[\s-]+'));
+      final searchText = textEditingValue.text.toLowerCase().trim();
+
+      if (widget.gameController.attempts.contains(character) ||
+          searchText.isEmpty) {
+        return false;
+      }
+
+      for (final word in words) {
+        if (word.startsWith(searchText)) {
+          return true;
+        }
+      }
+      return false;
     });
   }
 }

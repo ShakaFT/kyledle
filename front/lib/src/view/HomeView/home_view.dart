@@ -65,7 +65,16 @@ class HomeViewState extends StateX<HomeView> {
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 10),
+                    const Text(
+                      "Les données sont basées sur les opus de la série principale",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
                     _currentView ?? _buildGameModes(),
                   ],
                 ),

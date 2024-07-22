@@ -19,6 +19,7 @@ class AttemptHeaderState extends StateX<AttemptHeadersWidget> {
               (key) => Container(
                 padding: const EdgeInsets.all(8.0),
                 margin: const EdgeInsets.all(4.0),
+                height: 60, // fixed height for each header
                 width: 150, // fixed width for each header
                 decoration: BoxDecoration(
                   color: Colors.yellow.shade700,
@@ -33,13 +34,15 @@ class AttemptHeaderState extends StateX<AttemptHeadersWidget> {
                     ),
                   ],
                 ),
-                child: Text(
-                  key,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                child: Center(
+                  child: Text(
+                    key,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             )

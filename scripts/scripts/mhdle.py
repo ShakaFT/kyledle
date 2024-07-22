@@ -48,7 +48,7 @@ def main():
             "Faiblesses",
             "Afflictions",
             "Génération",
-            "Sous-espèce",
+            "Sous-espèce / Déviant / Variant",
         ],
     }
     for _, row in df.iterrows():
@@ -69,13 +69,15 @@ def main():
                 "Faiblesses": string_to_list(row["Faiblesses"]),
                 "Génération": row["Génération"].strip(),
                 "Afflictions": string_to_list(row["Afflictions"]),
-                "Sous-espèce": row["Sous-espèce"].strip(),
+                "Sous-espèce / Déviant / Variant": row[
+                    "Sous-espèce / Déviant / Variant"
+                ].strip(),
             },
             "indices": [
                 {
                     "icon": "crown",
                     "name": "Taille Moyenne",
-                    "value": str(row["Taille Moyenne"]).strip(),
+                    "value": str(row["Taille Moyenne"]).strip() + " cm",
                 },
                 {
                     "icon": "palette",
