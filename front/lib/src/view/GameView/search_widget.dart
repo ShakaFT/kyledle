@@ -155,20 +155,29 @@ class SearchWidgetState extends StateX<SearchWidget> {
     }
 
     return widget.gameController.characters.keys.where((character) {
-      final words = character.toLowerCase().split(RegExp(r'[\s-]+'));
       final searchText = textEditingValue.text.toLowerCase().trim();
+
+      final words = character.toLowerCase().split(RegExp(r'[\s-]+'));
+      final searchTexts = searchText.split(RegExp(r'[\s-]+'));
 
       if (widget.gameController.attempts.contains(character) ||
           searchText.isEmpty) {
         return false;
       }
 
-      for (final word in words) {
-        if (word.startsWith(searchText)) {
-          return true;
+      for (final text in searchTexts) {
+        var match = false;
+        for (final word in words) {
+          if (word.startsWith(text)) {
+            match = true;
+            break;
+          }
+        }
+        if (!match) {
+          return false;
         }
       }
-      return false;
+      return true;
     });
   }
 }
