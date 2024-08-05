@@ -1,3 +1,6 @@
 # Some dependencies are already install by restAPI-package
 
+Flask==3.0.3
+Flask-Cors==4.0.1
 pytz==2024.1
+redis==5.0.8

@@ -1,11 +1,14 @@
 # Kyledle rest API
 
-## Install restAPI-package
-
-```bash
-pip install git+https://<username>:<token>@github.com/ShakaFT/restAPI-package.git
-```
-
 ## Secrets
 
 - .env file contain all secrets
+
+## Config
+
+```bash
+brew install redis
+brew services start redis
+# brew services list
+# brew services stop redis
+```

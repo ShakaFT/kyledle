@@ -2,44 +2,61 @@
 This module contains main endpoints of default services.
 """
 
-from datetime import datetime, timedelta
-import os
+from collections import defaultdict
+from datetime import timedelta
 import random
 
-from flask import jsonify, request
+from flask import jsonify
 
-from restAPI.FlaskApp import FlaskApp
-
-from models.History import HistoryItem
-from models.KyledleData import KyledleData
+from config import app, redis
+from utils import decode_from_redis, to_string_date, utc_now
 
 
-app = FlaskApp(
-    "default",
-    os.environ["GOOGLE_CLOUD_PROJECT"],
-    allowed_origins=["https://kyledle.web.app"],
-    allowed_headers=[os.environ["KYLEDLE_API_KEY_HEADER"]],
-)
-app.api_key(os.environ["KYLEDLE_API_KEY_HEADER"], os.environ["KYLEDLE_API_KEY"])
+# app = FlaskApp(
+#     "default",
+#     os.environ["GOOGLE_CLOUD_PROJECT"],
+#     allowed_origins=["https://kyledle.web.app"],
+#     allowed_headers=[os.environ["KYLEDLE_API_KEY_HEADER"]],
+# )
+# app.api_key(os.environ["KYLEDLE_API_KEY_HEADER"], os.environ["KYLEDLE_API_KEY"])
 
 
-@app.get("/data")
-def get_data():
+@app.get("/")
+def hello():
+    """hello"""
+    return "Hello World"
+
+
+@app.get("/config/<game>")
+def get_game_config(game: str):
     """
-    This endpoints returns data.
+    This endpoint returns game config.
     """
-    args = dict(request.args)
-    try:
-        game = args["game"]
-        mode = args["mode"]
-    except KeyError as e:
-        return jsonify(error=f"Invalid args: missing {e}"), 400
+    # Fetch characters
+    keys = redis.keys(f"{game}:monster:*")
+    characters = [decode_from_redis(redis.hgetall(key)) for key in keys]  # type: ignore
 
-    data = KyledleData.from_database(game, mode)
-    item = HistoryItem.from_database(datetime.now())
-    assert item, "Missing History Item!"
+    # Fetch modes
+    keys = redis.keys(f"{game}:mode:*")
+    modes = [key.split(":")[-1] for key in keys]  # type: ignore
+    return jsonify(characters=characters, modes=modes)
 
-    return jsonify(data=data.to_dict(), target=item.target(game, mode))
+
+@app.get("/config/<game>/<mode>")
+def get_mode_config(game: str, mode: str):
+    """
+    This endpoint returns mode config.
+    """
+    today = to_string_date(utc_now())
+
+    # Fetch config
+    config = decode_from_redis(redis.hgetall(f"{game}:mode:{mode}"))  # type: ignore
+
+    # Fetch target
+    today_target = decode_from_redis(redis.hgetall(f"history:{today}:{game}:{mode}"))  # type: ignore
+    assert today_target, "Missing History Item!"
+
+    return jsonify(config=config, target=today_target["target"])
 
 
 @app.post("/schedule")
@@ -47,30 +64,34 @@ def schedule():
     """
     This endpoint schedules levels.
     """
-    now = datetime.now()
-    tomorrow = now + timedelta(days=1)
+    now = utc_now()
+    tomorrow = to_string_date(now + timedelta(days=1))
 
-    if HistoryItem.from_database(tomorrow):
+    if redis.keys(f"history:{tomorrow}:*"):
         raise ValueError(f"{tomorrow} already scheduled!")
 
-    game = "mhdle"
-    mode = "classic"
-
-    kyledle_data = KyledleData.from_database(game, mode)
-
-    already_scheduled_characters = []
+    already_scheduled_characters = defaultdict(lambda: defaultdict(list))
     for i in range(5):
-        if item := HistoryItem.from_database(now - timedelta(days=i)):
-            already_scheduled_characters.append(item.target(game, mode))
+        formatted_date = to_string_date(now - timedelta(days=i))
+        for key in redis.keys(f"history:{formatted_date}:*"):  # type: ignore
+            _, _, game, mode = key.split(":")
+            item = decode_from_redis(redis.hgetall(key))  # type: ignore
+            already_scheduled_characters[game][mode].append(item["target"])
 
-    characters = [
-        character
-        for character in kyledle_data.characters
-        if character not in already_scheduled_characters
-    ]
+    for key in redis.keys("*:mode:*"):  # type: ignore
+        game, _, mode = key.split(":")
 
-    history_item = HistoryItem(tomorrow, {game: {mode: random.choice(characters)}})
-    history_item.update_database()
+        characters = []
+        for character_key in redis.keys(f"{game}:character:*"):  # type: ignore
+            character = character_key.split(":")[-1]
+            if character not in already_scheduled_characters[game][mode]:
+                characters.append(character)
+
+        redis.hset(
+            f"history:{tomorrow}:{game}:{mode}",
+            mapping={"target": random.choice(characters)},
+        )
+
     return jsonify(), 204
 
 

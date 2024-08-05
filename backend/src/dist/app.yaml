@@ -1,5 +1,0 @@
-runtime: python311
-service: default
-env_variables:
-  KYLEDLE_API_KEY_HEADER: Kyledle-Api-Key
-  KYLEDLE_API_KEY: def68bb0-41ef-4330-8fb3-ea4ef8534836
