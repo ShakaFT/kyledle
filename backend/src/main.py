@@ -12,15 +12,6 @@ from config import app, redis
 from utils import decode_from_redis, to_string_date, utc_now
 
 
-# app = FlaskApp(
-#     "default",
-#     os.environ["GOOGLE_CLOUD_PROJECT"],
-#     allowed_origins=["https://kyledle.web.app"],
-#     allowed_headers=[os.environ["KYLEDLE_API_KEY_HEADER"]],
-# )
-# app.api_key(os.environ["KYLEDLE_API_KEY_HEADER"], os.environ["KYLEDLE_API_KEY"])
-
-
 @app.get("/")
 def hello():
     """hello"""
