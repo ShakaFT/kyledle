@@ -24,7 +24,7 @@ def get_game_config(game: str):
     This endpoint returns game config.
     """
     # Fetch characters
-    keys = redis.keys(f"{game}:monster:*")
+    keys = redis.keys(f"{game}:character:*")
     characters = [decode_from_redis(redis.hgetall(key)) for key in keys]  # type: ignore
 
     # Fetch modes
