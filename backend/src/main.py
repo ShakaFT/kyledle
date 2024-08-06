@@ -2,10 +2,6 @@
 This module contains main endpoints of default services.
 """
 
-from collections import defaultdict
-from datetime import timedelta
-import random
-
 from flask import jsonify
 
 from config import app, redis
@@ -44,46 +40,12 @@ def get_mode_config(game: str, mode: str):
     config = decode_from_redis(redis.hgetall(f"{game}:mode:{mode}"))  # type: ignore
 
     # Fetch target
-    today_target = decode_from_redis(redis.hgetall(f"history:{today}:{game}:{mode}"))  # type: ignore
+    today_target = decode_from_redis(
+        redis.hgetall(f"history:{today}:{game}:{mode}")  # type: ignore
+    )
     assert today_target, "Missing History Item!"
 
     return jsonify(config=config, target=today_target["target"])
-
-
-@app.post("/schedule")
-def schedule():
-    """
-    This endpoint schedules levels.
-    """
-    now = utc_now()
-    tomorrow = to_string_date(now + timedelta(days=1))
-
-    if redis.keys(f"history:{tomorrow}:*"):
-        raise ValueError(f"{tomorrow} already scheduled!")
-
-    already_scheduled_characters = defaultdict(lambda: defaultdict(list))
-    for i in range(5):
-        formatted_date = to_string_date(now - timedelta(days=i))
-        for key in redis.keys(f"history:{formatted_date}:*"):  # type: ignore
-            _, _, game, mode = key.split(":")
-            item = decode_from_redis(redis.hgetall(key))  # type: ignore
-            already_scheduled_characters[game][mode].append(item["target"])
-
-    for key in redis.keys("*:mode:*"):  # type: ignore
-        game, _, mode = key.split(":")
-
-        characters = []
-        for character_key in redis.keys(f"{game}:character:*"):  # type: ignore
-            character = character_key.split(":")[-1]
-            if character not in already_scheduled_characters[game][mode]:
-                characters.append(character)
-
-        redis.hset(
-            f"history:{tomorrow}:{game}:{mode}",
-            mapping={"target": random.choice(characters)},
-        )
-
-    return jsonify(), 204
 
 
 if __name__ == "__main__":
