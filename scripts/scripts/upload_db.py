@@ -43,14 +43,14 @@ def upload_data(characters: dict[str, Any]):
         mapping={
             "columns": json.dumps(
                 [
-                    "character",
+                    "id",
                     "picture",
-                    "monster_type",
+                    "monster-type",
                     "elements",
                     "weaknesses",
                     "ailments",
                     "generation",
-                    "subspecies",
+                    "is-subspecies",
                 ]
             ),
             "indices": json.dumps(["average_size", "colors"]),
@@ -68,7 +68,7 @@ def main():
         f"{constants.GOOGLE_SHEET_URL}&gid={constants.GOOGLE_SHEET_ID[GAME]}"
     )
     for _, row in df.iterrows():
-        character = row["Character"].strip()
+        character = row["ID"].strip()
         blob = public_bucket.blob(f"{GAME}/{character}.png")
 
         character_data = {}

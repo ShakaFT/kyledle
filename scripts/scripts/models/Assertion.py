@@ -35,7 +35,6 @@ class LocalisationAssertion:
         if column_key not in self.__localisation:
             self.__missing_keys.add(column_key)
         if column in constants.COLUMNS_NOT_TO_ASSERT[self.game]:
-
             return
 
         value_key = f"{column_key}.{value}"
@@ -52,6 +51,8 @@ class LocalisationAssertion:
         extra_keys = set()
         for not_checked_key in not_checked_keys:
             for column in self.__columns:
+                if column in constants.COLUMNS_NOT_TO_ASSERT[self.game]:
+                    return
                 if not_checked_key.startswith(f"{self.  game}.{column}"):
                     extra_keys.add(not_checked_key)
 
