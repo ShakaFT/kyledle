@@ -69,22 +69,21 @@ def main():
     )
     for _, row in df.iterrows():
         character = row["ID"].strip()
-        blob = public_bucket.blob(f"{GAME}/{character}.png")
+        blob = public_bucket.blob(f"v2/{GAME}/{character}.png")
 
         character_data = {}
         for column in df.columns:
             value = row[column]
             column = column.replace(" ", "-").lower()
 
-            if column == "picture":
-                value = blob.public_url
-            elif isinstance(value, bool):
+            if isinstance(value, bool):
                 value = "true" if value is True else "false"
             elif isinstance(value, str) and column[-1] == "s":
                 value = json.dumps([element.strip() for element in value.split("/")])
 
             character_data[column] = value
 
+        character_data["picture"] = blob.public_url
         characters[character] = character_data
 
     console.log("[bold magenta]Will fetch characters from database...")
@@ -103,6 +102,7 @@ def main():
         for removed_character in removed_characters:
             console.log(f"[bold green] • {removed_character}")
 
+    console.input("[bold yellow blink][Press ENTER to upload data]")
     console.log("[bold magenta]Will upload data...")
     upload_data(characters)
     remove_data(removed_characters)
