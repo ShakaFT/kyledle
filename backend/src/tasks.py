@@ -15,7 +15,6 @@ from utils import decode_from_redis, to_string_date, utc_now
 def hello_world():
     """hello_world"""
     print("Hello World")
-    return "ok"
 
 
 @shared_task

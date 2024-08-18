@@ -6,14 +6,14 @@ VENV_PATH=.venv
 VENV_REQUIREMENTS_PATH=$VENV_PATH/$REQUIREMENTS_FILENAME
 
 if [ ! -d $VENV_PATH ]; then
-    printf "$GREEN\nVirtual environment creation processing...\n$NO_COLOR"
+    echo "Virtual environment creation processing..."
     python3.12 -m venv $VENV_PATH --upgrade-deps
 fi
 
 source $VENV_PATH/bin/activate
 
 if ! cmp -s $REQUIREMENTS_FILENAME $VENV_REQUIREMENTS_PATH; then
-    printf "$GREEN\nUpdating local dependencies...\n$NO_COLOR"
+    echo "Updating local dependencies..."
     pip install --upgrade pip
     pip install -r $REQUIREMENTS_FILENAME
 

@@ -3,7 +3,5 @@
 **/.venv
 
 # Secrets
-.env/.env
-.env/.env.dev
-.env/.env.prod
+**/.env
 redis.conf

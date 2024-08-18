@@ -2,13 +2,30 @@
 
 ## Secrets
 
-- .env file contain all secrets
+### .env
 
-## Config
+You should add `.env/` folder
 
 ```bash
-brew install redis
-brew services start redis
-# brew services list
-# brew services stop redis
+# .env/.env.local
+API_KEY="No API Key"
+
+# .env/.env.dev
+API_KEY=
+REDIS_USERNAME=
+REDIS_PASSWORD=
+
+# .env/.env.prod
+API_KEY=
+REDIS_USERNAME=
+REDIS_PASSWORD=
+```
+
+### redis.conf
+
+```bash
+user default off
+user webapp on >"" ~* &* +@all
+user shakaft on >"" ~* &* +@all
+user nonudian on >"" ~* &* +@all
 ```
