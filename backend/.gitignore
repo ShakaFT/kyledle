@@ -2,8 +2,8 @@
 **/__pycache__
 **/.venv
 
-# Celery
-**/celerybeat-schedule.db
-
 # Secrets
-.env
+.env/.env
+.env/.env.dev
+.env/.env.prod
+redis.conf

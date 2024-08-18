@@ -1,0 +1,47 @@
+services:
+  web:
+    build:
+      dockerfile: ./compose/Dockerfile
+    command: flask run --host=0.0.0.0
+    depends_on:
+      - redis
+    env_file:
+      - .env/.env
+    environment:
+      - FLASK_APP=main:app
+      - FLASK_DEBUG=1
+    image: kyledle_flask:local
+    ports:
+      - $WEB_PORT:5000
+    volumes:
+      - .:/app
+  redis:
+    image: redis:alpine
+    ports:
+      - $REDIS_PORT:$REDIS_PORT
+  celery_worker:
+    build:
+      dockerfile: ./compose/Dockerfile
+    command: celery -A config.celery worker
+    depends_on:
+      - redis
+    env_file:
+      - .env/.env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:$REDIS_PORT/0
+      - CELERY_RESULT_BACKEND=redis://redis:$REDIS_PORT/0
+    volumes:
+      - .:/app
+  celery_beat:
+    build:
+      dockerfile: ./compose/Dockerfile
+    command: celery -A config.celery beat
+    depends_on:
+      - redis
+    environment:
+      - CELERY_BROKER_URL=redis://redis:$REDIS_PORT/0
+      - CELERY_RESULT_BACKEND=redis://redis:$REDIS_PORT/0
+    env_file:
+      - .env/.env
+    volumes:
+      - .:/app

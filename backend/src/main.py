@@ -46,7 +46,3 @@ def get_mode_config(game: str, mode: str):
     assert today_target, "Missing History Item!"
 
     return jsonify(config=config, target=today_target["target"])
-
-
-if __name__ == "__main__":
-    app.run(host="localhost", port=8080, debug=True)

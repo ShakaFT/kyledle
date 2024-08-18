@@ -1,0 +1,24 @@
+services:
+  web:
+    command: gunicorn --bind 0.0.0.0:5000 --workers 3 main:app
+    env_file:
+      - .env/.env.$ENVIRONMENT
+    image: kyledle_flask:$ENVIRONMENT
+  redis:
+    command: redis-server /etc/redis/redis.conf --port $REDIS_PORT
+    volumes:
+      - ./redis.conf:/etc/redis/redis.conf
+  celery_worker:
+    env_file:
+      - .env/.env.$ENVIRONMENT
+    environment:
+      - CELERY_BROKER_URL=redis://$REDIS_USERNAME:$REDIS_PASSWORD@redis:$REDIS_PORT/0
+      - CELERY_RESULT_BACKEND=redis://$REDIS_USERNAME:$REDIS_PASSWORD@redis:$REDIS_PORT/0
+    image: kyledle_celery_worker:$ENVIRONMENT
+  celery_beat:
+    env_file:
+      - .env/.env.$ENVIRONMENT
+    environment:
+      - CELERY_BROKER_URL=redis://$REDIS_USERNAME:$REDIS_PASSWORD@redis:$REDIS_PORT/0
+      - CELERY_RESULT_BACKEND=redis://$REDIS_USERNAME:$REDIS_PASSWORD@redis:$REDIS_PORT/0
+    image: kyledle_celery_beat:$ENVIRONMENT

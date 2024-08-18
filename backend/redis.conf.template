@@ -1,0 +1,6 @@
+# You should create `redis.conf` file with this config
+
+user default off
+user webapp on >$REDIS_PASSWORD_WEBAPP ~* &* +@all
+user shakaft on >$REDIS_PASSWORD_SHAKAFT ~* &* +@all
+user nonudian on >$REDIS_PASSWORD_NONUDIAN ~* &* +@all

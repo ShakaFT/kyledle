@@ -13,14 +13,6 @@ from redis import Redis
 
 # Create Flask
 app = Flask(__name__)
-app.config.from_mapping(
-    CELERY=dict(
-        broker_url="redis://localhost",
-        imports=("tasks",),
-        result_backend="redis://localhost",
-        task_ignore_result=True,
-    ),
-)
 
 # Handle Cors
 CORS(app=app, origins=["https://kyledle.web.app"], allow_headers=["Authorization"])
@@ -35,12 +27,19 @@ def before_request():
     if (
         request.headers.get("Authorization") != os.environ["API_KEY"]
         and request.method != "OPTIONS"
+        and not app.debug
     ):
         abort(401)
 
 
 # Create Redis
-redis = Redis(host="localhost", port=6379, decode_responses=True)
+redis = Redis(
+    decode_responses=True,
+    host=os.environ["REDIS_HOST"],
+    password=os.environ.get("REDIS_PASSWORD"),
+    port=int(os.environ["REDIS_PORT"]),
+    username=os.environ.get("REDIS_USERNAME"),
+)
 
 
 # Create Celery
@@ -51,10 +50,13 @@ class _FlaskTask(Task):  # pylint: disable=abstract-method
 
 
 celery = Celery(app.name, task_cls=_FlaskTask)
-celery.config_from_object(app.config["CELERY"])
+celery.conf.imports = ("tasks",)
 celery.conf.beat_schedule = {
     "hello-world": {"task": "tasks.hello_world", "schedule": crontab()},
-    "schedule-levels": {"task": "tasks.schedule_levels", "schedule": crontab("0", "0")},
+    "schedule-levels": {
+        "task": "tasks.schedule_levels",
+        "schedule": crontab("0", "0"),
+    },
 }
 
 celery.set_default()
