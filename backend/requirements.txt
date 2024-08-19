@@ -4,3 +4,4 @@ Flask-Cors==4.0.1
 gunicorn==23.0.0
 pytz==2024.1
 redis==5.0.8
+watchdog==4.0.2
