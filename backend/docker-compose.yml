@@ -29,6 +29,8 @@ services:
     image: redis:alpine
     ports:
       - $REDIS_PORT:$REDIS_PORT
+    volumes:
+      - redis_data:/data
 
   celery_worker:
     build:
@@ -57,3 +59,6 @@ services:
     image: kyledle_celery_beat:$ENVIRONMENT
     volumes:
       - ./src:/src
+
+volumes:
+    redis_data:
