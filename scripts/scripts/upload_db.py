@@ -5,22 +5,24 @@ This script allows to upload data.
 import json
 from typing import Any, Iterable
 
+from dotenv import load_dotenv
 from google.cloud import storage
 import pandas as pd
-from redis import Redis
 from rich.console import Console
 
-from utils import constants, interaction
+from utils import constants, db, interaction
 
+
+load_dotenv()
 
 console = Console()
-redis = Redis(host="localhost", port=6379, decode_responses=True)
-storage_client = storage.Client()
-
-public_bucket = storage_client.bucket("kyledle-public")
-
 ENVIRONMENT = interaction.ask_environment(console)
 GAME = interaction.ask_game(console)
+
+redis = db.get_db(ENVIRONMENT)
+
+storage_client = storage.Client()
+public_bucket = storage_client.bucket("kyledle-public")
 
 
 def remove_data(characters: Iterable[str]):

@@ -2,7 +2,7 @@
 This module contains constants.
 """
 
-ENVIRONMENTS = ["local"]
+ENVIRONMENTS = ["local", "dev", "prod"]
 GAMES = ["mhdle"]
 
 GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1nwVxOynl2rduEWoAVuZjmrlnlDiHwu3RUUoleJ-j6uo/export?format=csv"

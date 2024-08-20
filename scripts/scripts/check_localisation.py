@@ -4,17 +4,19 @@ This module checks localisation files.
 
 import json
 
-from redis import Redis
+from dotenv import load_dotenv
 from rich.console import Console
 
 from models.Assertion import LocalisationAssertion
-from utils import constants, interaction
+from utils import constants, db, interaction
 
+
+load_dotenv()
 
 console = Console()
-redis = Redis(host="localhost", port=6379, decode_responses=True)
-
 ENVIRONMENT = interaction.ask_environment(console)
+
+redis = db.get_db(ENVIRONMENT)
 
 
 def check_database(assertion: LocalisationAssertion):
