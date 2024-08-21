@@ -2,23 +2,28 @@
 This module allowed to create app.
 """
 
+import logging
 import os
 
 from celery import Celery, Task
 from celery.schedules import crontab
-from flask import abort, Flask, request
+from flask import abort, Flask, jsonify, request
 from flask_cors import CORS
 from redis import Redis
+
+import utils.constants as constants
+from utils.discord_message import error_message
 
 
 # Create Flask
 app = Flask(__name__)
 
-# Handle Cors
+
+# Cors Handling
 CORS(app=app, origins=["https://kyledle.web.app"], allow_headers=["Authorization"])
 
 
-# Handle API Key
+# API Key Handling
 @app.before_request
 def before_request():
     """
@@ -30,6 +35,24 @@ def before_request():
         and not app.debug
     ):
         abort(401)
+
+
+# Error Handling
+@app.errorhandler(Exception)
+def handle_exception(exc: Exception):
+    """
+    This function is called after each request.
+    """
+    error_message(exc)
+    return jsonify(error="An unhandled exception has occured..."), 500
+
+
+# Logging Handling
+if constants.IS_GUNICORN:
+    # See: https://trstringer.com/logging-flask-gunicorn-the-manageable-way
+    gunicorn_logger = logging.getLogger("gunicorn.error")
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 
 # Create Redis

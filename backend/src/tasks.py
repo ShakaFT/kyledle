@@ -4,20 +4,22 @@ This module contains tasks.
 
 from collections import defaultdict
 from datetime import timedelta
+import logging
 import random
 
-from celery import shared_task
 from config import redis
-from utils import decode_from_redis, to_string_date, utc_now
+from utils.celery_task import celery_task
+from utils.date import to_string_date, utc_now
+from utils.redis_decode import decode_from_redis
 
 
-@shared_task
+@celery_task
 def hello_world():
     """hello_world"""
-    print("Hello World")
+    logging.info("Hello World")
 
 
-@shared_task
+@celery_task
 def schedule_levels():
     """
     This endpoint schedules levels.

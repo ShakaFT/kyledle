@@ -10,10 +10,10 @@ services:
     volumes:
       - ./redis.conf:/etc/redis/redis.conf
   celery_worker:
-    command: celery -A config.celery worker
+    command: celery -A config.celery worker --loglevel INFO
     environment:
       <<: *celery-env
   celery_beat:
-    command: celery -A config.celery beat
+    command: celery -A config.celery beat --loglevel INFO
     environment:
       <<: *celery-env

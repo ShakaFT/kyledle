@@ -17,6 +17,7 @@ services:
       - .env/.env.$ENVIRONMENT
     environment:
       <<: *redis-env
+      ENVIRONMENT: $ENVIRONMENT
       FLASK_APP: main:app
       FLASK_DEBUG: 1
     image: kyledle_flask:$ENVIRONMENT
@@ -35,13 +36,14 @@ services:
   celery_worker:
     build:
       dockerfile: ./compose/Dockerfile
-    command: watchmedo auto-restart --directory=/src -- celery -A config.celery worker
+    command: watchmedo auto-restart --directory=/src -- celery -A config.celery worker --loglevel DEBUG
     depends_on:
       - $REDIS_HOST
     env_file:
       - .env/.env.$ENVIRONMENT
     environment:
       <<: [*celery-env, *redis-env]
+      ENVIRONMENT: $ENVIRONMENT
     image: kyledle_celery_worker:$ENVIRONMENT
     volumes:
       - ./src:/src
@@ -49,11 +51,12 @@ services:
   celery_beat:
     build:
       dockerfile: ./compose/Dockerfile
-    command: watchmedo auto-restart --directory=/src -- celery -A config.celery beat
+    command: watchmedo auto-restart --directory=/src -- celery -A config.celery beat --loglevel DEBUG
     depends_on:
       - $REDIS_HOST
     environment:
       <<: [*celery-env, *redis-env]
+      ENVIRONMENT: $ENVIRONMENT
     env_file:
       - .env/.env.$ENVIRONMENT
     image: kyledle_celery_beat:$ENVIRONMENT

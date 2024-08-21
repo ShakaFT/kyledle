@@ -5,7 +5,8 @@ This module contains main endpoints of default services.
 from flask import jsonify
 
 from config import app, redis
-from utils import decode_from_redis, to_string_date, utc_now
+from utils.date import to_string_date, utc_now
+from utils.redis_decode import decode_from_redis
 
 
 @app.get("/")
