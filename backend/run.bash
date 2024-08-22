@@ -5,11 +5,13 @@ export REDIS_HOST="redis"
 
 if [ "$1" = "prod" ]; then
     export ENVIRONMENT="prod"
+    export NGINX_PORT=80
     export REDIS_PORT=6381
     export WEB_PORT=8082
     docker-compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env/.env.prod -p kyledle-prod up --build
 elif [ "$1" = "dev" ]; then
     export ENVIRONMENT="dev"
+    export NGINX_PORT=81
     export REDIS_PORT=6380
     export WEB_PORT=8081
     docker-compose -f docker-compose.yml -f docker-compose.prod.yml --env-file .env/.env.dev -p kyledle-dev up --build

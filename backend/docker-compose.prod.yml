@@ -5,6 +5,8 @@ x-celery-env: &celery-env
 services:
   web:
     command: gunicorn --bind 0.0.0.0:5000 --workers 3 main:app
+    networks:
+      - webnet
   redis:
     command: redis-server /etc/redis/redis.conf --port $REDIS_PORT
     volumes:
@@ -17,3 +19,16 @@ services:
     command: celery -A config.celery beat --loglevel INFO
     environment:
       <<: *celery-env
+  nginx:
+    depends_on:
+      - web
+    image: nginx:alpine
+    networks:
+      - webnet
+    ports:
+      - $NGINX_PORT:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+
+networks:
+  webnet:

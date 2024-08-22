@@ -1,4 +1,10 @@
 {
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "[nginx]": {
+        "editor.defaultFormatter": "raynigon.nginx-formatter"
+    },
     "files.exclude": {
         "**/__pycache__": true,
         "**/.venv": true,
