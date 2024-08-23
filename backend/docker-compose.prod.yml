@@ -12,11 +12,11 @@ services:
     volumes:
       - ./redis.conf:/etc/redis/redis.conf
   celery_worker:
-    command: celery -A config.celery worker --loglevel INFO
+    command: celery -A config.celery worker --loglevel INFO --uid=nobody --gid=nogroup
     environment:
       <<: *celery-env
   celery_beat:
-    command: celery -A config.celery beat --loglevel INFO
+    command: celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup
     environment:
       <<: *celery-env
   nginx:

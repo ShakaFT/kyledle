@@ -36,7 +36,7 @@ services:
   celery_worker:
     build:
       dockerfile: ./compose/Dockerfile
-    command: watchmedo auto-restart --directory=/src -- celery -A config.celery worker --loglevel DEBUG
+    command: watchmedo auto-restart --directory=/src -- celery -A config.celery worker --loglevel DEBUG --uid=nobody --gid=nogroup
     depends_on:
       - $REDIS_HOST
     env_file:
@@ -51,7 +51,7 @@ services:
   celery_beat:
     build:
       dockerfile: ./compose/Dockerfile
-    command: watchmedo auto-restart --directory=/src -- celery -A config.celery beat --loglevel DEBUG
+    command: watchmedo auto-restart --directory=/src -- celery -A config.celery beat --loglevel DEBUG --uid=nobody --gid=nogroup
     depends_on:
       - $REDIS_HOST
     environment:

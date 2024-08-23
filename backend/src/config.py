@@ -73,6 +73,10 @@ class _FlaskTask(Task):  # pylint: disable=abstract-method
 
 
 celery = Celery(app.name, task_cls=_FlaskTask)
+
+# See: https://stackoverflow.com/a/78088996
+celery.conf.broker_connection_retry_on_startup = True
+
 celery.conf.imports = ("tasks",)
 celery.conf.beat_schedule = {
     "hello-world": {"task": "tasks.hello_world", "schedule": crontab()},
