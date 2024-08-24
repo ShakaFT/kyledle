@@ -1,9 +1,12 @@
 {
 	"recommendations": [
+		"ahmadalli.vscode-nginx-conf",
+		"codeavecjonathan.importmagic",
+		"kevinrose.vsc-python-indent",
 		"ms-python.pylint",
 		"ms-python.vscode-pylance",
-		"codeavecjonathan.importmagic",
 		"ms-python.isort",
-		"kevinrose.vsc-python-indent"
+		"raynigon.nginx-formatter",
+		"william-voyek.vscode-nginx"
 	],
 }

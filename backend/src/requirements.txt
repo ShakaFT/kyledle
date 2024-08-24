@@ -1,3 +1,0 @@
-# Some dependencies are already install by restAPI-package
-
-pytz==2024.1

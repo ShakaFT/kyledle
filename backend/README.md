@@ -1,11 +1,32 @@
 # Kyledle rest API
 
-## Install restAPI-package
-
-```bash
-pip install git+https://<username>:<token>@github.com/ShakaFT/restAPI-package.git
-```
-
 ## Secrets
 
-- .env file contain all secrets
+### .env
+
+You should add `.env/` folder
+
+```bash
+# .env/.env.local
+API_KEY="No API Key"
+
+# .env/.env.dev
+API_KEY=
+REDIS_USERNAME=
+REDIS_PASSWORD=
+
+# .env/.env.prod
+API_KEY=
+DISCORD_WEBHOOK_URL=
+REDIS_USERNAME=
+REDIS_PASSWORD=
+```
+
+### redis.conf
+
+```bash
+user default off
+user webapp on >"" ~* &* +@all
+user shakaft on >"" ~* &* +@all
+user nonudian on >"" ~* &* +@all
+```

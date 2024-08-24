@@ -1,4 +1,0 @@
-# Some dependencies are already install by restAPI-package
-
-pytz==2024.1
-git+https://ShakaFT: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@github.com/ShakaFT/restAPI-package.git
