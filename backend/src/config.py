@@ -10,8 +10,10 @@ from celery.schedules import crontab
 from flask import abort, Flask, jsonify, request
 from flask_cors import CORS
 from redis import Redis
+from werkzeug.exceptions import HTTPException
 
-import utils.constants as constants
+from utils import constants
+from utils.discord_message import error_message
 
 
 # Create Flask
@@ -37,13 +39,17 @@ def before_request():
 
 
 # Error Handling
-# @app.errorhandler(Exception)
-# def handle_exception(exc: Exception):
-#     """
-#     This function is called after each request.
-#     """
-#     error_message(exc)
-#     return jsonify(error="An unhandled exception has occured..."), 500
+@app.errorhandler(Exception)
+def handle_exception(exc: Exception):
+    """
+    This function is called after each request.
+    """
+    app.logger.debug(exc.__class__)
+    if isinstance(exc, HTTPException):
+        return exc
+
+    error_message(exc)
+    return jsonify(error="An unhandled exception has occured..."), 500
 
 
 # Logging Handling
