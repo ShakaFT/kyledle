@@ -59,6 +59,10 @@ def upload_data(characters: dict[str, Any]):
         },
     )
 
+    redis.set(f"{GAME}:mode:denomination", "")
+    redis.set(f"{GAME}:mode:shape", "")
+    redis.set(f"{GAME}:mode:soundtrack", "")
+
 
 def main():
     """

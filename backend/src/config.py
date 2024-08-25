@@ -30,9 +30,9 @@ def before_request():
     This function is called before each request.
     """
     if (
-        request.headers.get("Authorization") != os.environ["API_KEY"]
+        constants.ENVIRONMENT != "local"
         and request.method != "OPTIONS"
-        and not app.debug
+        and request.headers.get("Authorization") != os.environ["API_KEY"]
     ):
         abort(401)
 

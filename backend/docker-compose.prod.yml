@@ -5,6 +5,8 @@ x-celery-env: &celery-env
 services:
   web:
     command: gunicorn --bind 0.0.0.0:5000 --workers 3 main:app
+    env_file:
+      - .env/.env.$ENVIRONMENT
     networks:
       - webnet
   redis:
@@ -13,10 +15,14 @@ services:
       - ./redis.conf:/etc/redis/redis.conf
   celery_worker:
     command: celery -A config.celery worker --loglevel INFO --uid=nobody --gid=nogroup
+    env_file:
+      - .env/.env.$ENVIRONMENT
     environment:
       <<: *celery-env
   celery_beat:
     command: celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup
+    env_file:
+      - .env/.env.$ENVIRONMENT
     environment:
       <<: *celery-env
   nginx:
