@@ -3,6 +3,7 @@ This script allows to upload data.
 """
 
 import json
+import sys
 from typing import Any, Iterable
 
 from dotenv import load_dotenv
@@ -14,10 +15,20 @@ from utils import constants, db, interaction
 
 
 load_dotenv()
-
 console = Console()
-ENVIRONMENT = interaction.ask_environment(console)
-GAME = interaction.ask_game(console)
+
+# Args Handling
+args = iter(sys.argv[1:])
+ENVIRONMENT = next(args, None)
+GAME = next(args, None)
+
+if not ENVIRONMENT:
+    ENVIRONMENT = interaction.ask_environment(console)
+if not GAME:
+    GAME = interaction.ask_game(console)
+
+assert ENVIRONMENT in constants.ENVIRONMENTS, f"Environment {ENVIRONMENT} unknown"
+assert GAME in constants.GAMES, f"Game {GAME} unknown"
 
 redis = db.get_db(ENVIRONMENT)
 
@@ -108,7 +119,9 @@ def main():
         for removed_character in removed_characters:
             console.log(f"[bold green] • {removed_character}")
 
-    console.input("[bold yellow blink][Press ENTER to upload data]")
+    if ENVIRONMENT != "local":
+        console.input("[bold yellow blink][Press ENTER to upload data]")
+
     console.log("[bold magenta]Will upload data...")
     upload_data(characters)
     remove_data(removed_characters)

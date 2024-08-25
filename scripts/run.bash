@@ -21,7 +21,7 @@ if [ -z $1 ]; then
 fi
 
 current_directory=$(dirname $(readlink -f $0))
-export GOOGLE_APPLICATION_CREDENTIALS=$KYLEDLE_GCP
+export GOOGLE_APPLICATION_CREDENTIALS="$current_directory/credentials_kyledle.json"
 export SCRIPT_PATH=$(dirname $current_directory/$1)
 
 export BACKEND_PATH="../backend"

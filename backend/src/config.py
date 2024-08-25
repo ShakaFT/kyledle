@@ -12,7 +12,6 @@ from flask_cors import CORS
 from redis import Redis
 
 import utils.constants as constants
-from utils.discord_message import error_message
 
 
 # Create Flask
@@ -38,13 +37,13 @@ def before_request():
 
 
 # Error Handling
-@app.errorhandler(Exception)
-def handle_exception(exc: Exception):
-    """
-    This function is called after each request.
-    """
-    error_message(exc)
-    return jsonify(error="An unhandled exception has occured..."), 500
+# @app.errorhandler(Exception)
+# def handle_exception(exc: Exception):
+#     """
+#     This function is called after each request.
+#     """
+#     error_message(exc)
+#     return jsonify(error="An unhandled exception has occured..."), 500
 
 
 # Logging Handling
@@ -60,7 +59,6 @@ redis = Redis(
     decode_responses=True,
     host=os.environ["REDIS_HOST"],
     password=os.environ.get("REDIS_PASSWORD"),
-    port=int(os.environ["REDIS_PORT"]),
     username=os.environ.get("REDIS_USERNAME"),
 )
 

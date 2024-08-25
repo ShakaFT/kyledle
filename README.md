@@ -7,9 +7,6 @@
 You should add `.env/` folder
 
 ```bash
-# .env/.env.local
-API_KEY="No API Key"
-
 # .env/.env.dev
 API_KEY=
 REDIS_USERNAME=
@@ -25,6 +22,7 @@ REDIS_PASSWORD=
 ### redis.conf
 
 ```bash
+# Only in dev and prod environments
 user default off
 user webapp on >"" ~* &* +@all
 user shakaft on >"" ~* &* +@all
