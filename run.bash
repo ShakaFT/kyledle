@@ -1,6 +1,9 @@
 #!/bin/bash
 # This script should be used to run restAPI locally.
 
+# Clear Docker Images Cache
+trap 'docker rmi $(docker images -f "dangling=true" -q) > /dev/null 2>&1' EXIT
+
 export REDIS_HOST="redis"
 
 if [ "$1" = "prod" ]; then
