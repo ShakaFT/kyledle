@@ -26,8 +26,9 @@ def get_game_config(game: str):
 
     # Fetch modes
     keys = redis.keys(f"{game}:mode:*")
-    modes = [key.split(":")[-1] for key in keys]  # type: ignore
-    return jsonify(characters=characters, modes=modes)
+    modes = [decode_from_redis(redis.hgetall(key)) for key in keys]  # type: ignore
+    modes.sort(key=lambda m: m["order"])
+    return jsonify(characters=characters, modes=[mode["id"] for mode in modes])
 
 
 @app.get("/config/<game>/<mode>")

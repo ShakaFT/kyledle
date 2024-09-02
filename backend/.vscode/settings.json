@@ -1,18 +1,31 @@
 {
-    "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always",
+      "source.unusedImports": "always"
     },
-    "[nginx]": {
-        "editor.defaultFormatter": "raynigon.nginx-formatter"
-    },
-    "files.exclude": {
-        "**/__pycache__": true,
-        "**/.venv": true,
-        "**/celerybeat-schedule": true,
-    },
-    "python.analysis.typeCheckingMode": "basic",
-    "python.analysis.extraPaths": [
-        "${workspaceFolder}/src/"
-    ],
-    "python.defaultInterpreterPath": "${workspaceFolder}/.venv"
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.venv": true,
+    "**/celerybeat-schedule": true
+  },
+  "python.analysis.extraPaths": ["${workspaceFolder}/src/"],
+  "python.analysis.typeCheckingMode": "basic"
 }

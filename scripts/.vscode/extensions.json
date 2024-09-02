@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "codeavecjonathan.importmagic",
+    "davidanson.vscode-markdownlint",
+    "foxundermoon.shell-format",
+    "kevinrose.vsc-python-indent",
+    "ms-python.black-formatter",
+    "ms-python.isort",
+    "ms-python.pylint",
+    "ms-python.vscode-pylance",
+    "yzhang.markdown-all-in-one"
+  ]
+}

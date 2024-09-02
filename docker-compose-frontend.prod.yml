@@ -1,0 +1,12 @@
+services:
+  frontend:
+    build:
+      dockerfile: compose/frontend.Dockerfile
+      args:
+        API_KEY: $API_KEY
+        API_URL: $VITE_API_URL
+    command: nginx -g 'daemon off;'
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_frontend
+    image: ${PROJECT_NAME}_frontend:$ENVIRONMENT
+    ports:
+      - $FRONTEND_PORT:80

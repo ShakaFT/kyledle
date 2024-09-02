@@ -2,10 +2,10 @@
 This module contains tasks.
 """
 
-from collections import defaultdict
-from datetime import timedelta
 import logging
 import random
+from collections import defaultdict
+from datetime import timedelta
 
 from config import redis
 from utils.celery_task import celery_task

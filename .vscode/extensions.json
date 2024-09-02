@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "ahmadalli.vscode-nginx-conf",
+    "cweijan.vscode-redis-client",
+    "davidanson.vscode-markdownlint",
+    "ms-azuretools.vscode-docker",
+    "ms-vscode-remote.remote-containers",
+    "redhat.vscode-yaml",
+    "teclado.vscode-nginx-format",
+    "william-voyek.vscode-nginx",
+    "yzhang.markdown-all-in-one"
+  ]
+}

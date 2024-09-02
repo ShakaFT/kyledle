@@ -6,6 +6,7 @@ import os
 import traceback
 
 from discord_webhook import DiscordEmbed, DiscordWebhook
+
 from utils import constants
 
 
@@ -27,4 +28,4 @@ def error_message(exc: Exception):
     )
 
     discord_webhook.add_embed(embed)
-    response = discord_webhook.execute()
+    discord_webhook.execute()
