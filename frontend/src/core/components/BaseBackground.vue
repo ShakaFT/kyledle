@@ -1,12 +1,13 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, toValue } from 'vue';
 
-  import { useGameFromUrl } from '@/core/composables/useGameFromUrl';
+  import { useGameId } from '@/core/composables/useGameId';
 
-  const { game } = useGameFromUrl();
+  const { gameId } = useGameId();
 
   const background = computed(
-    () => `url(/${game.value}_background.png) center/cover no-repeat, black`,
+    () =>
+      `url(/${toValue(gameId)}_background.png) center/cover no-repeat, black`,
   );
 </script>
 

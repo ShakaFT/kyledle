@@ -1,22 +1,22 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, toValue } from 'vue';
 
-  import { useGameFromUrl } from '@/core/composables/useGameFromUrl';
+  import { useGameId } from '@/core/composables/useGameId';
 
   const props = withDefaults(
     defineProps<{ mode: string; disabled?: boolean }>(),
     { disabled: false },
   );
 
-  const { game } = useGameFromUrl();
+  const { gameId } = useGameId();
 
-  const link = computed(() => `/${game.value}/${props.mode}`);
+  const link = computed(() => `/${toValue(gameId)}/${props.mode}`);
 </script>
 
 <template>
   <RouterLink :to="link">
     <button class="button" :class="{ disabled }" type="button">
-      {{ $t(`${game}.mode.${mode}`) }}
+      {{ $t(`${gameId}.mode.${mode}`) }}
     </button>
   </RouterLink>
 </template>

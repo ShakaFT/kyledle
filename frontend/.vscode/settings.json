@@ -40,6 +40,7 @@
   "javascript.inlayHints.parameterTypes.enabled": true,
   "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
   "javascript.inlayHints.variableTypes.enabled": true,
+  "javascript.preferences.importModuleSpecifier": "non-relative",
   "tailwindCSS.includeLanguages": {
     "vue": "html",
     "vue-html": "html"
@@ -49,6 +50,7 @@
   "typescript.inlayHints.parameterTypes.enabled": true,
   "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
   "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "vue.inlayHints.inlineHandlerLeading": true,
   "vue.inlayHints.missingProps": true,
   "vue.inlayHints.optionsWrapper": true,

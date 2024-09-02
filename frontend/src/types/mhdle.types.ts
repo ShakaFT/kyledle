@@ -2,7 +2,7 @@ import type { GameDataOf } from '@/types/core.types';
 
 export type MHdleData = GameDataOf<MHdleMode[], MHdleCharacter[]>;
 
-type MHdleMode = 'classic' | 'denomination' | 'shape' | 'soundtrack';
+export type MHdleMode = 'classic' | 'denomination' | 'shape' | 'soundtrack';
 
 export interface MHdleCharacter {
   ailments: string[];

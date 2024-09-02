@@ -1,19 +1,17 @@
 <script setup lang="ts">
-  import type { MHdleData } from '@/types/mhdle.types';
+  import type { MHdleData, MHdleMode } from '@/types/mhdle.types';
 
   import { computed } from 'vue';
 
   import BaseButtonMode from '@/core/components/BaseButtonMode.vue';
-  import { useGameFromUrl } from '@/core/composables/useGameFromUrl';
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
   import { useGameStore } from '@/stores/game';
 
-  const { game } = useGameFromUrl();
-  const store = useGameStore<MHdleData>(game);
+  const store = useGameStore<MHdleData>();
 
   const modes = computed(() => store.data?.modes ?? []);
 
-  function isDisabled(mode: string): boolean {
+  function isDisabled(mode: MHdleMode): boolean {
     return mode !== 'classic';
   }
 </script>

@@ -1,10 +1,10 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-export const useGameFromUrl = () => {
+export const useGameId = () => {
   const route = useRoute();
 
   return {
-    game: computed(() => route.path.split('/')[1]),
+    gameId: computed(() => route.path.split('/')[1]),
   };
 };

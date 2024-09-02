@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, toValue } from 'vue';
 
-  import { useGameFromUrl } from '@/core/composables/useGameFromUrl';
+  import { useGameId } from '@/core/composables/useGameId';
 
-  const { game } = useGameFromUrl();
+  const { gameId } = useGameId();
 
-  const logo = computed(() => `/${game.value}_logo.png`);
+  const logo = computed(() => `/${toValue(gameId)}_logo.png`);
 </script>
 
 <template>
