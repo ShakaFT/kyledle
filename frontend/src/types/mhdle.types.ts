@@ -1,7 +1,3 @@
-import type { GameDataOf } from '@/types/core.types';
-
-export type MHdleData = GameDataOf<MHdleMode[], MHdleCharacter[]>;
-
 export type MHdleMode = 'classic' | 'denomination' | 'shape' | 'soundtrack';
 
 export interface MHdleCharacter {

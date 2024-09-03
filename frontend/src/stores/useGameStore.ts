@@ -1,12 +1,21 @@
-import { toValue, useFetch } from '@vueuse/core';
+import { toValue, useFetch, watchOnce } from '@vueuse/core';
 import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 import { useGameId } from '@/core/composables/useGameId';
 
-export const useGameStore = <T>() => {
+export const useGameStore = <
+  T extends {
+    characters: unknown[];
+    modes: string[];
+  },
+>() => {
   const { gameId } = useGameId();
 
   const defineGenericStore = defineStore(toValue(gameId), () => {
+    const characters = ref<T['characters']>([]);
+    const modes = ref<T['modes']>([]);
+
     const { data } = useFetch(
       `${import.meta.env.VITE_API_URL}/config/${toValue(gameId)}`,
       {
@@ -18,7 +27,14 @@ export const useGameStore = <T>() => {
       .get()
       .json<T>();
 
-    return { data };
+    watchOnce(data, () => {
+      if (data.value) {
+        characters.value = data.value.characters;
+        modes.value = data.value.modes;
+      }
+    });
+
+    return { characters, modes };
   });
 
   return defineGenericStore();
