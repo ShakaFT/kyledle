@@ -26,6 +26,7 @@
     "**/.venv": true,
     "**/celerybeat-schedule": true
   },
+  "python.analysis.autoImportCompletions": true,
   "python.analysis.extraPaths": ["${workspaceFolder}/src/"],
   "python.analysis.typeCheckingMode": "basic"
 }

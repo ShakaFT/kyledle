@@ -25,6 +25,7 @@
     "**/__pycache__": true,
     "**/.venv/": true
   },
+  "python.analysis.autoImportCompletions": true,
   "python.analysis.extraPaths": ["${workspaceFolder}/src/"],
   "python.analysis.typeCheckingMode": "basic"
 }
