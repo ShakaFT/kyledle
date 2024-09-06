@@ -46,7 +46,35 @@
   <AutoComplete
     v-model="searchedMonster"
     :empty-search-message="' '"
+    :input-class="[
+      /* animation */
+      'duration-300',
+      'focus:duration-200',
+      'focus:transition',
+      /* focus states */
+      'focus:ring-1',
+      'focus:ring-slate-500',
+      'outline-none',
+      /* layout */
+      'bg-slate-300',
+      'h-12',
+      'rounded-md',
+      'w-80',
+      /* misc */
+      'backdrop-blur-lg',
+      'backdrop-brightness-125',
+      'caret-transparent',
+      'mix-blend-multiply',
+      /* typography */
+      'font-[BluuNext]',
+      'placeholder:text-center',
+      'placeholder:text-slate-400',
+      'text-center',
+      'text-xl',
+    ]"
     :option-label="optionLabelOf"
+    :placeholder="`「 ${$t('mhdle.ui.search-monster')} 」`"
+    :spellcheck="false"
     :suggestions="selection"
     @complete="searchMonsterOf"
     @option-select="selectMonsterOf"

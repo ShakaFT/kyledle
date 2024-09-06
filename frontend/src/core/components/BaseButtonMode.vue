@@ -10,43 +10,40 @@
 </script>
 
 <template>
-  <RouterLink :to="`/${gameId}/${props.mode}`">
-    <button
-      :class="[
-        /* layout */
-        'm-2',
-        'p-2',
-        /* border */
-        'rounded-lg',
-        'w-52',
-        /* typography */
-        'font-[BluuNext]',
-        'text-4xl',
-        'text-white',
-        /* effects */
-        'backdrop-blur-md',
-        'backdrop-brightness-125',
-        'bg-black',
-        'mix-blend-multiply',
-        /* animation */
-        'duration-300',
-        'ease-out',
-        'transition',
-        /* interaction */
-        {
-          [[
-            'hover:bg-gray-800',
-            'hover:duration-300',
-            'hover:ease-out',
-            'hover:transition',
-          ].join(' ')]: !disabled,
-        },
-        /* disabled */
-        { ['opacity-50']: disabled },
-      ]"
-      type="button"
-    >
+  <button
+    :class="[
+      /* animation */
+      'duration-500',
+      {
+        [[
+          /* hover states */
+          'hover:bg-gray-800',
+          /* animation */
+          'hover:duration-200',
+          'hover:ease-out',
+          'hover:transition',
+        ].join(' ')]: !disabled,
+      },
+      /* layout */
+      'bg-black',
+      'm-2',
+      'p-2',
+      'rounded-lg',
+      'w-52',
+      /* misc */
+      'backdrop-blur-md',
+      'backdrop-brightness-125',
+      'mix-blend-multiply',
+      { ['opacity-50']: disabled },
+      /* typography */
+      'font-[BluuNext]',
+      'text-4xl',
+      'text-white',
+    ]"
+    type="button"
+  >
+    <RouterLink :to="`/${gameId}/${props.mode}`">
       {{ $t(`${gameId}.mode.${mode}`) }}
-    </button>
-  </RouterLink>
+    </RouterLink>
+  </button>
 </template>
