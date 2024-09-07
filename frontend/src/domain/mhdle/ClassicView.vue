@@ -1,35 +1,33 @@
 <script setup lang="ts">
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
-  import { computed, ref, toValue } from 'vue';
+  import { computed, ref } from 'vue';
 
   import { useCharacters } from '@/core/composables/useCharacters';
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
-  import SearchMonsterSelect from '@/domain/mhdle/components/SearchMonsterSelect.vue';
+  import SearchCharacterSelect from '@/domain/mhdle/components/SearchCharacterSelect.vue';
 
   const { characters } = useCharacters<MHdleCharacter>();
 
-  const attemptedMonsters = ref<MHdleCharacter[]>([]);
-  const availableMonsters = computed(() =>
-    toValue(characters).filter(
-      (monster) =>
-        !toValue(attemptedMonsters)
-          .map((attempted) => attempted.id)
-          .includes(monster.id),
-    ),
+  const availableCharacters = computed(() =>
+    characters.value.filter(isNotAttempted),
   );
+  const attemptedCharacters = ref<MHdleCharacter[]>([]);
 
-  function attemptMonsterOf(monster: MHdleCharacter) {
-    attemptedMonsters.value.push(monster);
-  }
+  const isNotAttempted = (character: MHdleCharacter) =>
+    !attemptedCharacters.value
+      .map((attempted) => attempted.id)
+      .includes(character.id);
+
+  const attemptOf = (character: MHdleCharacter) =>
+    attemptedCharacters.value.push(character);
 </script>
 
 <template>
   <BaseLayout>
-    <SearchMonsterSelect
-      :monsters="availableMonsters"
-      @attempt="attemptMonsterOf"
+    <SearchCharacterSelect
+      :characters="availableCharacters"
+      @select="attemptOf"
     />
-    {{ attemptedMonsters }}
   </BaseLayout>
 </template>

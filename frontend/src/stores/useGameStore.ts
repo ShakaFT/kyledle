@@ -1,4 +1,4 @@
-import { toValue, useFetch, watchOnce } from '@vueuse/core';
+import { useFetch, watchOnce } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -12,12 +12,12 @@ export const useGameStore = <
 >() => {
   const { gameId } = useGameId();
 
-  const defineGenericStore = defineStore(toValue(gameId), () => {
+  const defineGenericStore = defineStore(gameId.value, () => {
     const characters = ref<T['characters']>([]);
     const modes = ref<T['modes']>([]);
 
     const { data } = useFetch(
-      `${import.meta.env.VITE_API_URL}/config/${toValue(gameId)}`,
+      `${import.meta.env.VITE_API_URL}/config/${gameId.value}`,
       {
         headers: {
           Authorization: import.meta.env.VITE_API_KEY,

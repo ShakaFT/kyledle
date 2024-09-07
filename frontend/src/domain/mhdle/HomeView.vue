@@ -7,9 +7,7 @@
 
   const { modes } = useModes<MHdleMode>();
 
-  function isDisabled(mode: MHdleMode): boolean {
-    return mode !== 'classic';
-  }
+  const isDisabled = (mode: MHdleMode): boolean => mode !== 'classic';
 </script>
 
 <template>
