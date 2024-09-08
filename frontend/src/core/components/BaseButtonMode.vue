@@ -1,10 +1,9 @@
 <script setup lang="ts">
   import { useGameId } from '@/core/composables/useGameId';
 
-  const props = withDefaults(
-    defineProps<{ mode: string; disabled?: boolean }>(),
-    { disabled: false },
-  );
+  withDefaults(defineProps<{ mode: string; disabled?: boolean }>(), {
+    disabled: false,
+  });
 
   const { gameId } = useGameId();
 </script>
@@ -42,7 +41,7 @@
     ]"
     type="button"
   >
-    <RouterLink :to="`/${gameId}/${props.mode}`">
+    <RouterLink :to="`/${gameId}/${mode}`">
       {{ $t(`${gameId}.mode.${mode}`) }}
     </RouterLink>
   </button>

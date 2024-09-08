@@ -1,17 +1,13 @@
 <script setup lang="ts">
+  import type { SelectableCharacter } from '@/domain/mhdle/components/SearchCharacterOption.vue';
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
   import AutoComplete from 'primevue/autocomplete';
-  import { computed, ref } from 'vue';
+  import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
 
   import { useGameId } from '@/core/composables/useGameId';
-
-  interface SelectableCharacter {
-    character: MHdleCharacter;
-    translation: string;
-    matchingIndex: number;
-  }
+  import SearchCharacterOption from '@/domain/mhdle/components/SearchCharacterOption.vue';
 
   const props = defineProps<{ characters: MHdleCharacter[] }>();
   const emit = defineEmits<{ select: [character: MHdleCharacter] }>();
@@ -19,23 +15,38 @@
   const { t } = useI18n();
   const { gameId } = useGameId();
 
-  const selectableCharacters = computed<SelectableCharacter[]>(() =>
-    props.characters.map((character) => ({
-      character,
-      translation: t(`${gameId.value}.id.${character.id}`),
-      matchingIndex: -1,
-    })),
-  );
   const selection = ref<SelectableCharacter[]>([]);
   const searchedCharacter = ref('');
 
   const searchOf = (text: string) => {
-    const matchingCharacters = selectableCharacters.value.filter(
-      ({ translation }) =>
-        translation.toLowerCase().startsWith(text.toLowerCase()),
-    );
+    selection.value = props.characters
+      .map((character) => {
+        const translation = t(`${gameId.value}.id.${character.id}`);
 
-    selection.value = matchingCharacters;
+        const matchingTerm = translation
+          .split(/(?<=[\s-'])/g)
+          .map((word, i, words) => {
+            const term = word.concat(words.slice(i + 1, words.length).join(''));
+
+            return {
+              term,
+              startingAt: translation.length - term.length,
+            };
+          })
+          .find(({ term }) =>
+            term.toLowerCase().startsWith(text.trim().toLowerCase()),
+          );
+
+        return {
+          character,
+          translation,
+          matchingAt: matchingTerm
+            ? [matchingTerm.startingAt, matchingTerm.startingAt + text.length]
+            : [],
+        };
+      })
+      .filter(({ matchingAt }) => matchingAt.length > 0)
+      .sort((a, b) => a.translation.localeCompare(b.translation));
   };
 
   const selectOf = ({ character }: SelectableCharacter) => {
@@ -50,6 +61,7 @@
   <AutoComplete
     v-model="searchedCharacter"
     :complete-on-focus="selection.length > 0"
+    :delay="0"
     :empty-search-message="' '"
     :input-class="[
       /* animation */
@@ -78,7 +90,6 @@
       'text-center',
       'text-xl',
     ]"
-    option-label="translation"
     :overlay-class="[
       /* layout */
       'bg-slate-300',
@@ -103,5 +114,9 @@
     @clear="selection = []"
     @complete="searchOf($event.query)"
     @option-select="selectOf($event.value)"
-  />
+  >
+    <template #option="{ option }">
+      <SearchCharacterOption :option="option" />
+    </template>
+  </AutoComplete>
 </template>
