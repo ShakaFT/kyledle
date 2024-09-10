@@ -18,35 +18,40 @@
   const selection = ref<SelectableCharacter[]>([]);
   const searchedCharacter = ref('');
 
-  const searchOf = (text: string) => {
-    selection.value = props.characters
-      .map((character) => {
+  const startingTermsOf = (translation: string): string[] =>
+    translation
+      .split(/(?<=[\s-'])/g) // delimiters: space, hyphen, apostrophe
+      .map((term, i, terms) =>
+        term.concat(...terms.slice(i + 1, terms.length)).toLowerCase(),
+      );
+
+  const searchOf = (rawText: string) => {
+    const text = rawText.trim().toLowerCase();
+
+    selection.value = props.characters.reduce<SelectableCharacter[]>(
+      (characters, character) => {
         const translation = t(`${gameId.value}.id.${character.id}`);
 
-        const matchingTerm = translation
-          .split(/(?<=[\s-'])/g)
-          .map((word, i, words) => {
-            const term = word.concat(words.slice(i + 1, words.length).join(''));
+        const matchingTerm = startingTermsOf(translation).find((term) =>
+          term.startsWith(text),
+        );
 
-            return {
-              term,
-              startingAt: translation.length - term.length,
-            };
-          })
-          .find(({ term }) =>
-            term.toLowerCase().startsWith(text.trim().toLowerCase()),
-          );
+        if (matchingTerm) {
+          const startingAt = translation.length - matchingTerm.length;
 
-        return {
-          character,
-          translation,
-          matchingAt: matchingTerm
-            ? [matchingTerm.startingAt, matchingTerm.startingAt + text.length]
-            : [],
-        };
-      })
-      .filter(({ matchingAt }) => matchingAt.length > 0)
-      .sort((a, b) => a.translation.localeCompare(b.translation));
+          characters.push({
+            character,
+            translation,
+            matchingAt: [startingAt, startingAt + text.length],
+          });
+        }
+
+        return characters.sort((a, b) =>
+          a.translation.localeCompare(b.translation),
+        );
+      },
+      [],
+    );
   };
 
   const selectOf = ({ character }: SelectableCharacter) => {
@@ -108,6 +113,7 @@
       'mix-blend-multiply',
     ]"
     :placeholder="`「 ${$t('mhdle.ui.search-character')} 」`"
+    :pt:pc-input:root:maxlength="42"
     :scroll-height="`${Math.min(selection.length, 4) * 28}px`"
     :spellcheck="false"
     :suggestions="selection"

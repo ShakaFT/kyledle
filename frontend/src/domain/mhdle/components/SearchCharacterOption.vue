@@ -4,7 +4,7 @@
   export interface SelectableCharacter {
     character: MHdleCharacter;
     translation: string;
-    matchingAt: number[];
+    matchingAt: [number, number];
   }
 
   defineProps<{ option: SelectableCharacter }>();
