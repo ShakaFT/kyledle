@@ -2,30 +2,35 @@ x-celery-env: &celery-env
   CELERY_BROKER_URL: redis://$REDIS_HOST:6379/0
   CELERY_RESULT_BACKEND: redis://$REDIS_HOST:6379/0
 
+x-python-env: &python-env
+  ENVIRONMENT: $ENVIRONMENT
+  ORIGINS: $ORIGINS
+
 x-redis-env: &redis-env
   REDIS_HOST: $REDIS_HOST
 
 services:
-  web:
+  backend:
     build:
-      dockerfile: ./compose/backend/Dockerfile
+      dockerfile: ./compose/backend.Dockerfile
     command: flask run --host=0.0.0.0
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_backend
     depends_on:
       - $REDIS_HOST
     environment:
-      <<: *redis-env
-      ENVIRONMENT: $ENVIRONMENT
+      <<: [*python-env, *redis-env]
       FLASK_APP: main:app
       FLASK_DEBUG: 1
-    image: kyledle_flask:$ENVIRONMENT
+    image: ${PROJECT_NAME}_backend:$ENVIRONMENT
     networks:
       - redisnet
     ports:
-      - $WEB_PORT:5000
+      - $BACKEND_PORT:5000
     volumes:
       - ./backend/src:/src
 
   redis:
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_redis
     image: redis:alpine
     ports:
       - $REDIS_PORT:6379
@@ -36,14 +41,14 @@ services:
 
   celery_worker:
     build:
-      dockerfile: ./compose/backend/Dockerfile
+      dockerfile: ./compose/backend.Dockerfile
     command: watchmedo auto-restart --directory=/src -- celery -A config.celery worker --loglevel DEBUG --uid=nobody --gid=nogroup
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_celery_worker
     depends_on:
       - $REDIS_HOST
     environment:
-      <<: [*celery-env, *redis-env]
-      ENVIRONMENT: $ENVIRONMENT
-    image: kyledle_celery_worker:$ENVIRONMENT
+      <<: [*celery-env, *python-env, *redis-env]
+    image: ${PROJECT_NAME}_celery_worker:$ENVIRONMENT
     networks:
       - redisnet
     volumes:
@@ -51,21 +56,37 @@ services:
 
   celery_beat:
     build:
-      dockerfile: ./compose/backend/Dockerfile
+      dockerfile: ./compose/backend.Dockerfile
     command: watchmedo auto-restart --directory=/src -- celery -A config.celery beat --loglevel DEBUG --uid=nobody --gid=nogroup
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_celery_beat
     depends_on:
       - $REDIS_HOST
     environment:
-      <<: [*celery-env, *redis-env]
-      ENVIRONMENT: $ENVIRONMENT
-    image: kyledle_celery_beat:$ENVIRONMENT
+      <<: [*celery-env, *python-env, *redis-env]
+    image: ${PROJECT_NAME}_celery_beat:$ENVIRONMENT
     networks:
       - redisnet
     volumes:
       - ./backend/src:/src
 
+  script_db:
+    build:
+      dockerfile: ./compose/scripts.Dockerfile
+    command: bash -c "./run.bash src/upload_db.py $ENVIRONMENT mhdle"
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_script_db
+    depends_on:
+      - $REDIS_HOST
+    environment:
+      <<: *redis-env
+      ENVIRONMENT: $ENVIRONMENT
+    image: ${PROJECT_NAME}_script_db:$ENVIRONMENT
+    networks:
+      - redisnet
+    profiles:
+      - local
+
 networks:
   redisnet:
 
 volumes:
-    redis_data:
+  redis_data:

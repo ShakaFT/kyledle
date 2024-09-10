@@ -3,7 +3,7 @@ This module contains Celery Task models.
 """
 
 from billiard.einfo import ExceptionInfo
-from celery import shared_task, Task
+from celery import Task, shared_task
 
 from utils.discord_message import error_message
 

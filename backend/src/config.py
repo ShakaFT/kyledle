@@ -7,7 +7,7 @@ import os
 
 from celery import Celery, Task
 from celery.schedules import crontab
-from flask import abort, Flask, jsonify, request
+from flask import Flask, abort, jsonify, request
 from flask_cors import CORS
 from redis import Redis
 from werkzeug.exceptions import HTTPException
@@ -15,13 +15,12 @@ from werkzeug.exceptions import HTTPException
 from utils import constants
 from utils.discord_message import error_message
 
-
 # Create Flask
 app = Flask(__name__)
 
 
 # Cors Handling
-CORS(app=app, origins=["https://kyledle.web.app"], allow_headers=["Authorization"])
+CORS(app=app, origins=os.environ["ORIGINS"].split(","), allow_headers=["Authorization"])
 
 
 # API Key Handling
@@ -44,9 +43,8 @@ def handle_exception(exc: Exception):
     """
     This function is called after each request.
     """
-    app.logger.debug(exc.__class__)
-    if isinstance(exc, HTTPException):
-        return exc
+    if constants.ENVIRONMENT != "prod" or isinstance(exc, HTTPException):
+        raise exc
 
     error_message(exc)
     return jsonify(error="An unhandled exception has occured..."), 500
