@@ -18,7 +18,7 @@ services:
     depends_on:
       - $REDIS_HOST
     environment:
-      <<: [ *python-env, *redis-env ]
+      <<: [*python-env, *redis-env]
       FLASK_APP: main:app
       FLASK_DEBUG: 1
     image: ${PROJECT_NAME}_backend:$ENVIRONMENT
@@ -47,7 +47,7 @@ services:
     depends_on:
       - $REDIS_HOST
     environment:
-      <<: [ *celery-env, *python-env, *redis-env ]
+      <<: [*celery-env, *python-env, *redis-env]
     image: ${PROJECT_NAME}_celery_worker:$ENVIRONMENT
     networks:
       - redisnet
@@ -62,7 +62,7 @@ services:
     depends_on:
       - $REDIS_HOST
     environment:
-      <<: [ *celery-env, *python-env, *redis-env ]
+      <<: [*celery-env, *python-env, *redis-env]
     image: ${PROJECT_NAME}_celery_beat:$ENVIRONMENT
     networks:
       - redisnet
@@ -87,7 +87,6 @@ services:
 
 networks:
   redisnet:
-
 
 volumes:
   redis_data:
