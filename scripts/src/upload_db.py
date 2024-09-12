@@ -126,7 +126,9 @@ def main():
     console.log("[bold magenta]Will upload data...")
 
     if ENVIRONMENT == "local":
-        redis.flushdb()
+        for game in constants.GAMES:
+            for key in redis.scan_iter(f"{game}:*"):
+                redis.delete(key)
 
     upload_data(characters)
     remove_data(removed_characters)

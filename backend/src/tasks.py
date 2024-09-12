@@ -20,15 +20,15 @@ def hello_world():
 
 
 @celery_task
-def schedule_levels():
+def schedule_levels(tomorrow=True):
     """
     This endpoint schedules levels.
     """
     now = utc_now()
-    tomorrow = to_string_date(now + timedelta(days=1))
+    date_to_schedule = to_string_date(now + timedelta(days=1) if tomorrow else now)
 
-    if redis.keys(f"history:{tomorrow}:*"):
-        raise ValueError(f"{tomorrow} already scheduled!")
+    if redis.keys(f"history:{date_to_schedule}:*"):
+        return
 
     already_scheduled_characters = defaultdict(lambda: defaultdict(list))
     for i in range(5):
@@ -48,6 +48,6 @@ def schedule_levels():
                 characters.append(character)
 
         redis.hset(
-            f"history:{tomorrow}:{game}:{mode}",
+            f"history:{date_to_schedule}:{game}:{mode}",
             mapping={"target": random.choice(characters)},
         )

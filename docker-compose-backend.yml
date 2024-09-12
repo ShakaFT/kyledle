@@ -13,7 +13,7 @@ services:
   backend:
     build:
       dockerfile: ./compose/backend.Dockerfile
-    command: flask run --host=0.0.0.0
+    command: sh -c "python -c 'import tasks; tasks.schedule_levels(tomorrow=False)' && flask run --host=0.0.0.0"
     container_name: ${PROJECT_NAME}_${ENVIRONMENT}_backend
     depends_on:
       - $REDIS_HOST
