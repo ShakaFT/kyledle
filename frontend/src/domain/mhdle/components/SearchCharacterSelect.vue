@@ -90,7 +90,6 @@
       'mix-blend-multiply',
       /* typography */
       'font-[BluuNext]',
-      'placeholder:text-center',
       'placeholder:text-slate-400',
       'text-center',
       'text-xl',
@@ -106,9 +105,9 @@
       'text-center',
       'text-xl',
       /* misc */
-      'cursor-pointer',
       'backdrop-blur-lg',
       'backdrop-brightness-125',
+      'cursor-pointer',
       'drop-shadow-lg',
       'mix-blend-multiply',
     ]"
