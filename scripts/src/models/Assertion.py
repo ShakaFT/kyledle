@@ -54,7 +54,7 @@ class LocalisationAssertion:
         for not_checked_key in not_checked_keys:
             for column in self.__columns:
                 if column in constants.COLUMNS_NOT_TO_ASSERT[self.game]:
-                    return
+                    continue
                 if not_checked_key.startswith(f"{self.  game}.{column}"):
                     extra_keys.add(not_checked_key)
 
