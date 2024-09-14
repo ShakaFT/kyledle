@@ -13,7 +13,7 @@
   //TODO: fetch columns from backend
   const columns = [
     'id',
-    // 'picture',
+    'picture',
     'monster-type',
     'elements',
     'weaknesses',
@@ -26,17 +26,17 @@
 <template>
   <DataTable
     :value="characters"
-    :pt:table-container:class="['!overflow-visible', 'mt-6']"
+    pt:table-container:class="!overflow-visible flex justify-center mt-6"
+    pt:table:class="table-fixed w-[70%]"
   >
     <Column v-for="column in columns" :key="column" :field="column">
       <template #header>
         <div
           :class="[
             /* layout */
-            'bg-slate-300',
+            'bg-slate-400',
             'mb-4',
             'mx-1',
-            'px-4',
             'py-2',
             'rounded-lg',
             /* typography */
@@ -46,6 +46,32 @@
           ]"
         >
           {{ $t(`${gameId}.${column}`) }}
+        </div>
+      </template>
+      <template #body="{ data }">
+        <div
+          :class="[
+            /* layout */
+            'bg-slate-300',
+            'mx-1',
+            'py-2',
+            'rounded-lg',
+            /* typography */
+            'font-[BluuNext]',
+            'text-center',
+            /* misc */
+            'drop-shadow-lg',
+          ]"
+        >
+          {{
+            Array.isArray(data[column])
+              ? data[column]
+                  .map((element) => $t(`${gameId}.${column}.${element}`))
+                  .join('')
+              : column === 'picture'
+                ? ''
+                : $t(`${gameId}.${column}.${data[column]}`)
+          }}
         </div>
       </template>
     </Column>

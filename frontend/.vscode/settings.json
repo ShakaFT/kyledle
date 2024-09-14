@@ -43,7 +43,7 @@
   "javascript.preferences.importModuleSpecifier": "non-relative",
   "tailwind-fold.autoFold": false,
   "tailwind-fold.unfoldedTextOpacity": 0.6,
-  "tailwindCSS.classAttributes": ["class", "input-class", "overlay-class"],
+  "tailwindCSS.classAttributes": ["[input|overlay|pt].*class", "class"],
   "tailwindCSS.includeLanguages": {
     "vue": "html",
     "vue-html": "html"
