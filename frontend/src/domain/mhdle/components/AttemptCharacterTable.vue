@@ -25,24 +25,34 @@
 
 <template>
   <DataTable
+    :pt="{
+      root: {
+        class: 'mt-6',
+      },
+      tableContainer: {
+        class: '!overflow-visible flex justify-center',
+      },
+      table: {
+        class: 'table-fixed w-[70%]',
+      },
+    }"
     :value="characters"
-    pt:table-container:class="!overflow-visible flex justify-center mt-6"
-    pt:table:class="table-fixed w-[70%]"
   >
     <Column v-for="column in columns" :key="column" :field="column">
       <template #header>
         <div
           :class="[
             /* layout */
-            'bg-slate-400',
-            'mb-4',
+            'bg-slate-800',
+            'mb-3',
             'mx-1',
             'py-2',
             'rounded-lg',
             /* typography */
             'font-[BluuNext]',
+            'text-slate-300',
             /* misc */
-            'drop-shadow-lg',
+            'drop-shadow-[0_0_3px_#e0d9ca]',
           ]"
         >
           {{ $t(`${gameId}.${column}`) }}
@@ -53,12 +63,16 @@
           :class="[
             /* layout */
             'bg-slate-300',
-            'mx-1',
-            'py-2',
+            'border-[1px]',
+            'border-slate-800',
+            'content-center',
+            'h-16',
+            'm-1',
             'rounded-lg',
             /* typography */
             'font-[BluuNext]',
             'text-center',
+            'text-sm',
             /* misc */
             'drop-shadow-lg',
           ]"

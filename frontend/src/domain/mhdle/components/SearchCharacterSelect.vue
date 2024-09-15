@@ -68,51 +68,59 @@
     :complete-on-focus="selection.length > 0"
     :delay="0"
     :empty-search-message="' '"
-    :input-class="[
-      /* animation */
-      'duration-300',
-      'focus:duration-200',
-      'focus:transition',
-      /* focus states */
-      'focus:ring-[0.42px]',
-      'focus:ring-slate-600',
-      'outline-none',
-      /* layout */
-      'bg-slate-300',
-      'h-12',
-      'rounded-lg',
-      'w-80',
-      /* misc */
-      'backdrop-blur-lg',
-      'backdrop-brightness-125',
-      'caret-transparent',
-      'drop-shadow-lg',
-      'mix-blend-multiply',
-      /* typography */
-      'font-[BluuNext]',
-      'placeholder:text-slate-400',
-      'text-center',
-      'text-xl',
-    ]"
-    :overlay-class="[
-      /* layout */
-      'bg-slate-300',
-      'mt-1',
-      'overflow-auto',
-      'rounded-lg',
-      /* typography */
-      'font-[BluuNext]',
-      'text-center',
-      'text-xl',
-      /* misc */
-      'backdrop-blur-lg',
-      'backdrop-brightness-125',
-      'cursor-pointer',
-      'drop-shadow-lg',
-      'mix-blend-multiply',
-    ]"
     :placeholder="`「 ${$t('mhdle.ui.search-character')} 」`"
-    :pt:pc-input:root:maxlength="42"
+    :pt="{
+      overlay: {
+        class: [
+          /* layout */
+          'bg-slate-300',
+          'mt-1',
+          'overflow-auto',
+          'rounded-lg',
+          /* typography */
+          'font-[BluuNext]',
+          'text-center',
+          'text-xl',
+          /* misc */
+          'backdrop-blur-lg',
+          'backdrop-brightness-125',
+          'cursor-pointer',
+          'drop-shadow-lg',
+          'mix-blend-multiply',
+        ],
+      },
+      pcInput: {
+        root: {
+          class: [
+            /* animation */
+            'duration-300',
+            'focus:duration-200',
+            'focus:transition',
+            /* focus states */
+            'focus:ring-[0.42px]',
+            'focus:ring-slate-600',
+            'outline-none',
+            /* layout */
+            'bg-slate-300',
+            'h-12',
+            'rounded-lg',
+            'w-80',
+            /* misc */
+            'backdrop-blur-lg',
+            'backdrop-brightness-125',
+            'caret-transparent',
+            'drop-shadow-lg',
+            'mix-blend-multiply',
+            /* typography */
+            'font-[BluuNext]',
+            'placeholder:text-slate-400',
+            'text-center',
+            'text-xl',
+          ],
+          maxlength: 42,
+        },
+      },
+    }"
     :scroll-height="`${Math.min(selection.length, 4) * 28}px`"
     :spellcheck="false"
     :suggestions="selection"
