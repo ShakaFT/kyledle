@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import { useGameId } from '@/core/composables/useGameId';
+  import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
   withDefaults(defineProps<{ mode: string; disabled?: boolean }>(), {
     disabled: false,
   });
 
-  const { gameId } = useGameId();
+  const { gameId } = useCurrentGame();
 </script>
 
 <template>

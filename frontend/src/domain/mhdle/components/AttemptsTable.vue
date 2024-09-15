@@ -4,11 +4,11 @@
   import Column from 'primevue/column';
   import DataTable from 'primevue/datatable';
 
-  import { useGameId } from '@/core/composables/useGameId';
+  import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
   defineProps<{ characters: MHdleCharacter[] }>();
 
-  const { gameId } = useGameId();
+  const { gameId } = useCurrentGame();
 
   //TODO: fetch columns from backend
   const columns = [

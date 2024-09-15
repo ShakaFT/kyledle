@@ -1,19 +1,19 @@
 <script setup lang="ts">
-  import type { SelectableCharacter } from '@/domain/mhdle/components/SearchCharacterOption.vue';
+  import type { SelectableCharacter } from '@/domain/mhdle/components/SearchOption.vue';
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
   import AutoComplete from 'primevue/autocomplete';
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
 
-  import { useGameId } from '@/core/composables/useGameId';
-  import SearchCharacterOption from '@/domain/mhdle/components/SearchCharacterOption.vue';
+  import { useCurrentGame } from '@/core/composables/useCurrentGame';
+  import SearchOption from '@/domain/mhdle/components/SearchOption.vue';
 
   const props = defineProps<{ characters: MHdleCharacter[] }>();
   const emit = defineEmits<{ select: [character: MHdleCharacter] }>();
 
   const { t } = useI18n();
-  const { gameId } = useGameId();
+  const { gameId } = useCurrentGame();
 
   const selection = ref<SelectableCharacter[]>([]);
   const searchedCharacter = ref('');
@@ -129,7 +129,7 @@
     @option-select="selectOf($event.value)"
   >
     <template #option="{ option }">
-      <SearchCharacterOption :option="option" />
+      <SearchOption :option="option" />
     </template>
   </AutoComplete>
 </template>

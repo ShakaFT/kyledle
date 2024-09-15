@@ -2,7 +2,7 @@ import { useFetch, watchOnce } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
-import { useGameId } from '@/core/composables/useGameId';
+import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
 export const useGameStore = <
   T extends {
@@ -10,7 +10,7 @@ export const useGameStore = <
     modes: string[];
   },
 >() => {
-  const { gameId } = useGameId();
+  const { gameId } = useCurrentGame();
 
   const defineGenericStore = defineStore(gameId.value, () => {
     const characters = ref<T['characters']>([]);

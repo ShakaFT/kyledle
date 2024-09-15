@@ -5,8 +5,8 @@
 
   import { useCharacters } from '@/core/composables/useCharacters';
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
-  import AttemptCharacterTable from '@/domain/mhdle/components/AttemptCharacterTable.vue';
-  import SearchCharacterSelect from '@/domain/mhdle/components/SearchCharacterSelect.vue';
+  import AttemptsTable from '@/domain/mhdle/components/AttemptsTable.vue';
+  import SearchSelect from '@/domain/mhdle/components/SearchSelect.vue';
 
   const { characters } = useCharacters<MHdleCharacter>();
 
@@ -26,10 +26,7 @@
 
 <template>
   <BaseLayout>
-    <SearchCharacterSelect
-      :characters="availableCharacters"
-      @select="attemptOf"
-    />
-    <AttemptCharacterTable :characters="attemptedCharacters" />
+    <SearchSelect :characters="availableCharacters" @select="attemptOf" />
+    <AttemptsTable :characters="attemptedCharacters" />
   </BaseLayout>
 </template>

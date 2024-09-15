@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-export const useGameId = () => {
+export const useCurrentGame = () => {
   const route = useRoute();
 
   return {

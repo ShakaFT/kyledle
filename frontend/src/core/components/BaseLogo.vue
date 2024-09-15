@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { useGameId } from '@/core/composables/useGameId';
+  import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
-  const { gameId } = useGameId();
+  const { gameId } = useCurrentGame();
 </script>
 
 <template>
