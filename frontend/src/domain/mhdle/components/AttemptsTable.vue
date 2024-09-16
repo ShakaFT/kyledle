@@ -11,7 +11,7 @@
 
   defineProps<{ characters: MHdleCharacter[] }>();
 
-  const { gameId } = useCurrentGame();
+  const { game } = useCurrentGame();
   const { t } = useI18n();
 
   const translateOf = <T extends string>({
@@ -20,7 +20,7 @@
   }: {
     field: T;
     data: Record<T, string>;
-  }): string => t(`${gameId.value}.${field}.${data[field]}`);
+  }): string => t(`${game.value}.${field}.${data[field]}`);
 
   const translateManyOf = <T extends string>({
     field,
@@ -30,7 +30,7 @@
     data: Record<T, string[]>;
   }): string =>
     data[field]
-      .map((element) => t(`${gameId.value}.${field}.${element}`))
+      .map((element) => t(`${game.value}.${field}.${element}`))
       .join(', ');
 </script>
 

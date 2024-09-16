@@ -1,10 +1,10 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-export const useCurrentGame = () => {
+export const useCurrentMode = () => {
   const route = useRoute();
 
   return {
-    game: computed(() => route.path.split('/')[1]),
+    mode: computed(() => route.path.split('/')[2]),
   };
 };

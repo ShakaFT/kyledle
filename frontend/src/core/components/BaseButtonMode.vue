@@ -5,7 +5,7 @@
     disabled: false,
   });
 
-  const { gameId } = useCurrentGame();
+  const { game } = useCurrentGame();
 </script>
 
 <template>
@@ -41,8 +41,8 @@
     ]"
     type="button"
   >
-    <RouterLink :to="`/${gameId}/${mode}`">
-      {{ $t(`${gameId}.mode.${mode}`) }}
+    <RouterLink :to="`/${game}/${mode}`">
+      {{ $t(`${game}.mode.${mode}`) }}
     </RouterLink>
   </button>
 </template>

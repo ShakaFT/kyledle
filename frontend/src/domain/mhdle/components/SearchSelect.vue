@@ -13,7 +13,7 @@
   const emit = defineEmits<{ select: [character: MHdleCharacter] }>();
 
   const { t } = useI18n();
-  const { gameId } = useCurrentGame();
+  const { game } = useCurrentGame();
 
   const selection = ref<SelectableCharacter[]>([]);
   const searchedCharacter = ref('');
@@ -30,7 +30,7 @@
 
     selection.value = props.characters.reduce<SelectableCharacter[]>(
       (characters, character) => {
-        const translation = t(`${gameId.value}.id.${character.id}`);
+        const translation = t(`${game.value}.id.${character.id}`);
 
         const matchingTerm = startingTermsOf(translation).find((term) =>
           term.startsWith(text),

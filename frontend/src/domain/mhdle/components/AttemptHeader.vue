@@ -3,7 +3,7 @@
 
   defineProps<{ header: string }>();
 
-  const { gameId } = useCurrentGame();
+  const { game } = useCurrentGame();
 </script>
 
 <template>
@@ -22,6 +22,6 @@
       'drop-shadow-[0_0_3px_#e0d9ca]',
     ]"
   >
-    {{ $t(`${gameId}.${header}`) }}
+    {{ $t(`${game}.${header}`) }}
   </div>
 </template>

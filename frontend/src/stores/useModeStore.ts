@@ -3,21 +3,17 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
+import { useCurrentMode } from '@/core/composables/useCurrentMode';
 
-export const useGameStore = <
-  T extends {
-    characters: unknown[];
-    modes: string[];
-  },
->() => {
+export const useModeStore = <T extends string>() => {
   const { game } = useCurrentGame();
+  const { mode } = useCurrentMode();
 
-  const defineGenericStore = defineStore(game.value, () => {
-    const characters = ref<T['characters']>([]);
-    const modes = ref<T['modes']>([]);
+  const defineGenericStore = defineStore(mode.value, () => {
+    const target = ref<T>();
 
     const { data } = useFetch(
-      `${import.meta.env.VITE_API_URL}/config/${game.value}`,
+      `${import.meta.env.VITE_API_URL}/config/${game.value}/${mode.value}`,
       {
         headers: {
           Authorization: import.meta.env.VITE_API_KEY,
@@ -25,16 +21,15 @@ export const useGameStore = <
       },
     )
       .get()
-      .json<T>();
+      .json<{ target: T }>();
 
     watchOnce(data, () => {
       if (data.value) {
-        characters.value = data.value.characters;
-        modes.value = data.value.modes;
+        target.value = data.value.target;
       }
     });
 
-    return { characters, modes };
+    return { target };
   });
 
   return defineGenericStore();
