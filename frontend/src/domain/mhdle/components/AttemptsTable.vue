@@ -3,90 +3,115 @@
 
   import Column from 'primevue/column';
   import DataTable from 'primevue/datatable';
+  import { useI18n } from 'vue-i18n';
 
   import { useCurrentGame } from '@/core/composables/useCurrentGame';
+  import AttemptCell from '@/domain/mhdle/components/AttemptCell.vue';
+  import AttemptHeader from '@/domain/mhdle/components/AttemptHeader.vue';
 
   defineProps<{ characters: MHdleCharacter[] }>();
 
   const { gameId } = useCurrentGame();
+  const { t } = useI18n();
 
-  //TODO: fetch columns from backend
-  const columns = [
-    'id',
-    'picture',
-    'monster-type',
-    'elements',
-    'weaknesses',
-    'ailments',
-    'generation',
-    'is-subspecies',
-  ];
+  const translateOf = <T extends string>({
+    field,
+    data,
+  }: {
+    field: T;
+    data: Record<T, string>;
+  }): string => t(`${gameId.value}.${field}.${data[field]}`);
+
+  const translateManyOf = <T extends string>({
+    field,
+    data,
+  }: {
+    field: T;
+    data: Record<T, string[]>;
+  }): string =>
+    data[field]
+      .map((element) => t(`${gameId.value}.${field}.${element}`))
+      .join(', ');
 </script>
 
 <template>
   <DataTable
     :pt="{
-      root: {
-        class: 'mt-6',
-      },
-      tableContainer: {
-        class: '!overflow-visible flex justify-center',
-      },
-      table: {
-        class: 'table-fixed w-[70%]',
-      },
+      root: { class: 'mt-6' },
+      tableContainer: { class: '!overflow-visible flex justify-center' },
+      table: { class: 'table-fixed w-[70%]' },
     }"
     :value="characters"
   >
-    <Column v-for="column in columns" :key="column" :field="column">
+    <Column field="id">
       <template #header>
-        <div
-          :class="[
-            /* layout */
-            'bg-slate-800',
-            'mb-3',
-            'mx-1',
-            'py-2',
-            'rounded-lg',
-            /* typography */
-            'font-[BluuNext]',
-            'text-slate-300',
-            /* misc */
-            'drop-shadow-[0_0_3px_#e0d9ca]',
-          ]"
-        >
-          {{ $t(`${gameId}.${column}`) }}
-        </div>
+        <AttemptHeader header="id" />
       </template>
-      <template #body="{ data }">
-        <div
-          :class="[
-            /* layout */
-            'bg-slate-300',
-            'border-[1px]',
-            'border-slate-800',
-            'content-center',
-            'h-16',
-            'm-1',
-            'rounded-lg',
-            /* typography */
-            'font-[BluuNext]',
-            'text-center',
-            'text-sm',
-            /* misc */
-            'drop-shadow-lg',
-          ]"
-        >
-          {{
-            Array.isArray(data[column])
-              ? data[column]
-                  .map((element) => $t(`${gameId}.${column}.${element}`))
-                  .join('')
-              : column === 'picture'
-                ? ''
-                : $t(`${gameId}.${column}.${data[column]}`)
-          }}
-        </div>
+      <template #body="body">
+        <AttemptCell :body="translateOf(body)" />
+      </template>
+    </Column>
+
+    <Column field="picture">
+      <template #header>
+        <AttemptHeader header="picture" />
+      </template>
+      <template #body>
+        <AttemptCell body="" />
+      </template>
+    </Column>
+
+    <Column field="monster-type">
+      <template #header>
+        <AttemptHeader header="monster-type" />
+      </template>
+      <template #body="body">
+        <AttemptCell :body="translateOf(body)" />
+      </template>
+    </Column>
+
+    <Column field="elements">
+      <template #header>
+        <AttemptHeader header="elements" />
+      </template>
+      <template #body="body">
+        <AttemptCell :body="translateManyOf(body)" />
+      </template>
+    </Column>
+
+    <Column field="weaknesses">
+      <template #header>
+        <AttemptHeader header="weaknesses" />
+      </template>
+      <template #body="body">
+        <AttemptCell :body="translateManyOf(body)" />
+      </template>
+    </Column>
+
+    <Column field="ailments">
+      <template #header>
+        <AttemptHeader header="ailments" />
+      </template>
+      <template #body="body">
+        <AttemptCell :body="translateManyOf(body)" />
+      </template>
+    </Column>
+
+    <Column field="generation">
+      <template #header>
+        <AttemptHeader header="generation" />
+      </template>
+      <template #body="body">
+        <AttemptCell :body="translateOf(body)" />
+      </template>
+    </Column>
+
+    <Column field="is-subspecies">
+      <template #header>
+        <AttemptHeader header="is-subspecies" />
+      </template>
+      <template #body="body">
+        <AttemptCell :body="translateOf(body)" />
       </template>
     </Column>
   </DataTable>
