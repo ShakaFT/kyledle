@@ -5,12 +5,12 @@ import { ref } from 'vue';
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 import { useCurrentMode } from '@/core/composables/useCurrentMode';
 
-export const useModeStore = <T extends string>() => {
+export const useModeStore = <T extends { target: unknown }>() => {
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
 
   const defineGenericStore = defineStore(`${game.value}/${mode.value}`, () => {
-    const target = ref<T>();
+    const target = ref<T['target']>({});
 
     const { data } = useFetch(
       `${import.meta.env.VITE_API_URL}/config/${game.value}/${mode.value}`,
@@ -21,7 +21,7 @@ export const useModeStore = <T extends string>() => {
       },
     )
       .get()
-      .json<{ target: T }>();
+      .json<T>();
 
     watchOnce(data, () => {
       if (data.value) {

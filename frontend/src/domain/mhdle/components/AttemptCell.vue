@@ -1,14 +1,14 @@
 <script setup lang="ts">
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
-  import { useTarget } from '@/core/composables/useTarget';
+  import { useModeStore } from '@/stores/useModeStore';
 
   defineProps<{
     isClose?: (target: MHdleCharacter) => boolean;
     isExact: (target: MHdleCharacter) => boolean;
   }>();
 
-  const { target } = useTarget<MHdleCharacter>();
+  const { target } = useModeStore<{ target: MHdleCharacter }>();
 </script>
 
 <template>
