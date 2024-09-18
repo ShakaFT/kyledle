@@ -9,7 +9,7 @@ export const useModeStore = <T extends string>() => {
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
 
-  const defineGenericStore = defineStore(mode.value, () => {
+  const defineGenericStore = defineStore(`${game.value}/${mode.value}`, () => {
     const target = ref<T>();
 
     const { data } = useFetch(

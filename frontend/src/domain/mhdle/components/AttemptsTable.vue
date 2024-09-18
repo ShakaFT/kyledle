@@ -3,35 +3,12 @@
 
   import Column from 'primevue/column';
   import DataTable from 'primevue/datatable';
-  import { useI18n } from 'vue-i18n';
 
-  import { useCurrentGame } from '@/core/composables/useCurrentGame';
-  import AttemptCell from '@/domain/mhdle/components/AttemptCell.vue';
+  import AttemptCellGroup from '@/domain/mhdle/components/AttemptCellGroup.vue';
+  import AttemptCellUnit from '@/domain/mhdle/components/AttemptCellUnit.vue';
   import AttemptHeader from '@/domain/mhdle/components/AttemptHeader.vue';
 
-  defineProps<{ characters: MHdleCharacter[] }>();
-
-  const { game } = useCurrentGame();
-  const { t } = useI18n();
-
-  const translateOf = <T extends string>({
-    field,
-    data,
-  }: {
-    field: T;
-    data: Record<T, string>;
-  }): string => t(`${game.value}.${field}.${data[field]}`);
-
-  const translateManyOf = <T extends string>({
-    field,
-    data,
-  }: {
-    field: T;
-    data: Record<T, string[]>;
-  }): string =>
-    data[field]
-      .map((element) => t(`${game.value}.${field}.${element}`))
-      .join(', ');
+  defineProps<{ attempts: MHdleCharacter[] }>();
 </script>
 
 <template>
@@ -41,23 +18,14 @@
       tableContainer: { class: '!overflow-visible flex justify-center' },
       table: { class: 'table-fixed w-[70%]' },
     }"
-    :value="characters"
+    :value="attempts"
   >
     <Column field="id">
       <template #header>
         <AttemptHeader header="id" />
       </template>
-      <template #body="body">
-        <AttemptCell :body="translateOf(body)" />
-      </template>
-    </Column>
-
-    <Column field="picture">
-      <template #header>
-        <AttemptHeader header="picture" />
-      </template>
-      <template #body>
-        <AttemptCell body="" />
+      <template #body="{ data }">
+        <AttemptCellUnit :data="data" field="id" />
       </template>
     </Column>
 
@@ -65,8 +33,8 @@
       <template #header>
         <AttemptHeader header="monster-type" />
       </template>
-      <template #body="body">
-        <AttemptCell :body="translateOf(body)" />
+      <template #body="{ data }">
+        <AttemptCellUnit :data="data" field="monster-type" />
       </template>
     </Column>
 
@@ -74,8 +42,8 @@
       <template #header>
         <AttemptHeader header="elements" />
       </template>
-      <template #body="body">
-        <AttemptCell :body="translateManyOf(body)" />
+      <template #body="{ data }">
+        <AttemptCellGroup :data="data" field="elements" />
       </template>
     </Column>
 
@@ -83,8 +51,8 @@
       <template #header>
         <AttemptHeader header="weaknesses" />
       </template>
-      <template #body="body">
-        <AttemptCell :body="translateManyOf(body)" />
+      <template #body="{ data }">
+        <AttemptCellGroup :data="data" field="weaknesses" />
       </template>
     </Column>
 
@@ -92,8 +60,8 @@
       <template #header>
         <AttemptHeader header="ailments" />
       </template>
-      <template #body="body">
-        <AttemptCell :body="translateManyOf(body)" />
+      <template #body="{ data }">
+        <AttemptCellGroup :data="data" field="ailments" />
       </template>
     </Column>
 
@@ -101,8 +69,8 @@
       <template #header>
         <AttemptHeader header="generation" />
       </template>
-      <template #body="body">
-        <AttemptCell :body="translateOf(body)" />
+      <template #body="{ data }">
+        <AttemptCellUnit :data="data" field="generation" />
       </template>
     </Column>
 
@@ -110,8 +78,8 @@
       <template #header>
         <AttemptHeader header="is-subspecies" />
       </template>
-      <template #body="body">
-        <AttemptCell :body="translateOf(body)" />
+      <template #body="{ data }">
+        <AttemptCellUnit :data="data" field="is-subspecies" />
       </template>
     </Column>
   </DataTable>

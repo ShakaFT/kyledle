@@ -1,5 +1,14 @@
 <script setup lang="ts">
-  defineProps<{ body: string }>();
+  import type { MHdleCharacter } from '@/types/mhdle.types';
+
+  import { useTarget } from '@/core/composables/useTarget';
+
+  defineProps<{
+    isClose?: (target: MHdleCharacter) => boolean;
+    isExact: (target: MHdleCharacter) => boolean;
+  }>();
+
+  const { target } = useTarget<MHdleCharacter>();
 </script>
 
 <template>
@@ -13,6 +22,11 @@
       'h-16',
       'm-1',
       'rounded-lg',
+      isExact(target)
+        ? '!bg-green-600'
+        : isClose?.(target)
+          ? '!bg-yellow-600'
+          : '!bg-red-600',
       /* typography */
       'font-[BluuNext]',
       'text-center',
@@ -21,6 +35,6 @@
       'drop-shadow-lg',
     ]"
   >
-    {{ body }}
+    <slot />
   </div>
 </template>

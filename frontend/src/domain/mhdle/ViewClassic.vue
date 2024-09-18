@@ -7,26 +7,24 @@
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
   import AttemptsTable from '@/domain/mhdle/components/AttemptsTable.vue';
   import SearchSelect from '@/domain/mhdle/components/SearchSelect.vue';
+  import { useModeStore } from '@/stores/useModeStore';
 
   const { characters } = useCharacters<MHdleCharacter>();
+  useModeStore();
 
-  const availableCharacters = computed(() =>
-    characters.value.filter(isNotAttempted),
-  );
-  const attemptedCharacters = ref<MHdleCharacter[]>([]);
+  const leftovers = computed(() => characters.value.filter(isNotAttempted));
+  const attempts = ref<MHdleCharacter[]>([]);
 
-  const isNotAttempted = (character: MHdleCharacter) =>
-    !attemptedCharacters.value
-      .map((attempted) => attempted.id)
-      .includes(character.id);
+  const isNotAttempted = (character: MHdleCharacter): boolean =>
+    !attempts.value.map((attempt) => attempt.id).includes(character.id);
 
   const attemptOf = (character: MHdleCharacter) =>
-    attemptedCharacters.value.push(character);
+    attempts.value.unshift(character);
 </script>
 
 <template>
   <BaseLayout>
-    <SearchSelect :characters="availableCharacters" @select="attemptOf" />
-    <AttemptsTable :characters="attemptedCharacters" />
+    <SearchSelect :characters="leftovers" @select="attemptOf" />
+    <AttemptsTable :attempts="attempts" />
   </BaseLayout>
 </template>
