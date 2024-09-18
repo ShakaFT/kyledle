@@ -47,4 +47,9 @@ def get_mode_config(game: str, mode: str):
     )
     assert today_target, "Missing History Item!"
 
-    return jsonify(config=config, target=today_target["target"])
+    return jsonify(
+        config=config,
+        target=decode_from_redis(
+            redis.hgetall(f"{game}:character:{today_target['target']}")  # type: ignore
+        ),
+    )
