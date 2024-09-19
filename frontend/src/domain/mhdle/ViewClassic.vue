@@ -3,14 +3,14 @@
 
   import { computed, ref } from 'vue';
 
-  import { useCharacters } from '@/core/composables/useCharacters';
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
   import AttemptsTable from '@/domain/mhdle/components/AttemptsTable.vue';
   import SearchSelect from '@/domain/mhdle/components/SearchSelect.vue';
-  import { useModeStore } from '@/stores/useModeStore';
+  import { useCharacters } from '@/stores/GameStore';
+  import { useTarget } from '@/stores/ModeStore';
 
   const { characters } = useCharacters<MHdleCharacter>();
-  useModeStore();
+  useTarget<MHdleCharacter>();
 
   const leftovers = computed(() => characters.value.filter(isNotAttempted));
   const attempts = ref<MHdleCharacter[]>([]);

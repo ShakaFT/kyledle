@@ -2,8 +2,8 @@
   import type { MHdleMode } from '@/types/mhdle.types';
 
   import BaseButtonMode from '@/core/components/BaseButtonMode.vue';
-  import { useModes } from '@/core/composables/useModes';
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
+  import { useModes } from '@/stores/GameStore';
 
   const { modes } = useModes<MHdleMode>();
 

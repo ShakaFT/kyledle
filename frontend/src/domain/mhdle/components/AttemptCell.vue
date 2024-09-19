@@ -1,14 +1,14 @@
 <script setup lang="ts">
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
-  import { useModeStore } from '@/stores/useModeStore';
+  import { useTarget } from '@/stores/ModeStore';
 
   defineProps<{
-    isClose?: (target: MHdleCharacter) => boolean;
-    isExact: (target: MHdleCharacter) => boolean;
+    isRight: (target: MHdleCharacter) => boolean;
+    isWrong: (target: MHdleCharacter) => boolean;
   }>();
 
-  const { target } = useModeStore<{ target: MHdleCharacter }>();
+  const { target } = useTarget<MHdleCharacter>();
 </script>
 
 <template>
@@ -22,11 +22,11 @@
       'h-16',
       'm-1',
       'rounded-lg',
-      isExact(target)
+      isRight(target)
         ? '!bg-green-600'
-        : isClose?.(target)
-          ? '!bg-yellow-600'
-          : '!bg-red-600',
+        : isWrong(target)
+          ? '!bg-red-600'
+          : '!bg-yellow-600',
       /* typography */
       'font-[BluuNext]',
       'text-center',

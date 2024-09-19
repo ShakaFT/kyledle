@@ -1,17 +1,15 @@
-import { useFetch, watchOnce } from '@vueuse/core';
+import { useFetch } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed } from 'vue';
 
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 import { useCurrentMode } from '@/core/composables/useCurrentMode';
 
-export const useModeStore = <T extends { target: unknown }>() => {
+const useModeStore = <T extends { target: unknown }>() => {
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
 
-  const defineGenericStore = defineStore(`${game.value}/${mode.value}`, () => {
-    const target = ref<T['target']>({});
-
+  const useDataStore = defineStore(`${game.value}/${mode.value}`, () => {
     const { data } = useFetch(
       `${import.meta.env.VITE_API_URL}/config/${game.value}/${mode.value}`,
       {
@@ -23,14 +21,16 @@ export const useModeStore = <T extends { target: unknown }>() => {
       .get()
       .json<T>();
 
-    watchOnce(data, () => {
-      if (data.value) {
-        target.value = data.value.target;
-      }
-    });
-
-    return { target };
+    return { data };
   });
 
-  return defineGenericStore();
+  return useDataStore();
+};
+
+export const useTarget = <T>() => {
+  const store = useModeStore<{ target: T }>();
+
+  return {
+    target: computed(() => store.data?.target ?? <T>{}),
+  };
 };

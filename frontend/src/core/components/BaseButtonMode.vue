@@ -1,9 +1,10 @@
 <script setup lang="ts">
   import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
-  withDefaults(defineProps<{ mode: string; disabled?: boolean }>(), {
-    disabled: false,
-  });
+  const { disabled = false } = defineProps<{
+    mode: string;
+    disabled?: boolean;
+  }>();
 
   const { game } = useCurrentGame();
 </script>

@@ -7,19 +7,22 @@
 
   type UnitKeys<T> = keyof OmitMatching<T, string[]>;
 
-  const props = defineProps<{
+  const { field, data } = defineProps<{
     field: UnitKeys<MHdleCharacter>;
     data: MHdleCharacter;
   }>();
 
   const { game } = useCurrentGame();
 
-  const isTargetUnitMatchingOf = (target: MHdleCharacter): boolean =>
-    props.data[props.field] === target[props.field];
+  const isRightMatchingOf = (target: MHdleCharacter): boolean =>
+    data[field] === target[field];
+
+  const isWrongMatchingOf = (target: MHdleCharacter): boolean =>
+    data[field] !== target[field];
 </script>
 
 <template>
-  <AttemptCell :is-exact="isTargetUnitMatchingOf">
+  <AttemptCell :is-right="isRightMatchingOf" :is-wrong="isWrongMatchingOf">
     {{ $t(`${game}.${field}.${data[field]}`) }}
   </AttemptCell>
 </template>
