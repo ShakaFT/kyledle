@@ -49,7 +49,7 @@ else # local
     export FRONTEND_PORT=5173
     export REDIS_PORT=6379
     BACKEND_COMMAND="docker-compose -f docker-compose-backend.yml -p $PROJECT_NAME-backend-local --profile local up --build"
-    FRONTEND_COMMAND="cd frontend && npm run dev"
+    FRONTEND_COMMAND="cd frontend && npm i && npm run dev"
 fi
 
 export ORIGINS="http://localhost:$FRONTEND_PORT"
