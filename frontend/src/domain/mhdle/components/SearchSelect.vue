@@ -108,7 +108,7 @@
             /* misc */
             'backdrop-blur-lg',
             'backdrop-brightness-125',
-            'caret-transparent',
+            'caret-slate-500',
             'drop-shadow-lg',
             'mix-blend-multiply',
             /* typography */
