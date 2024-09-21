@@ -5,7 +5,7 @@ import { computed } from 'vue';
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 import { useCurrentMode } from '@/core/composables/useCurrentMode';
 
-const useModeStore = <T extends { target: unknown }>() => {
+const useModeStore = <T>() => {
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
 
@@ -19,7 +19,7 @@ const useModeStore = <T extends { target: unknown }>() => {
       },
     )
       .get()
-      .json<T>();
+      .json<{ target: T }>();
 
     return { data };
   });
@@ -27,8 +27,8 @@ const useModeStore = <T extends { target: unknown }>() => {
   return useDataStore();
 };
 
-export const useTarget = <T>() => {
-  const store = useModeStore<{ target: T }>();
+export const useTarget = <T extends object>() => {
+  const store = useModeStore<T>();
 
   return {
     target: computed(() => store.data?.target ?? <T>{}),

@@ -10,6 +10,7 @@
   const { field, data } = defineProps<{
     field: UnitKeys<MHdleCharacter>;
     data: MHdleCharacter;
+    index: number;
   }>();
 
   const { game } = useCurrentGame();
@@ -22,7 +23,11 @@
 </script>
 
 <template>
-  <AttemptCell :is-right="isRightMatchingOf" :is-wrong="isWrongMatchingOf">
+  <AttemptCell
+    :index="index"
+    :is-right="isRightMatchingOf"
+    :is-wrong="isWrongMatchingOf"
+  >
     {{ $t(`${game}.${field}.${data[field]}`) }}
   </AttemptCell>
 </template>

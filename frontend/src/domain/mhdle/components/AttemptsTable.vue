@@ -13,6 +13,7 @@
 
 <template>
   <DataTable
+    v-if="attempts.length > 0"
     :pt="{
       root: { class: 'mt-6' },
       tableContainer: { class: '!overflow-visible flex justify-center' },
@@ -24,8 +25,13 @@
       <template #header>
         <AttemptHeader header="id" />
       </template>
-      <template #body="{ data }">
-        <AttemptCellUnit :data="data" field="id" />
+      <template #body="{ data, field, index }">
+        <AttemptCellUnit
+          :key="`${data.id}-${field}`"
+          :data="data"
+          :field="field"
+          :index="index"
+        />
       </template>
     </Column>
 
@@ -33,8 +39,14 @@
       <template #header>
         <AttemptHeader header="monster-type" />
       </template>
-      <template #body="{ data }">
-        <AttemptCellUnit :data="data" field="monster-type" />
+      <template #body="{ data, field, index }">
+        <AttemptCellUnit
+          :key="`${data.id}-${field}`"
+          class="animate-delay-[0.5s]"
+          :data="data"
+          :field="field"
+          :index="index"
+        />
       </template>
     </Column>
 
@@ -42,8 +54,14 @@
       <template #header>
         <AttemptHeader header="elements" />
       </template>
-      <template #body="{ data }">
-        <AttemptCellGroup :data="data" field="elements" />
+      <template #body="{ data, field, index }">
+        <AttemptCellGroup
+          :key="`${data.id}-${field}`"
+          class="animate-delay-[1s]"
+          :data="data"
+          :field="field"
+          :index="index"
+        />
       </template>
     </Column>
 
@@ -51,8 +69,14 @@
       <template #header>
         <AttemptHeader header="weaknesses" />
       </template>
-      <template #body="{ data }">
-        <AttemptCellGroup :data="data" field="weaknesses" />
+      <template #body="{ data, field, index }">
+        <AttemptCellGroup
+          :key="`${data.id}-${field}`"
+          class="animate-delay-[1.5s]"
+          :data="data"
+          :field="field"
+          :index="index"
+        />
       </template>
     </Column>
 
@@ -60,8 +84,14 @@
       <template #header>
         <AttemptHeader header="ailments" />
       </template>
-      <template #body="{ data }">
-        <AttemptCellGroup :data="data" field="ailments" />
+      <template #body="{ data, field, index }">
+        <AttemptCellGroup
+          :key="`${data.id}-${field}`"
+          class="animate-delay-[2s]"
+          :data="data"
+          :field="field"
+          :index="index"
+        />
       </template>
     </Column>
 
@@ -69,8 +99,14 @@
       <template #header>
         <AttemptHeader header="generation" />
       </template>
-      <template #body="{ data }">
-        <AttemptCellUnit :data="data" field="generation" />
+      <template #body="{ data, field, index }">
+        <AttemptCellUnit
+          :key="`${data.id}-${field}`"
+          class="animate-delay-[2.5s]"
+          :data="data"
+          :field="field"
+          :index="index"
+        />
       </template>
     </Column>
 
@@ -78,8 +114,14 @@
       <template #header>
         <AttemptHeader header="is-subspecies" />
       </template>
-      <template #body="{ data }">
-        <AttemptCellUnit :data="data" field="is-subspecies" />
+      <template #body="{ data, field, index }">
+        <AttemptCellUnit
+          :key="`${data.id}-${field}`"
+          class="animate-delay-[3s]"
+          :data="data"
+          :field="field"
+          :index="index"
+        />
       </template>
     </Column>
   </DataTable>

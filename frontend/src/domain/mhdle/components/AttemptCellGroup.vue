@@ -10,6 +10,7 @@
   const { field, data } = defineProps<{
     field: GroupKeys<MHdleCharacter>;
     data: MHdleCharacter;
+    index: number;
   }>();
 
   const { game } = useCurrentGame();
@@ -22,7 +23,11 @@
 </script>
 
 <template>
-  <AttemptCell :is-right="isRightMatchingOf" :is-wrong="isWrongMatchingOf">
+  <AttemptCell
+    :index="index"
+    :is-right="isRightMatchingOf"
+    :is-wrong="isWrongMatchingOf"
+  >
     {{ data[field].map((unit) => $t(`${game}.${field}.${unit}`)).join(', ') }}
   </AttemptCell>
 </template>
