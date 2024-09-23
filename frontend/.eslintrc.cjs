@@ -15,4 +15,7 @@ module.exports = {
   parserOptions: {
     parser: '@typescript-eslint/parser',
   },
+  rules: {
+    'vue/attributes-order': ['warn', { alphabetical: true }],
+  },
 };

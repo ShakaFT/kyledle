@@ -4,9 +4,9 @@
 </script>
 
 <template>
-  <BaseBackground>
-    <div class="grid justify-center justify-items-center">
-      <BaseLogo class="mb-10 mt-2" />
+  <BaseBackground class="overflow-scroll">
+    <div class="my-10 grid justify-center justify-items-center">
+      <BaseLogo class="mb-10" />
       <slot />
     </div>
   </BaseBackground>

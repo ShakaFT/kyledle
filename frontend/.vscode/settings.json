@@ -41,9 +41,7 @@
   "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
   "javascript.inlayHints.variableTypes.enabled": true,
   "javascript.preferences.importModuleSpecifier": "non-relative",
-  "tailwind-fold.autoFold": false,
-  "tailwind-fold.unfoldedTextOpacity": 0.6,
-  "tailwindCSS.classAttributes": ["class", "input-class", "overlay-class"],
+  "tailwindCSS.classAttributes": ["class", "pt"],
   "tailwindCSS.includeLanguages": {
     "vue": "html",
     "vue-html": "html"
