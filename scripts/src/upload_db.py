@@ -32,7 +32,7 @@ assert GAME in constants.GAMES, f"Game {GAME} unknown"
 redis = db.get_db(ENVIRONMENT)
 
 storage_client = storage.Client()
-public_bucket = storage_client.bucket("kyledle-public")
+public_bucket = storage_client.bucket("kyledle-public-v2")
 
 
 def remove_data(characters: Iterable[str]):
@@ -87,7 +87,7 @@ def main():
     )
     for _, row in df.iterrows():
         character = row["ID"].strip()
-        blob = public_bucket.blob(f"v2/{GAME}/{character}.png")
+        blob = public_bucket.blob(f"{GAME}/{character}.png")
 
         character_data = {}
         for column in df.columns:
