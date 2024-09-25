@@ -26,12 +26,7 @@
         <AttemptHeader header="id" />
       </template>
       <template #body="{ data, field, index }">
-        <AttemptCellUnit
-          :key="`${data.id}-${field}`"
-          :data="data"
-          :field="field"
-          :index="index"
-        />
+        <AttemptCellUnit :key="`${data.id}-${field}`" :data :field :index />
       </template>
     </Column>
 
@@ -43,9 +38,9 @@
         <AttemptCellUnit
           :key="`${data.id}-${field}`"
           class="animate-delay-[0.5s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -58,9 +53,9 @@
         <AttemptCellGroup
           :key="`${data.id}-${field}`"
           class="animate-delay-[1s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -73,9 +68,9 @@
         <AttemptCellGroup
           :key="`${data.id}-${field}`"
           class="animate-delay-[1.5s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -88,9 +83,9 @@
         <AttemptCellGroup
           :key="`${data.id}-${field}`"
           class="animate-delay-[2s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -103,9 +98,9 @@
         <AttemptCellUnit
           :key="`${data.id}-${field}`"
           class="animate-delay-[2.5s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -118,9 +113,9 @@
         <AttemptCellUnit
           :key="`${data.id}-${field}`"
           class="animate-delay-[3s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>

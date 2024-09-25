@@ -129,7 +129,7 @@
     @option-select="selectOf($event.value)"
   >
     <template #option="{ option }">
-      <SearchOption :option="option" />
+      <SearchOption :option />
     </template>
   </AutoComplete>
 </template>

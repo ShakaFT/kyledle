@@ -16,7 +16,7 @@
       v-for="mode in modes"
       :key="mode"
       :disabled="isDisabled(mode)"
-      :mode="mode"
+      :mode
     />
   </BaseLayout>
 </template>

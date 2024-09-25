@@ -24,7 +24,7 @@
 
 <template>
   <AttemptCell
-    :index="index"
+    :index
     :is-right="isRightMatchingOf"
     :is-wrong="isWrongMatchingOf"
   >
