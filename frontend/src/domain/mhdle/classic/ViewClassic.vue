@@ -5,11 +5,11 @@
   import { computed, ref } from 'vue';
 
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
-  import AttemptsTable from '@/domain/mhdle/components/AttemptsTable.vue';
-  import SearchSelect from '@/domain/mhdle/components/SearchSelect.vue';
-  import VictoryDialog from '@/domain/mhdle/components/VictoryDialog.vue';
+  import AttemptsTable from '@/domain/mhdle/classic/attempts/AttemptsTable.vue';
+  import SearchSelect from '@/domain/mhdle/classic/search/SearchSelect.vue';
+  import VictoryDialog from '@/domain/mhdle/classic/victory/VictoryDialog.vue';
+  import { useTarget } from '@/stores/ClassicStore';
   import { useCharacters } from '@/stores/GameStore';
-  import { useTarget } from '@/stores/ModeStore';
 
   const { characters } = useCharacters<MHdleCharacter>();
   const { target } = useTarget<MHdleCharacter>();

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import type { SelectableCharacter } from '@/domain/mhdle/components/SearchOption.vue';
+  import type { SelectableCharacter } from '@/domain/mhdle/classic/search/SearchOption.vue';
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
   import AutoComplete from 'primevue/autocomplete';
@@ -7,7 +7,7 @@
   import { useI18n } from 'vue-i18n';
 
   import { useCurrentGame } from '@/core/composables/useCurrentGame';
-  import SearchOption from '@/domain/mhdle/components/SearchOption.vue';
+  import SearchOption from '@/domain/mhdle/classic/search/SearchOption.vue';
 
   const { characters } = defineProps<{ characters: MHdleCharacter[] }>();
   const emit = defineEmits<{ select: [character: MHdleCharacter] }>();

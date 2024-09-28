@@ -1,14 +1,14 @@
 <script setup lang="ts">
-  import type { OmitMatching } from '@/types/core.types';
+  import type { PickMatching } from '@/types/core.types';
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
   import { useCurrentGame } from '@/core/composables/useCurrentGame';
-  import AttemptCell from '@/domain/mhdle/components/AttemptCell.vue';
+  import AttemptCell from '@/domain/mhdle/classic/attempts/AttemptCell.vue';
 
-  type UnitKeys<T> = keyof OmitMatching<T, string[]>;
+  type GroupKeys<T> = keyof PickMatching<T, string[]>;
 
   const { field, data } = defineProps<{
-    field: UnitKeys<MHdleCharacter>;
+    field: GroupKeys<MHdleCharacter>;
     data: MHdleCharacter;
     index: number;
   }>();
@@ -16,10 +16,10 @@
   const { game } = useCurrentGame();
 
   const isRightMatchingOf = (target: MHdleCharacter): boolean =>
-    data[field] === target[field];
+    data[field].every((value) => target[field].includes(value));
 
   const isWrongMatchingOf = (target: MHdleCharacter): boolean =>
-    data[field] !== target[field];
+    !data[field].some((value) => target[field].includes(value));
 </script>
 
 <template>
@@ -28,6 +28,6 @@
     :is-right="isRightMatchingOf"
     :is-wrong="isWrongMatchingOf"
   >
-    {{ $t(`${game}.${field}.${data[field]}`) }}
+    {{ data[field].map((unit) => $t(`${game}.${field}.${unit}`)).join(', ') }}
   </AttemptCell>
 </template>

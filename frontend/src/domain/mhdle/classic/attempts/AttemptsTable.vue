@@ -4,9 +4,9 @@
   import Column from 'primevue/column';
   import DataTable from 'primevue/datatable';
 
-  import AttemptCellGroup from '@/domain/mhdle/components/AttemptCellGroup.vue';
-  import AttemptCellUnit from '@/domain/mhdle/components/AttemptCellUnit.vue';
-  import AttemptHeader from '@/domain/mhdle/components/AttemptHeader.vue';
+  import AttemptCellGroup from '@/domain/mhdle/classic/attempts/AttemptCellGroup.vue';
+  import AttemptCellUnit from '@/domain/mhdle/classic/attempts/AttemptCellUnit.vue';
+  import AttemptHeader from '@/domain/mhdle/classic/attempts/AttemptHeader.vue';
 
   defineProps<{ attempts: MHdleCharacter[] }>();
 </script>

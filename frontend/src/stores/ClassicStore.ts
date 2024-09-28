@@ -5,7 +5,7 @@ import { computed } from 'vue';
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 import { useCurrentMode } from '@/core/composables/useCurrentMode';
 
-const useModeStore = <T>() => {
+const useClassicStore = <T>() => {
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
 
@@ -28,7 +28,7 @@ const useModeStore = <T>() => {
 };
 
 export const useTarget = <T extends object>() => {
-  const store = useModeStore<T>();
+  const store = useClassicStore<T>();
 
   return {
     target: computed(() => store.data?.target ?? <T>{}),
