@@ -1,10 +1,9 @@
 import { useFetch } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import { computed } from 'vue';
 
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
-const useGameStore = <T, U>() => {
+export const useGameStore = <T, U>() => {
   const { game } = useCurrentGame();
 
   const useDataStore = defineStore(game.value, () => {
@@ -23,20 +22,4 @@ const useGameStore = <T, U>() => {
   });
 
   return useDataStore();
-};
-
-export const useCharacters = <T extends object>() => {
-  const store = useGameStore<T, string>();
-
-  return {
-    characters: computed(() => store.data?.characters ?? <Array<T>>[]),
-  };
-};
-
-export const useModes = <T extends string>() => {
-  const store = useGameStore<object, T>();
-
-  return {
-    modes: computed(() => store.data?.modes ?? <Array<T>>[]),
-  };
 };

@@ -1,11 +1,10 @@
 import { useFetch } from '@vueuse/core';
 import { defineStore } from 'pinia';
-import { computed } from 'vue';
 
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 import { useCurrentMode } from '@/core/composables/useCurrentMode';
 
-const useClassicStore = <T>() => {
+export const useClassicStore = <T>() => {
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
 
@@ -25,12 +24,4 @@ const useClassicStore = <T>() => {
   });
 
   return useDataStore();
-};
-
-export const useTarget = <T extends object>() => {
-  const store = useClassicStore<T>();
-
-  return {
-    target: computed(() => store.data?.target ?? <T>{}),
-  };
 };

@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
-  import { useTarget } from '@/stores/ClassicStore';
+  import { useTarget } from '@/stores/composables/useTarget';
 
   defineProps<{
     index: number;
