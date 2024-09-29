@@ -1,11 +1,11 @@
 <script setup lang="ts">
-  import type { MHdleMode } from '@/types/mhdle.types';
+  import type { MHdleCharacter, MHdleMode } from '@/types/mhdle.types';
 
   import BaseButtonMode from '@/core/components/BaseButtonMode.vue';
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
-  import { useModes } from '@/stores/composables/useModes';
+  import { useGameStore } from '@/stores/useGameStore';
 
-  const { modes } = useModes<MHdleMode>();
+  const { modes } = useGameStore<MHdleCharacter, MHdleMode>();
 
   const isDisabledOf = (mode: MHdleMode): boolean => mode !== 'classic';
 </script>

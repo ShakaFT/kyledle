@@ -8,9 +8,9 @@
 
   import { useCurrentGame } from '@/core/composables/useCurrentGame';
   import SearchOption from '@/domain/mhdle/classic/search/SearchOption.vue';
+  import { useClassicStore } from '@/stores/useClassicStore';
 
-  const { characters } = defineProps<{ characters: MHdleCharacter[] }>();
-  const emit = defineEmits<{ select: [character: MHdleCharacter] }>();
+  const { leftovers, attemptOf } = useClassicStore<MHdleCharacter>();
 
   const { t } = useI18n();
   const { game } = useCurrentGame();
@@ -28,7 +28,7 @@
   const searchOf = (rawText: string) => {
     const text = rawText.trim().toLowerCase();
 
-    selection.value = characters.reduce<SelectableCharacter[]>(
+    selection.value = leftovers.value.reduce<SelectableCharacter[]>(
       (characters, character) => {
         const translation = t(`${game.value}.id.${character.id}`);
 
@@ -55,8 +55,7 @@
   };
 
   const selectOf = ({ character }: SelectableCharacter) => {
-    emit('select', character);
-
+    attemptOf(character);
     selection.value = [];
     searchedCharacter.value = '';
   };

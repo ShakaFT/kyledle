@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
-  import { useTarget } from '@/stores/composables/useTarget';
+  import { useClassicStore } from '@/stores/useClassicStore';
 
   defineProps<{
     index: number;
@@ -9,7 +9,7 @@
     isWrong: (target: MHdleCharacter) => boolean;
   }>();
 
-  const { target } = useTarget<MHdleCharacter>();
+  const { target } = useClassicStore<MHdleCharacter>();
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 import { useFetch } from '@vueuse/core';
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
+import { computed } from 'vue';
 
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
@@ -18,8 +19,11 @@ export const useGameStore = <T, U>() => {
       .get()
       .json<{ characters: T[]; modes: U[] }>();
 
-    return { data };
+    const characters = computed(() => data.value?.characters ?? <T[]>[]);
+    const modes = computed(() => data.value?.modes ?? <U[]>[]);
+
+    return { data, characters, modes };
   });
 
-  return useDataStore();
+  return storeToRefs(useDataStore());
 };

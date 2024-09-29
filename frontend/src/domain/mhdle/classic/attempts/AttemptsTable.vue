@@ -7,8 +7,9 @@
   import AttemptCellGroup from '@/domain/mhdle/classic/attempts/AttemptCellGroup.vue';
   import AttemptCellUnit from '@/domain/mhdle/classic/attempts/AttemptCellUnit.vue';
   import AttemptHeader from '@/domain/mhdle/classic/attempts/AttemptHeader.vue';
+  import { useClassicStore } from '@/stores/useClassicStore';
 
-  defineProps<{ attempts: MHdleCharacter[] }>();
+  const { attempts } = useClassicStore<MHdleCharacter>();
 </script>
 
 <template>

@@ -1,10 +1,19 @@
+import type { Ref } from 'vue';
+
 import { useFetch } from '@vueuse/core';
-import { defineStore } from 'pinia';
+import { defineStore, storeToRefs } from 'pinia';
+import { computed, ref } from 'vue';
 
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 import { useCurrentMode } from '@/core/composables/useCurrentMode';
+import { useGameStore } from '@/stores/useGameStore';
 
-export const useClassicStore = <T>() => {
+export const useClassicStore = <
+  T extends object & { id: string },
+  U extends string = string,
+>() => {
+  const { characters } = useGameStore<T, U>();
+
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
 
@@ -20,8 +29,25 @@ export const useClassicStore = <T>() => {
       .get()
       .json<{ target: T }>();
 
-    return { data };
+    const attempts = ref<T[]>([]) as Ref<T[]>;
+    const leftovers = computed(() => characters.value.filter(isLeftoverOf));
+    const target = computed(() => data.value?.target ?? <T>{});
+
+    function attemptOf(character: T) {
+      attempts.value.unshift(character);
+    }
+
+    function isLeftoverOf(character: T): boolean {
+      return !attempts.value.find((attempt) => attempt.id === character.id);
+    }
+
+    return { data, attempts, leftovers, target, attemptOf, isLeftoverOf };
   });
 
-  return useDataStore();
+  const dataStore = useDataStore();
+
+  return {
+    ...storeToRefs(dataStore),
+    attemptOf: dataStore.attemptOf,
+  };
 };
