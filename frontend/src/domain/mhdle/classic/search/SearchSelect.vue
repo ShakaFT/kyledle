@@ -2,6 +2,7 @@
   import type { SelectableCharacter } from '@/domain/mhdle/classic/search/SearchOption.vue';
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
+  import { refAutoReset } from '@vueuse/core';
   import AutoComplete from 'primevue/autocomplete';
   import { ref } from 'vue';
   import { useI18n } from 'vue-i18n';
@@ -10,13 +11,14 @@
   import SearchOption from '@/domain/mhdle/classic/search/SearchOption.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
 
-  const { leftovers, attemptOf } = useClassicStore<MHdleCharacter>();
+  const { leftovers, attemptOf, hasWon } = useClassicStore<MHdleCharacter>();
 
   const { t } = useI18n();
   const { game } = useCurrentGame();
 
   const selection = ref<SelectableCharacter[]>([]);
   const searchedCharacter = ref('');
+  const isDisabled = refAutoReset(false, 3500);
 
   const startingTermsOf = (translation: string): string[] =>
     translation
@@ -58,6 +60,7 @@
     attemptOf(character);
     selection.value = [];
     searchedCharacter.value = '';
+    isDisabled.value = true;
   };
 </script>
 
@@ -66,6 +69,7 @@
     v-model="searchedCharacter"
     :complete-on-focus="selection.length > 0"
     :delay="0"
+    :disabled="isDisabled || hasWon"
     :empty-search-message="' '"
     :placeholder="`「 ${$t('mhdle.ui.search-character')} 」`"
     :pt="{

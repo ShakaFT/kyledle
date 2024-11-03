@@ -32,6 +32,10 @@ export const useClassicStore = <
     const attempts = ref<T[]>([]) as Ref<T[]>;
     const leftovers = computed(() => characters.value.filter(isLeftoverOf));
     const target = computed(() => data.value?.target ?? <T>{});
+    const hasWon = computed(
+      () =>
+        !!attempts.value.find((character) => character.id === target.value.id),
+    );
 
     function attemptOf(character: T) {
       attempts.value.unshift(character);
@@ -41,7 +45,15 @@ export const useClassicStore = <
       return !attempts.value.find((attempt) => attempt.id === character.id);
     }
 
-    return { data, attempts, leftovers, target, attemptOf, isLeftoverOf };
+    return {
+      data,
+      attempts,
+      leftovers,
+      target,
+      hasWon,
+      attemptOf,
+      isLeftoverOf,
+    };
   });
 
   const dataStore = useDataStore();
