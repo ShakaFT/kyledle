@@ -75,50 +75,42 @@
     :pt="{
       overlay: {
         class: [
-          /* layout */
+          'backdrop-blur-lg',
+          'backdrop-brightness-125',
           'bg-slate-300',
+          'cursor-pointer',
+          'drop-shadow-lg',
+          'font-[BluuNext]',
+          'mix-blend-multiply',
           'mt-1',
           'overflow-auto',
           'rounded-lg',
-          /* typography */
-          'font-[BluuNext]',
           'text-center',
           'text-xl',
-          /* misc */
-          'backdrop-blur-lg',
-          'backdrop-brightness-125',
-          'cursor-pointer',
-          'drop-shadow-lg',
-          'mix-blend-multiply',
         ],
       },
       pcInput: {
         root: {
           class: [
-            /* animation */
-            'duration-300',
-            'focus:duration-200',
-            'focus:transition',
-            /* focus states */
-            'focus:ring-[0.42px]',
-            'focus:ring-slate-600',
-            'outline-none',
-            /* layout */
-            'bg-slate-300',
-            'h-12',
-            'rounded-lg',
-            'w-80',
-            /* misc */
             'backdrop-blur-lg',
             'backdrop-brightness-125',
+            'bg-slate-300',
             'caret-slate-500',
             'drop-shadow-lg',
-            'mix-blend-multiply',
-            /* typography */
+            'duration-300',
+            'focus:duration-200',
+            'focus:ring-[0.42px]',
+            'focus:ring-slate-600',
+            'focus:transition',
             'font-[BluuNext]',
+            'h-12',
+            'mix-blend-multiply',
+            'outline-none',
             'placeholder:text-slate-400',
+            'rounded-lg',
             'text-center',
             'text-xl',
+            'w-80',
           ],
           maxlength: 42,
         },

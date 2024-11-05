@@ -8,19 +8,12 @@
   const { attempts, hasWon } = useClassicStore<MHdleCharacter>();
 
   const isVisible = refDebounced(hasWon, 3500);
-
-  const rotateRandomly = () => {
-    const angle = Math.floor(Math.random() * 2) + 2;
-    const sign = Math.random() < 0.5 ? '-' : '';
-
-    return `${sign}rotate-${angle}`;
-  };
 </script>
 
 <template>
   <dialog
     v-if="isVisible"
-    :class="`inset-0 flex ${rotateRandomly()} animate-jump-in rounded-lg bg-slate-800 drop-shadow-lg animate-add animate-duration-300`"
+    :class="`inset-0 flex ${Math.random() < 0.5 ? `-rotate-3` : `rotate-3`} animate-jump-in rounded-lg bg-slate-800 drop-shadow-lg animate-add animate-duration-300`"
   >
     <div class="p-9">
       <div class="absolute right-2 top-1">
@@ -32,11 +25,11 @@
           ✖️
         </button>
       </div>
+
       <div class="text-center font-[BluuNext] text-green-400">
-        <h1 class="text-5xl">Bravo !</h1>
+        <h1 class="text-5xl">{{ $t('mhdle.ui.victory.title') }}</h1>
         <p class="text-xl">
-          Vous avez trouvé le monstre du jour en
-          {{ attempts.length }} tentative(s).
+          {{ $t('mhdle.ui.victory.sentence', { x: attempts.length }) }}
         </p>
       </div>
     </div>

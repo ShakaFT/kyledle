@@ -15,26 +15,22 @@
 <template>
   <div
     :class="[
-      /* animation */
-      { 'animate-fade-right animate-duration-300': index === 0 },
-      /* layout */
       'bg-slate-300',
       'border-[1px]',
       'content-center',
+      'drop-shadow-lg',
+      'font-[BluuNext]',
       'h-16',
       'm-1',
       'rounded-lg',
+      'text-center',
+      'text-sm',
+      { 'animate-fade-right animate-duration-300': index === 0 },
       isRight(target)
         ? ['!bg-green-600', 'border-green-800']
         : isWrong(target)
           ? ['!bg-red-600', 'border-red-800']
           : ['!bg-yellow-600', 'border-yellow-800'],
-      /* typography */
-      'font-[BluuNext]',
-      'text-center',
-      'text-sm',
-      /* misc */
-      'drop-shadow-lg',
     ]"
   >
     <slot />

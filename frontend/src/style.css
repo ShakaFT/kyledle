@@ -6,7 +6,3 @@
   font-family: 'BluuNext';
   src: url('@/assets/fonts/BluuNext-Bold.otf') format('opentype');
 }
-@font-face {
-  font-family: 'Lobster';
-  src: url('@/assets/fonts/Lobster-Regular.ttf') format('truetype');
-}
