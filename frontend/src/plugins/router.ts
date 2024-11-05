@@ -17,7 +17,7 @@ export default createRouter({
     },
     {
       path: '/mhdle/classic',
-      component: () => import('@/domain/mhdle/ViewClassic.vue'),
+      component: () => import('@/domain/mhdle/classic/ViewClassic.vue'),
     },
   ],
 });

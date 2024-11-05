@@ -517,6 +517,8 @@
   "mhdle.title.zorah-magdaros": "Le Dragon-Volcan",
   "mhdle.title": "Titre",
   "mhdle.ui.search-character": "Tape le nom d'un monstre",
+  "mhdle.ui.victory.title": "Bravo !",
+  "mhdle.ui.victory.sentence": "Vous avez trouvé le monstre du jour en {x} tentative(s).",
   "mhdle.weaknesses.dragon": "Dragon",
   "mhdle.weaknesses.fire": "Feu",
   "mhdle.weaknesses.ice": "Glace",

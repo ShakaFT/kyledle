@@ -4,11 +4,12 @@
   import Column from 'primevue/column';
   import DataTable from 'primevue/datatable';
 
-  import AttemptCellGroup from '@/domain/mhdle/components/AttemptCellGroup.vue';
-  import AttemptCellUnit from '@/domain/mhdle/components/AttemptCellUnit.vue';
-  import AttemptHeader from '@/domain/mhdle/components/AttemptHeader.vue';
+  import AttemptCellGroup from '@/domain/mhdle/classic/attempts/AttemptCellGroup.vue';
+  import AttemptCellUnit from '@/domain/mhdle/classic/attempts/AttemptCellUnit.vue';
+  import AttemptHeader from '@/domain/mhdle/classic/attempts/AttemptHeader.vue';
+  import { useClassicStore } from '@/stores/useClassicStore';
 
-  defineProps<{ attempts: MHdleCharacter[] }>();
+  const { attempts } = useClassicStore<MHdleCharacter>();
 </script>
 
 <template>
@@ -26,12 +27,7 @@
         <AttemptHeader header="id" />
       </template>
       <template #body="{ data, field, index }">
-        <AttemptCellUnit
-          :key="`${data.id}-${field}`"
-          :data="data"
-          :field="field"
-          :index="index"
-        />
+        <AttemptCellUnit :key="`${data.id}-${field}`" :data :field :index />
       </template>
     </Column>
 
@@ -43,9 +39,9 @@
         <AttemptCellUnit
           :key="`${data.id}-${field}`"
           class="animate-delay-[0.5s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -58,9 +54,9 @@
         <AttemptCellGroup
           :key="`${data.id}-${field}`"
           class="animate-delay-[1s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -73,9 +69,9 @@
         <AttemptCellGroup
           :key="`${data.id}-${field}`"
           class="animate-delay-[1.5s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -88,9 +84,9 @@
         <AttemptCellGroup
           :key="`${data.id}-${field}`"
           class="animate-delay-[2s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -103,9 +99,9 @@
         <AttemptCellUnit
           :key="`${data.id}-${field}`"
           class="animate-delay-[2.5s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
@@ -118,9 +114,9 @@
         <AttemptCellUnit
           :key="`${data.id}-${field}`"
           class="animate-delay-[3s]"
-          :data="data"
-          :field="field"
-          :index="index"
+          :data
+          :field
+          :index
         />
       </template>
     </Column>
