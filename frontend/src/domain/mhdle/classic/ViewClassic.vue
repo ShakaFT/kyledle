@@ -1,13 +1,17 @@
 <script setup lang="ts">
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
   import AttemptsTable from '@/domain/mhdle/classic/attempts/AttemptsTable.vue';
+  import HintsIcon from '@/domain/mhdle/classic/hints/HintsIcon.vue';
   import SearchSelect from '@/domain/mhdle/classic/search/SearchSelect.vue';
   import VictoryDialog from '@/domain/mhdle/classic/victory/VictoryDialog.vue';
 </script>
 
 <template>
   <BaseLayout>
-    <SearchSelect />
+    <div class="relative">
+      <SearchSelect />
+      <HintsIcon class="absolute left-[103%] top-0" />
+    </div>
     <AttemptsTable />
     <VictoryDialog />
   </BaseLayout>

@@ -25,7 +25,8 @@
   "editor.tabSize": 2,
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
   "files.associations": {
-    "*.css": "tailwindcss"
+    "*.css": "tailwindcss",
+    "*.svg": "html"
   },
   "i18n-ally.annotationInPlace": true,
   "i18n-ally.annotations": true,
