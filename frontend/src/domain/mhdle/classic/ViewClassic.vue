@@ -10,7 +10,7 @@
   <BaseLayout>
     <div class="relative">
       <SearchSelect />
-      <HintsIcon class="absolute left-[103%] top-0" />
+      <HintsIcon />
     </div>
     <AttemptsTable />
     <VictoryDialog />
