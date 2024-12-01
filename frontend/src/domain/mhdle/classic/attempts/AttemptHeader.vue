@@ -10,7 +10,7 @@
   <div
     :class="[
       'bg-slate-800',
-      'drop-shadow-[0_0_3px_#e0d9ca]',
+      'drop-shadow-[0_0_3px_black]',
       'font-[BluuNext]',
       'mb-3',
       'mx-1',
