@@ -8,6 +8,7 @@
   import { useI18n } from 'vue-i18n';
 
   import { useCurrentGame } from '@/core/composables/useCurrentGame';
+  import HintsIcon from '@/domain/mhdle/classic/hints/HintsIcon.vue';
   import SearchOption from '@/domain/mhdle/classic/search/SearchOption.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
 
@@ -65,66 +66,69 @@
 </script>
 
 <template>
-  <AutoComplete
-    v-model="searchedCharacter"
-    :complete-on-focus="selection.length > 0"
-    :delay="0"
-    :disabled="isDisabled || hasWon"
-    :empty-search-message="' '"
-    :placeholder="`「 ${$t('mhdle.ui.search-character')} 」`"
-    :pt="{
-      overlay: {
-        class: [
-          'backdrop-blur-lg',
-          'backdrop-brightness-125',
-          'bg-slate-300',
-          'cursor-pointer',
-          'drop-shadow-lg',
-          'font-[BluuNext]',
-          'mix-blend-multiply',
-          'mt-1',
-          'overflow-auto',
-          'rounded-lg',
-          'text-center',
-          'text-xl',
-        ],
-      },
-      pcInput: {
-        root: {
+  <div class="relative">
+    <AutoComplete
+      v-model="searchedCharacter"
+      :complete-on-focus="selection.length > 0"
+      :delay="0"
+      :disabled="isDisabled || hasWon"
+      :empty-search-message="' '"
+      :placeholder="`「 ${$t('mhdle.ui.search-character')} 」`"
+      :pt="{
+        overlay: {
           class: [
             'backdrop-blur-lg',
             'backdrop-brightness-125',
             'bg-slate-300',
-            'caret-slate-500',
+            'cursor-pointer',
             'drop-shadow-lg',
-            'duration-300',
-            'focus:duration-200',
-            'focus:ring-[0.42px]',
-            'focus:ring-slate-600',
-            'focus:transition',
             'font-[BluuNext]',
-            'h-12',
             'mix-blend-multiply',
-            'outline-none',
-            'placeholder:text-slate-400',
+            'mt-1',
+            'overflow-auto',
             'rounded-lg',
             'text-center',
             'text-xl',
-            'w-80',
           ],
-          maxlength: 42,
         },
-      },
-    }"
-    :scroll-height="`${Math.min(selection.length, 4) * 28}px`"
-    :spellcheck="false"
-    :suggestions="selection"
-    @clear="selection = []"
-    @complete="searchOf($event.query)"
-    @option-select="selectOf($event.value)"
-  >
-    <template #option="{ option }">
-      <SearchOption :option />
-    </template>
-  </AutoComplete>
+        pcInput: {
+          root: {
+            class: [
+              'backdrop-blur-lg',
+              'backdrop-brightness-125',
+              'bg-slate-300',
+              'caret-slate-500',
+              'drop-shadow-lg',
+              'duration-300',
+              'focus:duration-200',
+              'focus:ring-[0.42px]',
+              'focus:ring-slate-600',
+              'focus:transition',
+              'font-[BluuNext]',
+              'h-12',
+              'mix-blend-multiply',
+              'outline-none',
+              'placeholder:text-slate-400',
+              'rounded-lg',
+              'text-center',
+              'text-xl',
+              'w-80',
+            ],
+            maxlength: 42,
+          },
+        },
+      }"
+      :scroll-height="`${Math.min(selection.length, 4) * 28}px`"
+      :spellcheck="false"
+      :suggestions="selection"
+      @clear="selection = []"
+      @complete="searchOf($event.query)"
+      @option-select="selectOf($event.value)"
+    >
+      <template #option="{ option }">
+        <SearchOption :option />
+      </template>
+    </AutoComplete>
+    <HintsIcon />
+  </div>
 </template>
