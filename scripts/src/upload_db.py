@@ -87,7 +87,7 @@ def main():
     )
     for _, row in df.iterrows():
         character = row["ID"].strip()
-        blob = public_bucket.blob(f"{GAME}/{character}.png")
+        character_blob = public_bucket.blob(f"{GAME}/characters/{character}.png")
 
         character_data = {}
         for column in df.columns:
@@ -96,12 +96,27 @@ def main():
 
             if isinstance(value, bool):
                 value = "true" if value is True else "false"
-            elif isinstance(value, str) and column[-1] == "s":
-                value = json.dumps([element.strip() for element in value.split("/")])
+
+            if column in constants.COLUMNS_WITH_MULTIPLE_VALUES[GAME]:
+                value = [element.strip() for element in value.split("/")]
+
+            if column in constants.COLUMNS_WITH_PICTURE[GAME]:
+                value = [
+                    {
+                        "id": v,
+                        "picture": public_bucket.blob(
+                            f"{GAME}/extras/{column}/{v}.png"
+                        ).public_url,
+                    }
+                    for v in value
+                ]
+
+            if isinstance(value, list):
+                value = json.dumps(value)
 
             character_data[column] = value
 
-        character_data["picture"] = blob.public_url
+        character_data["picture"] = character_blob.public_url
         characters[character] = character_data
 
     console.log("[bold magenta]Will fetch characters from database...")
