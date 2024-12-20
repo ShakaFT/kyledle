@@ -1,14 +1,19 @@
 export type MHdleMode = 'classic' | 'denomination' | 'shape' | 'soundtrack';
 
 export interface MHdleCharacter {
-  ailments: string[];
+  ailments: ArrayWithPictureLink;
   'average-size': number;
   colors: string[];
-  elements: string[];
+  elements: ArrayWithPictureLink;
   generation: string;
   id: string;
   'is-subspecies': boolean;
   'monster-type': string;
   picture: string;
-  weaknesses: string[];
+  weaknesses: ArrayWithPictureLink;
 }
+
+export type ArrayWithPictureLink = Array<{
+  id: string;
+  picture: string;
+}>;

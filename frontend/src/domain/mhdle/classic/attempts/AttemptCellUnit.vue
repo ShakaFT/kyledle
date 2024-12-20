@@ -5,7 +5,7 @@
   import { useCurrentGame } from '@/core/composables/useCurrentGame';
   import AttemptCell from '@/domain/mhdle/classic/attempts/AttemptCell.vue';
 
-  type UnitKeys<T> = keyof OmitMatching<T, string[]>;
+  type UnitKeys<T> = keyof OmitMatching<T, unknown[]>;
 
   const { field, data } = defineProps<{
     field: UnitKeys<MHdleCharacter>;
