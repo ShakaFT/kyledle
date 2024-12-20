@@ -13,5 +13,7 @@ GOOGLE_SHEET_URL = "https://docs.google.com/spreadsheets/d/1nwVxOynl2rduEWoAVuZj
 GOOGLE_SHEET_ID = {"mhdle": "644384787"}
 
 COLUMNS_NOT_TO_ASSERT = {"mhdle": ["average-size", "picture", "is-subspecies"]}
-COLUMNS_WITH_MULTIPLE_VALUES = {"mhdle": ["ailments", "elements", "weaknesses"]}
+COLUMNS_WITH_MULTIPLE_VALUES = {
+    "mhdle": ["ailments", "colors", "elements", "weaknesses"]
+}
 COLUMNS_WITH_PICTURE = {"mhdle": ["ailments", "elements", "weaknesses"]}
