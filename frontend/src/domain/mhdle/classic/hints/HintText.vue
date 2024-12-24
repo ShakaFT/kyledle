@@ -1,7 +1,11 @@
 <script setup lang="ts">
   import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
-  const { isCountdownOngoing, type, value } = defineProps<{
+  const {
+    isCountdownOngoing,
+    type,
+    value = '',
+  } = defineProps<{
     isCountdownOngoing: boolean;
     type: string;
     value: string;
