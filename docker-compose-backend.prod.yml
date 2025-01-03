@@ -24,7 +24,7 @@ services:
       <<: *celery-env
 
   celery_beat:
-    command: celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup
+    command: celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup -s /home/celery/var/run/celerybeat-schedule
     env_file:
       - .env/.env.$ENVIRONMENT
     environment:
