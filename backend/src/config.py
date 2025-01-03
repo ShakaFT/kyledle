@@ -65,9 +65,6 @@ redis = Redis(
     password=os.environ.get("REDIS_PASSWORD"),
     username=os.environ.get("REDIS_USERNAME"),
 )
-print("ta mère")
-print(os.environ.get("REDIS_PASSWORD"))
-print(os.environ.get("REDIS_USERNAME"))
 
 
 # Create Celery

@@ -12,9 +12,9 @@ services:
     ports: !reset null
 
   redis:
-    command: redis-server /etc/redis/redis.conf
+    command: redis-server /etc/redis/tamere/redis.conf
     volumes:
-      - ./redis.conf:/etc/redis/redis.conf
+      - ./redis.conf:/etc/redis/tamere/redis.conf
 
   celery_worker:
     command: celery -A config.celery worker --loglevel INFO --uid=nobody --gid=nogroup
