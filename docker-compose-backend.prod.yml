@@ -31,6 +31,8 @@ services:
     environment:
       <<: *celery-env
     user: nobody:nogroup
+    volumes:
+      - ./celerybeat:/app
 
   nginx:
     container_name: ${PROJECT_NAME}_${ENVIRONMENT}_nginx
