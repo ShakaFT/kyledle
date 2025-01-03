@@ -12,6 +12,7 @@ x-redis-env: &redis-env
 services:
   backend:
     build:
+      context: .
       dockerfile: ./compose/backend.Dockerfile
     command: sh -c "python -c 'import tasks; tasks.schedule_levels(tomorrow=False)' && flask run --host=0.0.0.0"
     container_name: ${PROJECT_NAME}_${ENVIRONMENT}_backend
@@ -41,6 +42,7 @@ services:
 
   celery_worker:
     build:
+      context: .
       dockerfile: ./compose/backend.Dockerfile
     command: watchmedo auto-restart --directory=/src -- celery -A config.celery worker --loglevel DEBUG --uid=nobody --gid=nogroup
     container_name: ${PROJECT_NAME}_${ENVIRONMENT}_celery_worker
@@ -56,6 +58,7 @@ services:
 
   celery_beat:
     build:
+      context: .
       dockerfile: ./compose/backend.Dockerfile
     command: watchmedo auto-restart --directory=/src -- celery -A config.celery beat --loglevel DEBUG --uid=nobody --gid=nogroup
     container_name: ${PROJECT_NAME}_${ENVIRONMENT}_celery_beat
