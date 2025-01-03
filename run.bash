@@ -30,8 +30,8 @@ fi
 
 export PROJECT_NAME="kyledle"
 export REDIS_HOST="redis"
-BACKEND_COMMAND="docker-compose -f docker-compose-backend.yml -f docker-compose-backend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-backend-$1 up --build"
-FRONTEND_COMMAND="docker-compose -f docker-compose-frontend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-frontend-$1 up --build"
+BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -f docker-compose-backend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-backend-$1 up --build"
+FRONTEND_COMMAND="docker compose -f docker-compose-frontend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-frontend-$1 up --build"
 
 if [ "$1" = "prod" ]; then
     export BACKEND_PORT=8082
@@ -48,7 +48,7 @@ else # local
     export ENVIRONMENT="local"
     export FRONTEND_PORT=5173
     export REDIS_PORT=6379
-    BACKEND_COMMAND="docker-compose -f docker-compose-backend.yml -p $PROJECT_NAME-backend-local --profile local up --build"
+    BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -p $PROJECT_NAME-backend-local --profile local up --build"
     FRONTEND_COMMAND="cd frontend && npm i && npm run dev"
 fi
 
