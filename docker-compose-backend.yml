@@ -74,6 +74,7 @@ services:
 
   script_db:
     build:
+      context: .
       dockerfile: ./compose/scripts.Dockerfile
     command: bash -c "./run.bash src/upload_db.py $ENVIRONMENT mhdle"
     container_name: ${PROJECT_NAME}_${ENVIRONMENT}_script_db

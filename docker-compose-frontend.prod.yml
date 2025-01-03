@@ -1,6 +1,7 @@
 services:
   frontend:
     build:
+      context: .
       dockerfile: compose/frontend.Dockerfile
       args:
         API_KEY: $API_KEY
