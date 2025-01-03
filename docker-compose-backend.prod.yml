@@ -17,22 +17,18 @@ services:
       - ./redis.conf:/etc/redis/kyledle/redis.conf
 
   celery_worker:
-    command: celery -A config.celery worker --loglevel INFO
+    command: celery -A config.celery worker --loglevel INFO --uid=nobody --gid=nogroup
     env_file:
       - .env/.env.$ENVIRONMENT
     environment:
       <<: *celery-env
-    user: nobody:nogroup
 
   celery_beat:
-    command: celery -A config.celery beat --loglevel INFO
+    command: sh -c "chown nobody:nogroup celerybeat-schedule && celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup"
     env_file:
       - .env/.env.$ENVIRONMENT
     environment:
       <<: *celery-env
-    user: nobody:nogroup
-    volumes:
-      - ./celerybeat:/app
 
   nginx:
     container_name: ${PROJECT_NAME}_${ENVIRONMENT}_nginx
