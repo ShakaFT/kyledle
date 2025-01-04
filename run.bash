@@ -39,23 +39,25 @@ if [ "$1" = "prod" ]; then
     export ENVIRONMENT="prod"
     export FRONTEND_PORT=80
     export REDIS_PORT=6381
+    export ORIGINS=$BASE_URL
 elif [ "$1" = "dev" ]; then
     BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8081
     export ENVIRONMENT="dev"
     export FRONTEND_PORT=5174
     export REDIS_PORT=6380
+    export ORIGINS="$BASE_URL:$FRONTEND_PORT"
 else # local
     BASE_URL="http://localhost"
     export BACKEND_PORT=8080
     export ENVIRONMENT="local"
     export FRONTEND_PORT=5173
     export REDIS_PORT=6379
+    export ORIGINS="$BASE_URL:$FRONTEND_PORT"
     BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -p $PROJECT_NAME-backend-local --profile local up --build"
     FRONTEND_COMMAND="cd frontend && npm i && npm run dev"
 fi
 
-export ORIGINS="$BASE_URL:$FRONTEND_PORT"
 export VITE_API_URL="$BASE_URL:$BACKEND_PORT"
 
 PARRALLEL_COMMAND=$(
