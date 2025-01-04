@@ -12,9 +12,9 @@ services:
     ports: !reset null
 
   redis:
-    command: redis-server /etc/redis/redis.conf
+    command: redis-server /etc/redis/kyledle/redis.conf
     volumes:
-      - ./redis.conf:/etc/redis/redis.conf
+      - ./redis.conf:/etc/redis/kyledle/redis.conf
 
   celery_worker:
     command: celery -A config.celery worker --loglevel INFO --uid=nobody --gid=nogroup
@@ -24,7 +24,7 @@ services:
       <<: *celery-env
 
   celery_beat:
-    command: celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup
+    command: sh -c "chown nobody:nogroup celerybeat-schedule && celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup"
     env_file:
       - .env/.env.$ENVIRONMENT
     environment:

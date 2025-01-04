@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script should be used to run restAPI locally.
+# This script should be used to run Kyledle.
 
 # Clear Docker Images Cache
 trap 'docker rmi $(docker images -f "dangling=true" -q) > /dev/null 2>&1' EXIT
@@ -30,30 +30,35 @@ fi
 
 export PROJECT_NAME="kyledle"
 export REDIS_HOST="redis"
-BACKEND_COMMAND="docker-compose -f docker-compose-backend.yml -f docker-compose-backend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-backend-$1 up --build"
-FRONTEND_COMMAND="docker-compose -f docker-compose-frontend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-frontend-$1 up --build"
+BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -f docker-compose-backend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-backend-$1 up --build"
+FRONTEND_COMMAND="docker compose -f docker-compose-frontend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-frontend-$1 up --build"
 
 if [ "$1" = "prod" ]; then
+    BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8082
     export ENVIRONMENT="prod"
-    export FRONTEND_PORT=5175
+    export FRONTEND_PORT=80
     export REDIS_PORT=6381
+    export ORIGINS="$BASE_URL,http://kyledle.shakaft.fr"
 elif [ "$1" = "dev" ]; then
+    BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8081
     export ENVIRONMENT="dev"
     export FRONTEND_PORT=5174
     export REDIS_PORT=6380
+    export ORIGINS="$BASE_URL:$FRONTEND_PORT"
 else # local
+    BASE_URL="http://localhost"
     export BACKEND_PORT=8080
     export ENVIRONMENT="local"
     export FRONTEND_PORT=5173
     export REDIS_PORT=6379
-    BACKEND_COMMAND="docker-compose -f docker-compose-backend.yml -p $PROJECT_NAME-backend-local --profile local up --build"
+    export ORIGINS="$BASE_URL:$FRONTEND_PORT"
+    BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -p $PROJECT_NAME-backend-local --profile local up --build"
     FRONTEND_COMMAND="cd frontend && npm i && npm run dev"
 fi
 
-export ORIGINS="http://localhost:$FRONTEND_PORT"
-export VITE_API_URL="http://localhost:$BACKEND_PORT"
+export VITE_API_URL="$BASE_URL:$BACKEND_PORT"
 
 PARRALLEL_COMMAND=$(
     cat <<EOF
