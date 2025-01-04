@@ -34,16 +34,19 @@ BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -f docker-compose-
 FRONTEND_COMMAND="docker compose -f docker-compose-frontend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-frontend-$1 up --build"
 
 if [ "$1" = "prod" ]; then
+    BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8082
     export ENVIRONMENT="prod"
     export FRONTEND_PORT=5175
     export REDIS_PORT=6381
 elif [ "$1" = "dev" ]; then
+    BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8081
     export ENVIRONMENT="dev"
     export FRONTEND_PORT=5174
     export REDIS_PORT=6380
 else # local
+    BASE_URL="http://localhost"
     export BACKEND_PORT=8080
     export ENVIRONMENT="local"
     export FRONTEND_PORT=5173
@@ -52,8 +55,8 @@ else # local
     FRONTEND_COMMAND="cd frontend && npm i && npm run dev"
 fi
 
-export ORIGINS="http://localhost:$FRONTEND_PORT"
-export VITE_API_URL="http://localhost:$BACKEND_PORT"
+export ORIGINS="$BASE_URL:$FRONTEND_PORT"
+export VITE_API_URL="$BASE_URL:$BACKEND_PORT"
 
 PARRALLEL_COMMAND=$(
     cat <<EOF
