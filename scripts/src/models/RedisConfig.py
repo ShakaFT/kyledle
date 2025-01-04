@@ -16,7 +16,7 @@ class RedisConfig:
         assert (
             environment in constants.ENVIRONMENTS
         ), f"Environment {environment} unknown"
-        self.host = os.environ.get("REDIS_HOST", "localhost")
+        self.host = os.environ.get("REDIS_HOST", "57.129.77.184")
         self.username = os.environ.get("REDIS_USERNAME")
         self.password = os.environ.get("REDIS_PASSWORD")
 
