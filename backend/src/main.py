@@ -9,15 +9,6 @@ from utils.date import to_string_date, utc_now
 from utils.redis_decode import decode_from_redis
 
 
-@app.post("/schedule")
-def schedule():
-    """schedule"""
-    from tasks import schedule_levels
-
-    schedule_levels(tomorrow=False)
-    schedule_levels(tomorrow=True)
-
-
 @app.get("/")
 def hello():
     """hello"""
