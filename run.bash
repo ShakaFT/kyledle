@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script should be used to run restAPI locally.
+# This script should be used to run Kyledle.
 
 # Clear Docker Images Cache
 trap 'docker rmi $(docker images -f "dangling=true" -q) > /dev/null 2>&1' EXIT
