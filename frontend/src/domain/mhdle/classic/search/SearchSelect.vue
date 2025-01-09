@@ -118,7 +118,7 @@
           },
         },
       }"
-      :scroll-height="`${Math.min(selection.length, 4) * 28}px`"
+      :scroll-height="`${Math.min(selection.length, 4) * 64}px`"
       :spellcheck="false"
       :suggestions="selection"
       @clear="selection = []"
