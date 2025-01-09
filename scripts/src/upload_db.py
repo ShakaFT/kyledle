@@ -87,7 +87,7 @@ def main():
     )
     for _, row in df.iterrows():
         character = row["ID"].strip()
-        character_blob = public_bucket.blob(f"{GAME}/characters/{character}.png")
+        character_blob = public_bucket.blob(f"{GAME}/characters/{character}.svg")
 
         character_data = {}
         for column in df.columns:
@@ -105,7 +105,7 @@ def main():
                     {
                         "id": v,
                         "picture": public_bucket.blob(
-                            f"{GAME}/extras/{column}/{v}.png"
+                            f"{GAME}/extras/{column}/{v}.svg"
                         ).public_url,
                     }
                     for v in value

@@ -5,6 +5,7 @@
   import DataTable from 'primevue/datatable';
 
   import AttemptCellGroup from '@/domain/mhdle/classic/attempts/AttemptCellGroup.vue';
+  import AttemptCellIcon from '@/domain/mhdle/classic/attempts/AttemptCellIcon.vue';
   import AttemptCellUnit from '@/domain/mhdle/classic/attempts/AttemptCellUnit.vue';
   import AttemptHeader from '@/domain/mhdle/classic/attempts/AttemptHeader.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
@@ -27,7 +28,7 @@
         <AttemptHeader header="id" />
       </template>
       <template #body="{ data, field, index }">
-        <AttemptCellUnit :key="`${data.id}-${field}`" :data :field :index />
+        <AttemptCellIcon :key="`${data.id}-${field}`" :data :index />
       </template>
     </Column>
 
