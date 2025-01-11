@@ -91,7 +91,7 @@
             'text-xl',
           ],
         },
-        pcInput: {
+        pcInputText: {
           root: {
             class: [
               'backdrop-blur-lg',
