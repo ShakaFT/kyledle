@@ -8,7 +8,7 @@
       'border-[1px]',
       'content-center',
       'drop-shadow-lg',
-      'font-[BluuNext]',
+      'font-[BagnardSans]',
       'h-16',
       'm-1',
       'rounded-lg',

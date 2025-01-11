@@ -11,7 +11,7 @@
     :class="[
       'bg-slate-800',
       'drop-shadow-[0_0_3px_black]',
-      'font-[BluuNext]',
+      'font-[BagnardSans]',
       'mb-3',
       'mx-1',
       'py-2',
