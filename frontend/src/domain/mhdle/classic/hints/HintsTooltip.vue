@@ -26,7 +26,7 @@
   <div
     class="pointer-events-none absolute -top-[6px] left-[386px] min-w-max rounded-lg bg-slate-800 px-3 py-2 drop-shadow-[0_0_3px_black] transition-all duration-300 ease-in-out"
   >
-    <div class="flex flex-col gap-1 font-[BluuNext] text-sm text-slate-300">
+    <div class="flex flex-col gap-1 font-[BagnardSans] text-sm text-slate-300">
       <HintText
         :is-countdown-ongoing="attempts.length < 5"
         type="average-size"

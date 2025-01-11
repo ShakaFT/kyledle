@@ -26,9 +26,11 @@
         </button>
       </div>
 
-      <div class="text-center font-[BluuNext] text-green-400">
-        <h1 class="text-5xl">{{ $t('mhdle.ui.victory.title') }}</h1>
-        <p class="text-xl">
+      <div class="text-center text-green-400">
+        <h1 class="font-[YoungSerif] text-5xl">
+          {{ $t('mhdle.ui.victory.title') }}
+        </h1>
+        <p class="font-[BagnardSans] text-xl">
           {{ $t('mhdle.ui.victory.sentence', { x: attempts.length }) }}
         </p>
       </div>
