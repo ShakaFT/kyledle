@@ -73,7 +73,7 @@
       :delay="0"
       :disabled="isDisabled || hasWon"
       :empty-search-message="' '"
-      :placeholder="`「 ${$t('mhdle.ui.search-character')} 」`"
+      :placeholder="`「 ${$t('mhdle.search')} 」`"
       :pt="{
         overlay: {
           class: [
