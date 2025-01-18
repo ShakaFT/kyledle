@@ -3,6 +3,7 @@
 
   import { refDebounced } from '@vueuse/core';
 
+  import BaseCloseButton from '@/core/components/BaseCloseButton.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
 
   const { attempts, hasWon } = useClassicStore<MHdleCharacter>();
@@ -17,13 +18,7 @@
   >
     <div class="p-9">
       <div class="absolute right-2 top-1">
-        <button
-          class="text-xl text-transparent opacity-85 hover:animate-jump hover:animate-duration-500 hover:animate-once"
-          style="text-shadow: 0 0 0 #4ade80"
-          @click="isVisible = false"
-        >
-          ✖️
-        </button>
+        <BaseCloseButton color="#4ade80" @click="isVisible = false" />
       </div>
 
       <div class="text-center text-green-400">
