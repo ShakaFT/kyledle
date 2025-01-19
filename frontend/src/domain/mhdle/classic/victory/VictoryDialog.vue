@@ -1,39 +1,34 @@
 <script setup lang="ts">
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
-  import { refDebounced } from '@vueuse/core';
+  import { watchDebounced } from '@vueuse/core';
+  import { useTemplateRef } from 'vue';
 
+  import BaseDialog from '@/core/components/BaseDialog.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
 
   const { attempts, hasWon } = useClassicStore<MHdleCharacter>();
 
-  const isVisible = refDebounced(hasWon, 3500);
+  const dialog = useTemplateRef('dialog');
+
+  watchDebounced(hasWon, () => dialog.value?.dialog?.showModal(), {
+    debounce: 3500,
+  });
 </script>
 
 <template>
-  <dialog
-    v-if="isVisible"
-    :class="`inset-0 flex ${Math.random() < 0.5 ? `-rotate-3` : `rotate-3`} animate-jump-in rounded-lg bg-slate-800 drop-shadow-lg animate-add animate-duration-300`"
+  <BaseDialog
+    ref="dialog"
+    :class="Math.random() < 0.5 ? `-rotate-3` : `rotate-3`"
+    color="#4ade80"
   >
-    <div class="p-9">
-      <div class="absolute right-2 top-1">
-        <button
-          class="text-xl text-transparent opacity-85 hover:animate-jump hover:animate-duration-500 hover:animate-once"
-          style="text-shadow: 0 0 0 #4ade80"
-          @click="isVisible = false"
-        >
-          ✖️
-        </button>
-      </div>
-
-      <div class="text-center text-green-400">
-        <h1 class="font-[YoungSerif] text-5xl">
-          {{ $t('mhdle.ui.victory.title') }}
-        </h1>
-        <p class="font-[BagnardSans] text-xl">
-          {{ $t('mhdle.ui.victory.sentence', { x: attempts.length }) }}
-        </p>
-      </div>
+    <div class="p-12 text-center text-green-400">
+      <h1 class="font-[YoungSerif] text-5xl">
+        {{ $t('mhdle.victory') }}
+      </h1>
+      <p class="font-[BagnardSans] text-xl">
+        {{ $t('mhdle.victory.description', { x: attempts.length }) }}
+      </p>
     </div>
-  </dialog>
+  </BaseDialog>
 </template>

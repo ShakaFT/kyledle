@@ -13,19 +13,19 @@
   <RouterLink class="m-2" :to="`/${game}/${mode}`">
     <button
       :class="[
-        'backdrop-blur-md',
-        'backdrop-brightness-125',
-        'bg-black',
-        'duration-500',
+        'backdrop-blur-xl',
+        'bg-slate-800',
+        'drop-shadow-[0_0_3px_#1e293b]',
+        'duration-300',
         'font-[BluuNext]',
-        'mix-blend-multiply',
+        'hover:scale-105',
+        'mix-blend-hard-light',
         'p-2',
         'rounded-lg',
         'text-4xl',
-        'text-white',
+        'text-slate-300',
         'w-52',
-        disabled ? 'opacity-50' : 'hover:bg-red-800 hover:ease-out',
-        Math.random() < 0.5 ? `hover:-rotate-2` : `hover:rotate-2`,
+        disabled ? 'opacity-30' : 'hover:ease-out',
       ]"
       type="button"
     >

@@ -3,6 +3,7 @@
 
   import BaseButtonMode from '@/core/components/BaseButtonMode.vue';
   import BaseLayout from '@/core/layouts/BaseLayout.vue';
+  import CreditsDialog from '@/domain/mhdle/credits/CreditsDialog.vue';
   import { useGameStore } from '@/stores/useGameStore';
 
   const { modes } = useGameStore<MHdleCharacter, MHdleMode>();
@@ -18,5 +19,6 @@
       :disabled="isDisabledOf(mode)"
       :mode
     />
+    <CreditsDialog />
   </BaseLayout>
 </template>
