@@ -41,7 +41,7 @@
           :key="`${data.id}-${field}`"
           class="animate-delay-[0.5s]"
           :data
-          :field
+          :field="field as 'monster-type'"
           :index
         />
       </template>
@@ -56,7 +56,7 @@
           :key="`${data.id}-${field}`"
           class="animate-delay-[1s]"
           :data
-          :field
+          :field="field as 'elements'"
           :index
         />
       </template>
@@ -71,7 +71,7 @@
           :key="`${data.id}-${field}`"
           class="animate-delay-[1.5s]"
           :data
-          :field
+          :field="field as 'weaknesses'"
           :index
         />
       </template>
@@ -86,7 +86,7 @@
           :key="`${data.id}-${field}`"
           class="animate-delay-[2s]"
           :data
-          :field
+          :field="field as 'ailments'"
           :index
         />
       </template>
@@ -101,7 +101,7 @@
           :key="`${data.id}-${field}`"
           class="animate-delay-[2.5s]"
           :data
-          :field
+          :field="field as 'generation'"
           :index
         />
       </template>
@@ -116,7 +116,7 @@
           :key="`${data.id}-${field}`"
           class="animate-delay-[3s]"
           :data
-          :field
+          :field="field as 'is-subspecies'"
           :index
         />
       </template>

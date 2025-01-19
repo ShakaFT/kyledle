@@ -5,12 +5,14 @@
 </script>
 
 <template>
-  <button
+  <a
     class="mt-3 drop-shadow-[0_0_5px_#1e293b] duration-200 hover:scale-105"
+    href="https://discord.gg/mGvC3sYw"
+    target="_blank"
   >
     <img
-      class="h-14 drop-shadow-[0_0_10px_#1e293b]"
-      :src="`/${game}_guild.svg`"
+      class="h-[50px] drop-shadow-[0_0_10px_#1e293b]"
+      :src="`/${game}_discord.svg`"
     />
-  </button>
+  </a>
 </template>
