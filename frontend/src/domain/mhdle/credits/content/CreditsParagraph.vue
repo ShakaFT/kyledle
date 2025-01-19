@@ -26,17 +26,17 @@
         <template v-if="translation.tag === 'a'">
           <a
             :key="translation.slot"
-            class="italic transition duration-300 hover:text-red-700"
+            class="italic transition duration-300 hover:text-slate-500"
             :href="translation.href"
             target="_blank"
           >
-            {{ `${translation.term}` }}
+            {{ translation.term }}
           </a>
         </template>
 
         <template v-if="translation.tag === 'span'">
           <span :key="translation.slot" class="italic">
-            {{ `${translation.term}` }}
+            {{ translation.term }}
           </span>
         </template>
       </template>

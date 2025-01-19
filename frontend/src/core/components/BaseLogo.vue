@@ -14,7 +14,7 @@
           'hover:scale-105',
           /* misc */
           'cursor-pointer',
-          'drop-shadow-[0_-30px_20px_black]',
+          'drop-shadow-[0_-30px_20px_#1e293b]',
           'invert',
         ]"
         :src="`/${game}_logo.png`"
