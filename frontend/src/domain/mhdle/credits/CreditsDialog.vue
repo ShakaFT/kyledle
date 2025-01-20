@@ -5,6 +5,7 @@
   import CreditsTextDevelopment from '@/domain/mhdle/credits/content/CreditsTextDevelopment.vue';
   import CreditsIcon from '@/domain/mhdle/credits/CreditsIcon.vue';
   import DiscordIcon from '@/domain/mhdle/credits/DiscordIcon.vue';
+  import TwitchIcon from '@/domain/mhdle/credits/TwitchIcon.vue';
 </script>
 
 <template>
@@ -13,6 +14,7 @@
       <div class="flex items-center gap-4">
         <CreditsIcon @click="dialog?.showModal()" />
         <DiscordIcon />
+        <TwitchIcon />
       </div>
     </template>
 
