@@ -2,6 +2,8 @@
 This module contains main endpoints of default services.
 """
 
+from datetime import datetime
+
 from flask import jsonify
 
 from config import app, redis
@@ -36,7 +38,8 @@ def get_mode_config(game: str, mode: str):
     """
     This endpoint returns mode config.
     """
-    today = to_string_date(utc_now())
+    today_date = utc_now()
+    today = to_string_date(today_date)
 
     # Fetch config
     config = decode_from_redis(redis.hgetall(f"{game}:mode:{mode}"))  # type: ignore
@@ -51,5 +54,10 @@ def get_mode_config(game: str, mode: str):
         config=config,
         target=decode_from_redis(
             redis.hgetall(f"{game}:character:{today_target['target']}")  # type: ignore
+        ),
+        timestamp=int(
+            datetime(
+                year=today_date.year, month=today_date.month, day=today_date.day
+            ).timestamp()
         ),
     )
