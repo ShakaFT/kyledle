@@ -46,6 +46,9 @@ ssh-keygen -t ed25519
 sudo apt-get install docker-compose-plugin
 sudo chmod 666 /var/run/docker.sock
 
+# Set Paris timezone
+timedatectl set-timezone Europe/Paris
+
 # Doc to disable IPV6: https://github.com/docker/hub-feedback/issues/2421#issuecomment-2491140211
 
 # Add Supervisor file config
