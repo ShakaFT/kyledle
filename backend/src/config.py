@@ -31,6 +31,7 @@ def before_request():
     """
     if (
         constants.ENVIRONMENT != "local"
+        and request.path != "/"  # Call by gunicorn to warmup server
         and request.method != "OPTIONS"
         and request.headers.get("Authorization") != os.environ["API_KEY"]
     ):
