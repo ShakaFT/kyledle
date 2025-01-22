@@ -1,6 +1,6 @@
 import { useFetch } from '@vueuse/core';
 import { defineStore, storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 import { useCurrentGame } from '@/core/composables/useCurrentGame';
 
@@ -21,8 +21,9 @@ export const useGameStore = <T, U>() => {
 
     const characters = computed(() => data.value?.characters ?? <T[]>[]);
     const modes = computed(() => data.value?.modes ?? <U[]>[]);
+    const isAnimationEnabled = ref(true);
 
-    return { data, characters, modes };
+    return { data, characters, modes, isAnimationEnabled };
   });
 
   return storeToRefs(useDataStore());

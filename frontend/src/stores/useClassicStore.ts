@@ -12,7 +12,7 @@ export const useClassicStore = <
   T extends object & { id: string },
   U extends string = string,
 >() => {
-  const { characters } = useGameStore<T, U>();
+  const { characters, isAnimationEnabled } = useGameStore<T, U>();
 
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
@@ -39,6 +39,7 @@ export const useClassicStore = <
 
     function attemptOf(character: T) {
       attempts.value.unshift(character);
+      isAnimationEnabled.value = true;
 
       const storage = useLocalStorage(`${game.value}/${mode.value}`, {
         attempts: <T[]>[],
@@ -61,8 +62,15 @@ export const useClassicStore = <
         serverDay,
       });
 
-      if (storage.value.serverDay === serverDay)
-        return (attempts.value = storage.value.attempts);
+      if (
+        storage.value.serverDay === serverDay &&
+        storage.value.attempts.length > 0
+      ) {
+        return (
+          (attempts.value = storage.value.attempts),
+          (isAnimationEnabled.value = false)
+        );
+      }
 
       storage.value.attempts = [];
       storage.value.serverDay = serverDay;
