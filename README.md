@@ -51,7 +51,7 @@ timedatectl set-timezone Europe/Paris
 
 # Doc to disable IPV6: https://github.com/docker/hub-feedback/issues/2421#issuecomment-2491140211
 
-# Add Supervisor file config
+# Add Supervisor file config --> /etc/supervisor/conf.d/kyledle.conf
 [program:kyledle-dev-backend]
 command=/home/debian/kyledle-dev/run.bash dev -b
 directory=/home/debian/kyledle-dev
@@ -67,6 +67,14 @@ autostart=true
 autorestart=true
 stderr_logfile=/var/log/kyledle-dev-frontend.err.log
 stdout_logfile=/var/log/kyledle-dev-frontend.out.log
+
+[program:kyledle-dev-nginx]
+command=/home/debian/kyledle-dev/run.bash dev -n
+directory=/home/debian/kyledle-dev
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/kyledle-dev-nginx.err.log
+stdout_logfile=/var/log/kyledle-dev-nginx.out.log
 
 [program:kyledle-prod-backend]
 command=/home/debian/kyledle-prod/run.bash prod -b
@@ -84,8 +92,20 @@ autorestart=true
 stderr_logfile=/var/log/kyledle-prod-frontend.err.log
 stdout_logfile=/var/log/kyledle-prod-frontend.out.log
 
+[program:kyledle-prod-nginx]
+command=/home/debian/kyledle-prod/run.bash prod -n
+directory=/home/debian/kyledle-prod
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/kyledle-prod-nginx.err.log
+stdout_logfile=/var/log/kyledle-prod-nginx.out.log
+
 # Execute these commands to refresh supervisor
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo supervisorctl status
+
+# Generate Certbot Certificates
+sudo certbot certonly --standalone -d kyledle.shakaft.fr
+sudo certbot certonly --standalone -d api.kyledle.shakaft.fr
 ```

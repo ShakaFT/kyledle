@@ -9,6 +9,7 @@ services:
       - .env/.env.$ENVIRONMENT
     networks:
       - backend_network
+      - nginx_network
     ports: !reset null
 
   redis:
@@ -31,7 +32,7 @@ services:
       <<: *celery-env
 
   nginx:
-    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_nginx
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_backend_nginx
     depends_on:
       - backend
     image: nginx:alpine
@@ -44,3 +45,6 @@ services:
 
 networks:
   backend_network:
+  nginx_network:
+    external: true
+    name: $NGINX_NETWORK

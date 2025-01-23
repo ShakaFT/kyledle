@@ -22,10 +22,13 @@ EOF
 
 RUN_FRONTEND=true
 RUN_BACKEND=true
+RUN_NGINX=false
 if [[ "$@" =~ "-frontend" || "$@" =~ "-front" || "$@" =~ "-f" ]]; then
     RUN_BACKEND=false
 elif [[ "$@" =~ "-backend" || "$@" =~ "-back" || "$@" =~ "-b" ]]; then
     RUN_FRONTEND=false
+elif [[ "$@" =~ "-nginx" || "$@" =~ "-n" ]]; then
+    RUN_NGINX=true
 fi
 
 export PROJECT_NAME="kyledle"
@@ -34,12 +37,15 @@ BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -f docker-compose-
 FRONTEND_COMMAND="docker compose -f docker-compose-frontend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-frontend-$1 up --build"
 
 if [ "$1" = "prod" ]; then
-    BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8082
     export ENVIRONMENT="prod"
-    export FRONTEND_PORT=80
+    export FRONTEND_PORT=5175
     export REDIS_PORT=6381
-    export ORIGINS="$BASE_URL,http://kyledle.shakaft.fr"
+    export ORIGINS="https://$PROJECT_NAME.shakaft.fr"
+    export VITE_API_URL="https://api.$PROJECT_NAME.shakaft.fr"
+
+    # Network used by Nginx in production
+    docker network create $PROJECT_NAME-prod-nginx >/dev/null 2>&1
 elif [ "$1" = "dev" ]; then
     BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8081
@@ -47,6 +53,7 @@ elif [ "$1" = "dev" ]; then
     export FRONTEND_PORT=5174
     export REDIS_PORT=6380
     export ORIGINS="$BASE_URL:$FRONTEND_PORT"
+    export VITE_API_URL="$BASE_URL:$BACKEND_PORT"
 else # local
     BASE_URL="http://localhost"
     export BACKEND_PORT=8080
@@ -54,11 +61,10 @@ else # local
     export FRONTEND_PORT=5173
     export REDIS_PORT=6379
     export ORIGINS="$BASE_URL:$FRONTEND_PORT"
+    export VITE_API_URL="$BASE_URL:$BACKEND_PORT"
     BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -p $PROJECT_NAME-backend-local --profile local up --build"
     FRONTEND_COMMAND="cd frontend && npm i && npm run dev"
 fi
-
-export VITE_API_URL="$BASE_URL:$BACKEND_PORT"
 
 PARRALLEL_COMMAND=$(
     cat <<EOF
@@ -73,6 +79,11 @@ cd $(pwd)
 eval $BACKEND_COMMAND
 EOF
 )
+
+if $RUN_NGINX; then
+    docker compose -f docker-compose-nginx.prod.yml -p $PROJECT_NAME-nginx-$1 up --build
+    exit 0
+fi
 
 if $RUN_BACKEND && $RUN_FRONTEND; then
     run_in_parrallel "$PARRALLEL_COMMAND"
