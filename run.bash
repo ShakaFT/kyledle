@@ -83,6 +83,7 @@ EOF
 
 if $RUN_NGINX; then
     docker compose -f docker-compose-nginx.prod.yml -p $PROJECT_NAME-nginx-$1 up --build
+    exit 0
 fi
 
 if $RUN_BACKEND && $RUN_FRONTEND; then
