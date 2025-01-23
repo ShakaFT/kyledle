@@ -37,12 +37,12 @@ BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -f docker-compose-
 FRONTEND_COMMAND="docker compose -f docker-compose-frontend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-frontend-$1 up --build"
 
 if [ "$1" = "prod" ]; then
-    BASE_URL="http://57.129.77.184"
+    BASE_URL="https://api.$PROJECT_NAME.shakaft.fr"
     export BACKEND_PORT=8082
     export ENVIRONMENT="prod"
     export FRONTEND_PORT=5175
     export REDIS_PORT=6381
-    export ORIGINS="$BASE_URL,http://$PROJECT_NAME.shakaft.fr"
+    export ORIGINS="http://$PROJECT_NAME.shakaft.fr"
     export NGINX_NETWORK="$PROJECT_NAME-prod-network"
     docker network create $NGINX_NETWORK >/dev/null 2>&1
 elif [ "$1" = "dev" ]; then
