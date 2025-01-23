@@ -42,7 +42,7 @@ if [ "$1" = "prod" ]; then
     export ENVIRONMENT="prod"
     export FRONTEND_PORT=5175
     export REDIS_PORT=6381
-    export ORIGINS="http://$PROJECT_NAME.shakaft.fr"
+    export ORIGINS="https://$PROJECT_NAME.shakaft.fr"
     export NGINX_NETWORK="$PROJECT_NAME-prod-network"
     docker network create $NGINX_NETWORK >/dev/null 2>&1
 elif [ "$1" = "dev" ]; then
