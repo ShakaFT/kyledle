@@ -32,6 +32,7 @@ elif [[ "$@" =~ "-nginx" || "$@" =~ "-n" ]]; then
 fi
 
 export PROJECT_NAME="kyledle"
+export NGINX_NETWORK="$PROJECT_NAME-prod-nginx"
 export REDIS_HOST="redis"
 BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -f docker-compose-backend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-backend-$1 up --build"
 FRONTEND_COMMAND="docker compose -f docker-compose-frontend.prod.yml --env-file .env/.env.$1 -p $PROJECT_NAME-frontend-$1 up --build"
@@ -45,7 +46,6 @@ if [ "$1" = "prod" ]; then
     export VITE_API_URL="https://api.$PROJECT_NAME.shakaft.fr"
 
     # Network used by Nginx in production
-    export NGINX_NETWORK=$PROJECT_NAME-prod-nginx
     docker network create $NGINX_NETWORK >/dev/null 2>&1
 elif [ "$1" = "dev" ]; then
     BASE_URL="http://57.129.77.184"
