@@ -13,8 +13,6 @@ services:
       - nginx_network
     ports:
       - $FRONTEND_PORT:80
-    volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro
 
 networks:
   nginx_network:
