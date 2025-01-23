@@ -45,7 +45,8 @@ if [ "$1" = "prod" ]; then
     export VITE_API_URL="https://api.$PROJECT_NAME.shakaft.fr"
 
     # Network used by Nginx in production
-    docker network create $PROJECT_NAME-prod-nginx >/dev/null 2>&1
+    export NGINX_NETWORK=$PROJECT_NAME-prod-nginx
+    docker network create $NGINX_NETWORK >/dev/null 2>&1
 elif [ "$1" = "dev" ]; then
     BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8081
