@@ -17,14 +17,14 @@ services:
       - ./redis.conf:/etc/redis/kyledle/redis.conf
 
   celery_worker:
-    command: celery -A config.celery worker --loglevel INFO --uid=nobody --gid=nogroup
+    command: celery -A config.celery worker --loglevel INFO
     env_file:
       - .env/.env.$ENVIRONMENT
     environment:
       <<: *celery-env
 
   celery_beat:
-    command: sh -c "touch celerybeat-schedule && chown nobody:nogroup celerybeat-schedule && celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup"
+    command: celery -A config.celery beat --loglevel INFO
     env_file:
       - .env/.env.$ENVIRONMENT
     environment:
