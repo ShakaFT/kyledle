@@ -44,7 +44,6 @@ if [ "$1" = "prod" ]; then
     export NGINX_NETWORK="$PROJECT_NAME-prod-network"
     export ORIGINS="https://$PROJECT_NAME.shakaft.fr"
     export VITE_API_URL="https://api.$PROJECT_NAME.shakaft.fr"
-    docker network create $NGINX_NETWORK >/dev/null 2>&1
 elif [ "$1" = "dev" ]; then
     BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8081
@@ -54,7 +53,6 @@ elif [ "$1" = "dev" ]; then
     export NGINX_NETWORK="$PROJECT_NAME-dev-network"
     export ORIGINS="$BASE_URL:$FRONTEND_PORT"
     export VITE_API_URL="$BASE_URL:$BACKEND_PORT"
-    docker network create $NGINX_NETWORK >/dev/null 2>&1
 else # local
     BASE_URL="http://localhost"
     export BACKEND_PORT=8080
@@ -66,6 +64,9 @@ else # local
     BACKEND_COMMAND="docker compose -f docker-compose-backend.yml -p $PROJECT_NAME-backend-local --profile local up --build"
     FRONTEND_COMMAND="cd frontend && npm i && npm run dev"
 fi
+
+# Network used by Nginx
+docker network create $NGINX_NETWORK >/dev/null 2>&1
 
 PARRALLEL_COMMAND=$(
     cat <<EOF

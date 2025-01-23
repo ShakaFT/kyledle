@@ -88,4 +88,8 @@ stdout_logfile=/var/log/kyledle-prod-frontend.out.log
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo supervisorctl status
+
+# Generate Certbot Certificates
+sudo certbot certonly --standalone -d kyledle.shakaft.fr
+sudo certbot certonly --standalone -d api.kyledle.shakaft.fr
 ```
