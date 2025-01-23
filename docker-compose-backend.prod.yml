@@ -24,7 +24,7 @@ services:
       <<: *celery-env
 
   celery_beat:
-    command: sh -c "celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup && chown nobody:nogroup celerybeat-schedule"
+    command: sh -c "touch celerybeat-schedule && chown nobody:nogroup celerybeat-schedule && celery -A config.celery beat --loglevel INFO --uid=nobody --gid=nogroup"
     env_file:
       - .env/.env.$ENVIRONMENT
     environment:
