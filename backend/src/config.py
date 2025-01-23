@@ -36,7 +36,7 @@ def before_request():
         and request.headers.get("Authorization") != os.environ["API_KEY"]
     ):
         logging.error(f"ERROR --> {request.path}")
-        abort(401)
+        return jsonify("Unauthorized"), 401
 
 
 # Error Handling
