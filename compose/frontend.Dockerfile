@@ -7,8 +7,8 @@ COPY frontend .
 RUN npm i
 RUN npm run build
 
-FROM nginx:alpine AS server
-COPY nginx/nginx-frontend.conf /etc/nginx/nginx.conf
-RUN rm -rf /usr/share/nginx/html
-COPY --from=build /dist /usr/share/nginx/html
-RUN ls -l /usr/share/nginx/html
+# FROM nginx:alpine AS server
+# COPY nginx/nginx-frontend.conf /etc/nginx/nginx.conf
+# RUN rm -rf /usr/share/nginx/html
+# COPY --from=build /dist /usr/share/nginx/html
+# RUN ls -l /usr/share/nginx/html

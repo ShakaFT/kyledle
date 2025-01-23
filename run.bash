@@ -35,6 +35,7 @@ FRONTEND_COMMAND="docker compose -f docker-compose-frontend.prod.yml --env-file 
 
 if [ "$1" = "prod" ]; then
     BASE_URL="http://57.129.77.184"
+    DEPLOY_NGINX=true
     export BACKEND_PORT=8082
     export ENVIRONMENT="prod"
     export FRONTEND_PORT=80
@@ -42,6 +43,7 @@ if [ "$1" = "prod" ]; then
     export ORIGINS="$BASE_URL,http://kyledle.shakaft.fr"
 elif [ "$1" = "dev" ]; then
     BASE_URL="http://57.129.77.184"
+    DEPLOY_NGINX=true
     export BACKEND_PORT=8081
     export ENVIRONMENT="dev"
     export FRONTEND_PORT=5174
@@ -49,6 +51,7 @@ elif [ "$1" = "dev" ]; then
     export ORIGINS="$BASE_URL:$FRONTEND_PORT"
 else # local
     BASE_URL="http://localhost"
+    DEPLOY_NGINX=false
     export BACKEND_PORT=8080
     export ENVIRONMENT="local"
     export FRONTEND_PORT=5173
