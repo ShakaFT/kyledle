@@ -7,7 +7,7 @@ import os
 
 from celery import Celery, Task
 from celery.schedules import crontab
-from flask import Flask, abort, jsonify, request
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from redis import Redis
 from werkzeug.exceptions import HTTPException
@@ -35,7 +35,7 @@ def before_request():
         and request.method != "OPTIONS"
         and request.headers.get("Authorization") != os.environ["API_KEY"]
     ):
-        abort(401)
+        return jsonify("Unauthorized"), 401
 
 
 # Error Handling
