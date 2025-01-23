@@ -14,6 +14,12 @@ from utils.redis_decode import decode_from_redis
 
 
 @celery_task
+def hello_world():
+    """hello_world"""
+    logging.error("HELLO WORLD")
+
+
+@celery_task
 def schedule_levels(tomorrow=True):
     """
     This endpoint schedules levels.
