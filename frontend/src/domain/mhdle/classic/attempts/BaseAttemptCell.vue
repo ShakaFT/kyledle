@@ -1,5 +1,9 @@
 <script setup lang="ts">
+  import { useGameStore } from '@/stores/useGameStore';
+
   defineProps<{ index: number }>();
+
+  const { isAnimationEnabled } = useGameStore();
 </script>
 
 <template>
@@ -14,7 +18,10 @@
       'rounded-lg',
       'text-center',
       'text-sm',
-      { 'animate-fade-right animate-duration-300': index === 0 },
+      {
+        'animate-fade-right animate-duration-300':
+          isAnimationEnabled && index === 0,
+      },
     ]"
   >
     <slot />

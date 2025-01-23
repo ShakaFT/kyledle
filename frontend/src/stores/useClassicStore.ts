@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 
-import { useFetch } from '@vueuse/core';
+import { useFetch, useLocalStorage, watchOnce } from '@vueuse/core';
 import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 
@@ -12,7 +12,7 @@ export const useClassicStore = <
   T extends object & { id: string },
   U extends string = string,
 >() => {
-  const { characters } = useGameStore<T, U>();
+  const { characters, isAnimationEnabled } = useGameStore<T, U>();
 
   const { game } = useCurrentGame();
   const { mode } = useCurrentMode();
@@ -27,7 +27,7 @@ export const useClassicStore = <
       },
     )
       .get()
-      .json<{ target: T }>();
+      .json<{ target: T; timestamp: number }>();
 
     const attempts = ref<T[]>([]) as Ref<T[]>;
     const leftovers = computed(() => characters.value.filter(isLeftoverOf));
@@ -39,11 +39,42 @@ export const useClassicStore = <
 
     function attemptOf(character: T) {
       attempts.value.unshift(character);
+      isAnimationEnabled.value = true;
+
+      const storage = useLocalStorage(`${game.value}/${mode.value}`, {
+        attempts: <T[]>[],
+      });
+
+      storage.value.attempts = attempts.value;
     }
 
     function isLeftoverOf(character: T): boolean {
       return !attempts.value.find((attempt) => attempt.id === character.id);
     }
+
+    watchOnce(data, (data) => {
+      if (!data) return;
+
+      const serverDay = new Date(data.timestamp * 1000).toDateString();
+
+      const storage = useLocalStorage(`${game.value}/${mode.value}`, {
+        attempts: [],
+        serverDay,
+      });
+
+      if (
+        storage.value.serverDay === serverDay &&
+        storage.value.attempts.length > 0
+      ) {
+        return (
+          (attempts.value = storage.value.attempts),
+          (isAnimationEnabled.value = false)
+        );
+      }
+
+      storage.value.attempts = [];
+      storage.value.serverDay = serverDay;
+    });
 
     return {
       data,
@@ -56,10 +87,10 @@ export const useClassicStore = <
     };
   });
 
-  const dataStore = useDataStore();
+  const store = useDataStore();
 
   return {
-    ...storeToRefs(dataStore),
-    attemptOf: dataStore.attemptOf,
+    ...storeToRefs(store),
+    attemptOf: store.attemptOf,
   };
 };
