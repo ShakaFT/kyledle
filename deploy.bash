@@ -33,7 +33,7 @@ elif [ "$1" = "dev" ]; then
     wait_for_service "http://localhost:8081"
     sudo supervisorctl restart kyledle-dev-frontend
     wait_for_service "http://localhost:51740"
-    sudo supervisorctl restart kyledle-dev-nginx
+    # sudo supervisorctl restart kyledle-dev-nginx
 else
     echo "Exit! Missing first parameter"
     exit 1
