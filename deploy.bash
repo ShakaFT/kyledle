@@ -26,13 +26,13 @@ if [ "$1" = "prod" ]; then
     sudo supervisorctl restart kyledle-prod-backend
     wait_for_service "http://localhost:8082"
     sudo supervisorctl restart kyledle-prod-frontend
-    wait_for_service "http://localhost:5175"
+    wait_for_service "http://localhost:51750"
     sudo supervisorctl restart kyledle-prod-nginx
 elif [ "$1" = "dev" ]; then
     sudo supervisorctl restart kyledle-dev-backend
     wait_for_service "http://localhost:8081"
     sudo supervisorctl restart kyledle-dev-frontend
-    wait_for_service "http://localhost:5174"
+    wait_for_service "http://localhost:51740"
     sudo supervisorctl restart kyledle-dev-nginx
 else
     echo "Exit! Missing first parameter"
