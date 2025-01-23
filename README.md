@@ -51,7 +51,7 @@ timedatectl set-timezone Europe/Paris
 
 # Doc to disable IPV6: https://github.com/docker/hub-feedback/issues/2421#issuecomment-2491140211
 
-# Add Supervisor file config
+# Add Supervisor file config --> /etc/supervisor/conf.d/kyledle.conf
 [program:kyledle-dev-backend]
 command=/home/debian/kyledle-dev/run.bash dev -b
 directory=/home/debian/kyledle-dev

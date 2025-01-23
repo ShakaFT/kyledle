@@ -12,7 +12,7 @@ services:
     networks:
       - nginx_network
     ports:
-      - $FRONTEND_PORT:80
+      - $FRONTEND_PORT_TEST:80
 
 networks:
   nginx_network:
