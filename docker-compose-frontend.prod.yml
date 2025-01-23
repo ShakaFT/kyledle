@@ -11,6 +11,8 @@ services:
     image: ${PROJECT_NAME}_frontend:$ENVIRONMENT
     networks:
       - nginx_network
+    ports:
+      - $FRONTEND_PORT:80
 
 networks:
   nginx_network:
