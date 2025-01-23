@@ -2,7 +2,6 @@
 This module contains tasks.
 """
 
-import logging
 import random
 from collections import defaultdict
 from datetime import timedelta
@@ -11,12 +10,6 @@ from config import redis
 from utils.celery_task import celery_task
 from utils.date import to_string_date, utc_now
 from utils.redis_decode import decode_from_redis
-
-
-@celery_task
-def hello_world():
-    """hello_world"""
-    logging.error("HELLO WORLD")
 
 
 @celery_task

@@ -83,7 +83,6 @@ celery.conf.broker_connection_retry_on_startup = True
 
 celery.conf.imports = ("tasks",)
 celery.conf.beat_schedule = {
-    "hello-world": {"task": "tasks.hello_world", "schedule": crontab()},
     "schedule-levels": {"task": "tasks.schedule_levels", "schedule": crontab("0", "0")},
 }
 
