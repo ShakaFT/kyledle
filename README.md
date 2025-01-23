@@ -68,6 +68,14 @@ autorestart=true
 stderr_logfile=/var/log/kyledle-dev-frontend.err.log
 stdout_logfile=/var/log/kyledle-dev-frontend.out.log
 
+[program:kyledle-dev-nginx]
+command=/home/debian/kyledle-dev/run.bash dev -n
+directory=/home/debian/kyledle-dev
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/kyledle-dev-nginx.err.log
+stdout_logfile=/var/log/kyledle-dev-nginx.out.log
+
 [program:kyledle-prod-backend]
 command=/home/debian/kyledle-prod/run.bash prod -b
 directory=/home/debian/kyledle-prod
@@ -83,6 +91,14 @@ autostart=true
 autorestart=true
 stderr_logfile=/var/log/kyledle-prod-frontend.err.log
 stdout_logfile=/var/log/kyledle-prod-frontend.out.log
+
+[program:kyledle-prod-nginx]
+command=/home/debian/kyledle-prod/run.bash prod -n
+directory=/home/debian/kyledle-prod
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/kyledle-prod-nginx.err.log
+stdout_logfile=/var/log/kyledle-prod-nginx.out.log
 
 # Execute these commands to refresh supervisor
 sudo supervisorctl reread
