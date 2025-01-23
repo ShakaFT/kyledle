@@ -44,7 +44,7 @@ if [ "$1" = "prod" ]; then
     export REDIS_PORT=6381
     export ORIGINS="$BASE_URL,http://$PROJECT_NAME.shakaft.fr"
     export NGINX_NETWORK="$PROJECT_NAME-prod-network"
-    docker network create $NGINX_NETWORK
+    docker network create $NGINX_NETWORK >/dev/null 2>&1
 elif [ "$1" = "dev" ]; then
     BASE_URL="http://57.129.77.184"
     export BACKEND_PORT=8081
@@ -53,7 +53,7 @@ elif [ "$1" = "dev" ]; then
     export REDIS_PORT=6380
     export ORIGINS="$BASE_URL:$FRONTEND_PORT"
     export NGINX_NETWORK="$PROJECT_NAME-dev-network"
-    docker network create $NGINX_NETWORK
+    docker network create $NGINX_NETWORK >/dev/null 2>&1
 else # local
     BASE_URL="http://localhost"
     export BACKEND_PORT=8080
