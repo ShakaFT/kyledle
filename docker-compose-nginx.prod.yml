@@ -1,0 +1,18 @@
+services:
+  nginx:
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_nginx
+    image: nginx:alpine
+    networks:
+      - ${NGINX_NETWORK}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+
+networks:
+  ${NGINX_NETWORK}:
+    external: true
+
+volumes:
+  redis_data:

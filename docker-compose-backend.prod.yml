@@ -7,9 +7,11 @@ services:
     command: sh -c "python -c 'import tasks; tasks.schedule_levels(tomorrow=False)' && gunicorn --bind 0.0.0.0:5000 --workers 3 main:app"
     env_file:
       - .env/.env.$ENVIRONMENT
+    networks:
+      - ${NGINX_NETWORK}
     # networks:
     #   - backend_network
-    ports: !reset null
+    # ports: !reset null
 
   redis:
     command: redis-server /etc/redis/kyledle/redis.conf
@@ -43,3 +45,7 @@ services:
 
 # networks:
 #   backend_network:
+
+networks:
+  ${NGINX_NETWORK}:
+    external: true

@@ -22,10 +22,13 @@ EOF
 
 RUN_FRONTEND=true
 RUN_BACKEND=true
+RUN_NGINX=false
 if [[ "$@" =~ "-frontend" || "$@" =~ "-front" || "$@" =~ "-f" ]]; then
     RUN_BACKEND=false
 elif [[ "$@" =~ "-backend" || "$@" =~ "-back" || "$@" =~ "-b" ]]; then
     RUN_FRONTEND=false
+elif [[ "$@" =~ "-nginx" || "$@" =~ "-n" ]]; then
+    RUN_NGINX=true
 fi
 
 export PROJECT_NAME="kyledle"
@@ -35,23 +38,24 @@ FRONTEND_COMMAND="docker compose -f docker-compose-frontend.prod.yml --env-file 
 
 if [ "$1" = "prod" ]; then
     BASE_URL="http://57.129.77.184"
-    DEPLOY_NGINX=true
     export BACKEND_PORT=8082
     export ENVIRONMENT="prod"
-    export FRONTEND_PORT=80
+    export FRONTEND_PORT=5175
     export REDIS_PORT=6381
-    export ORIGINS="$BASE_URL,http://kyledle.shakaft.fr"
+    export ORIGINS="$BASE_URL,http://$PROJECT_NAME.shakaft.fr"
+    export NGINX_NETWORK="$PROJECT_NAME-prod-network"
+    docker network create $NGINX_NETWORK
 elif [ "$1" = "dev" ]; then
     BASE_URL="http://57.129.77.184"
-    DEPLOY_NGINX=true
     export BACKEND_PORT=8081
     export ENVIRONMENT="dev"
     export FRONTEND_PORT=5174
     export REDIS_PORT=6380
     export ORIGINS="$BASE_URL:$FRONTEND_PORT"
+    export NGINX_NETWORK="$PROJECT_NAME-dev-network"
+    docker network create $NGINX_NETWORK
 else # local
     BASE_URL="http://localhost"
-    DEPLOY_NGINX=false
     export BACKEND_PORT=8080
     export ENVIRONMENT="local"
     export FRONTEND_PORT=5173
@@ -76,6 +80,10 @@ cd $(pwd)
 eval $BACKEND_COMMAND
 EOF
 )
+
+if $RUN_NGINX; then
+    docker compose -f docker-compose-nginx.prod -p $PROJECT_NAME-nginx-$1 up --build
+fi
 
 if $RUN_BACKEND && $RUN_FRONTEND; then
     run_in_parrallel "$PARRALLEL_COMMAND"
