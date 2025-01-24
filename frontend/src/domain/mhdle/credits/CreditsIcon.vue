@@ -6,7 +6,7 @@
 
 <template>
   <button
-    class="mt-3 drop-shadow-[0_0_5px_#1e293b] duration-200 hover:scale-105"
+    class="mt-3 cursor-pointer drop-shadow-[0_0_5px_#1e293b] duration-200 hover:scale-105"
   >
     <img
       class="h-14 drop-shadow-[0_0_10px_#1e293b]"

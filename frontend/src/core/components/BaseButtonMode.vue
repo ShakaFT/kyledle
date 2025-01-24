@@ -13,6 +13,7 @@
   <RouterLink class="m-2" :to="`/${game}/${mode}`">
     <button
       :class="[
+        'cursor-pointer',
         'backdrop-blur-xl',
         'bg-slate-800',
         'drop-shadow-[0_0_3px_#1e293b]',

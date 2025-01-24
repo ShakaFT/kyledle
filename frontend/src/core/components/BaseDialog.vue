@@ -16,9 +16,9 @@
   <dialog
     v-bind="$attrs"
     ref="dialog"
-    class="pointer-events-none flex rounded-lg bg-slate-800 opacity-0 transition-opacity duration-300 backdrop:bg-transparent open:pointer-events-auto open:opacity-100 open:drop-shadow-[0_0_3px_black]"
+    class="pointer-events-none flex place-self-center justify-self-center rounded-lg bg-slate-800 opacity-0 transition-opacity duration-300 backdrop:bg-transparent open:pointer-events-auto open:opacity-100 open:drop-shadow-[0_0_3px_black]"
   >
-    <div class="absolute right-2 top-1">
+    <div class="absolute top-1 right-2">
       <BaseCloseButton :color @click="dialog?.close()" />
     </div>
 

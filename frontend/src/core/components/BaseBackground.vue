@@ -3,7 +3,7 @@
 
   const { game } = useCurrentGame();
 
-  const background = `url(/${game.value}_background.webp) center/cover no-repeat, black`;
+  const background = `url(/${game.value}_background.webp) center/cover no-repeat, #0e141c`;
 </script>
 
 <template>

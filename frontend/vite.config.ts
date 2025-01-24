@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url';
 
 import vueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
+import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import { defineConfig, loadEnv } from 'vite';
 import vueDevTools from 'vite-plugin-vue-devtools';
@@ -16,6 +17,7 @@ export default defineConfig(({ mode }) => {
       vueI18nPlugin({
         include: fileURLToPath(new URL('./src/locales/**', import.meta.url)),
       }),
+      tailwindcss(),
     ],
     resolve: {
       alias: {

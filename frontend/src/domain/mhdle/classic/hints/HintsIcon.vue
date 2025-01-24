@@ -34,7 +34,7 @@
 <template>
   <img
     ref="hoverable"
-    class="absolute -right-[58px] top-0"
+    class="absolute top-0 -right-[58px]"
     :class="classes"
     :src="`/${game}_${mode}_hints.svg`"
     width="50"

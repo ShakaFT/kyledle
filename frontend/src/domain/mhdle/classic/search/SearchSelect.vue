@@ -107,7 +107,7 @@
               'font-[YoungSerif]',
               'h-12',
               'mix-blend-multiply',
-              'outline-none',
+              'outline-hidden',
               'placeholder:font-[BluuNext]',
               'placeholder:text-slate-400',
               'rounded-lg',
