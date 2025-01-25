@@ -1,7 +1,5 @@
 <script setup lang="ts">
-  import { useCurrentGame } from '@/core/composables/useCurrentGame';
-
-  const { game } = useCurrentGame();
+  const src = new URL(`/src/assets/images/twitch.svg`, import.meta.url).href;
 </script>
 
 <template>
@@ -10,9 +8,6 @@
     href="https://www.twitch.tv/kylekilleur"
     target="_blank"
   >
-    <img
-      class="h-[50px] drop-shadow-[0_0_10px_#1e293b]"
-      :src="`/${game}_twitch.svg`"
-    />
+    <img class="h-[50px] drop-shadow-[0_0_10px_#1e293b]" :src />
   </a>
 </template>

@@ -29,6 +29,11 @@
     if (isHovered.value)
       classes.value = 'drop-shadow-[0_0_10px_black] duration-500';
   });
+
+  const src = new URL(
+    `/src/assets/images/${game.value}/${mode.value}/hints.svg`,
+    import.meta.url,
+  ).href;
 </script>
 
 <template>
@@ -36,7 +41,7 @@
     ref="hoverable"
     class="absolute top-0 -right-[58px]"
     :class="classes"
-    :src="`/${game}_${mode}_hints.svg`"
+    :src
     width="50"
   />
   <HintsTooltip :class="isHovered ? 'opacity-100' : 'opacity-0'" />

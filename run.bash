@@ -4,17 +4,15 @@
 # Clear Docker Images Cache
 trap 'docker rmi $(docker images -f "dangling=true" -q) > /dev/null 2>&1' EXIT
 
-function run_in_parrallel {
+function run_in_parallel {
     # Open new terminal tab (on MacOS only)
     osascript <<EOF
     tell application "iTerm2"
         tell current window
-            set originalTab to current tab
             create tab with default profile
             tell current session of current tab
                 write text "$1"
             end tell
-            select originalTab
         end tell
     end tell
 EOF
@@ -67,7 +65,7 @@ else # local
     FRONTEND_COMMAND="cd frontend && npm i && npm run dev"
 fi
 
-PARRALLEL_COMMAND=$(
+PARALLEL_COMMAND=$(
     cat <<EOF
 export BACKEND_PORT=$BACKEND_PORT
 export ENVIRONMENT=$ENVIRONMENT
@@ -87,7 +85,7 @@ if $RUN_NGINX; then
 fi
 
 if $RUN_BACKEND && $RUN_FRONTEND; then
-    run_in_parrallel "$PARRALLEL_COMMAND"
+    run_in_parallel "$PARALLEL_COMMAND"
 elif $RUN_BACKEND; then
     eval "$BACKEND_COMMAND"
 fi

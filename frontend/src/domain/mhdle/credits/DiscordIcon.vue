@@ -1,7 +1,5 @@
 <script setup lang="ts">
-  import { useCurrentGame } from '@/core/composables/useCurrentGame';
-
-  const { game } = useCurrentGame();
+  const src = new URL(`/src/assets/images/discord.svg`, import.meta.url).href;
 </script>
 
 <template>
@@ -10,9 +8,6 @@
     href="https://discord.gg/a9dPB2HrNH"
     target="_blank"
   >
-    <img
-      class="h-[50px] drop-shadow-[0_0_10px_#1e293b]"
-      :src="`/${game}_discord.svg`"
-    />
+    <img class="h-[50px] drop-shadow-[0_0_10px_#1e293b]" :src />
   </a>
 </template>
