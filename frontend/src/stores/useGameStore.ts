@@ -2,10 +2,10 @@ import { useFetch } from '@vueuse/core';
 import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 
-import { useCurrentGame } from '@/core/composables/useCurrentGame';
+import { useGameRoute } from '@/features/core/composables/game';
 
 export const useGameStore = <T, U>() => {
-  const { game } = useCurrentGame();
+  const { game } = useGameRoute();
 
   const useDataStore = defineStore(game.value, () => {
     const { data } = useFetch(

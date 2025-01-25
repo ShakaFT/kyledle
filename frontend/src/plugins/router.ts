@@ -13,11 +13,11 @@ export default createRouter({
     },
     {
       path: '/mhdle',
-      component: () => import('@/domain/mhdle/ViewHome.vue'),
+      component: () => import('@/features/mhdle/views/ViewHome.vue'),
     },
     {
       path: '/mhdle/classic',
-      component: () => import('@/domain/mhdle/classic/ViewClassic.vue'),
+      component: () => import('@/features/mhdle/views/ViewClassic.vue'),
     },
   ],
 });
