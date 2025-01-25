@@ -8,15 +8,7 @@
   <RouterLink :to="`/${game}`">
     <button>
       <img
-        :class="[
-          /* animation */
-          'duration-200',
-          'hover:scale-105',
-          /* misc */
-          'cursor-pointer',
-          'drop-shadow-[0_-30px_20px_#1e293b]',
-          'invert',
-        ]"
+        class="drop-shadow-[0_-30px_20px_#1e293b] invert duration-200 hover:scale-105"
         :src="`/${game}_logo.png`"
         width="380"
       />

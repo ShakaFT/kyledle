@@ -12,22 +12,8 @@
 <template>
   <RouterLink class="m-2" :to="`/${game}/${mode}`">
     <button
-      :class="[
-        'cursor-pointer',
-        'backdrop-blur-xl',
-        'bg-slate-800',
-        'drop-shadow-[0_0_3px_#1e293b]',
-        'duration-300',
-        'font-[BluuNext]',
-        'hover:scale-105',
-        'mix-blend-hard-light',
-        'p-2',
-        'rounded-lg',
-        'text-4xl',
-        'text-slate-300',
-        'w-52',
-        disabled ? 'opacity-30' : 'hover:ease-out',
-      ]"
+      class="app-color w-52 rounded-lg p-2 font-[BluuNext] text-4xl text-slate-300 mix-blend-hard-light drop-shadow-[0_0_3px_#1e293b] backdrop-blur-xl duration-300 hover:scale-105"
+      :class="{ 'opacity-30': disabled }"
       type="button"
     >
       {{ $t(`${game}.mode.${mode}`) }}

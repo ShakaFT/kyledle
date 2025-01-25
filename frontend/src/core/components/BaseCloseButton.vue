@@ -6,7 +6,7 @@
 
 <template>
   <button
-    class="hover:animate-jump hover:animate-duration-500 hover:animate-once cursor-pointer text-xl text-transparent opacity-85"
+    class="hover:animate-jump hover:animate-duration-500 hover:animate-once text-xl text-transparent opacity-85"
     :style="`text-shadow: 0 0 0 ${color}`"
   >
     {{ icon }}

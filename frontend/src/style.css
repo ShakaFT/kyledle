@@ -1,6 +1,16 @@
 @import 'tailwindcss';
 @plugin 'tailwindcss-animated';
 
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+@utility app-color {
+  @apply bg-slate-800;
+}
+
 @font-face {
   font-family: 'BluuNext';
   src: url('@/assets/fonts/BluuNext-Bold.otf') format('opentype');

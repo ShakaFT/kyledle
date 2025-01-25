@@ -8,21 +8,11 @@
 
 <template>
   <div
-    :class="[
-      'border-[1px]',
-      'content-center',
-      'drop-shadow-lg',
-      'font-[BagnardSans]',
-      'h-16',
-      'm-1',
-      'rounded-lg',
-      'text-center',
-      'text-sm',
-      {
-        'animate-fade-right animate-duration-300':
-          isAnimationEnabled && index === 0,
-      },
-    ]"
+    class="m-1 h-16 content-center rounded-lg border-[1px] text-center font-[BagnardSans] text-sm drop-shadow-lg"
+    :class="{
+      'animate-fade-right animate-duration-300':
+        isAnimationEnabled && index === 0,
+    }"
   >
     <slot />
   </div>
