@@ -2,13 +2,11 @@
   import type { SelectableCharacter } from '@/features/mhdle/components/ClassicSearchOption.vue';
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
-  import { refAutoReset } from '@vueuse/core';
-  import AutoComplete from 'primevue/autocomplete';
-  import { ref } from 'vue';
+  import { onClickOutside, refAutoReset } from '@vueuse/core';
+  import { ref, useTemplateRef } from 'vue';
   import { useI18n } from 'vue-i18n';
 
   import { useGameRoute } from '@/features/core/composables/game';
-  import ClassicHintsIcon from '@/features/mhdle/components/ClassicHintsIcon.vue';
   import ClassicSearchOption from '@/features/mhdle/components/ClassicSearchOption.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
 
@@ -17,8 +15,11 @@
   const { t } = useI18n();
   const { game } = useGameRoute();
 
+  const input = useTemplateRef('input');
+  const isFocusActive = ref(false);
+
   const selection = ref<SelectableCharacter[]>([]);
-  const searchedCharacter = ref('');
+  const search = ref('');
   const isDisabled = refAutoReset(false, 3500);
 
   const startingTermsOf = (translation: string): string[] =>
@@ -28,8 +29,12 @@
         term.concat(...terms.slice(i + 1, terms.length)).toLowerCase(),
       );
 
-  const searchOf = (rawText: string) => {
-    const text = rawText.trim().toLowerCase();
+  const searchOf = () => {
+    if (search.value.length === 0) {
+      return (selection.value = []);
+    }
+
+    const text = search.value.trim().toLowerCase();
 
     selection.value = leftovers.value.reduce<SelectableCharacter[]>(
       (characters, character) => {
@@ -60,76 +65,43 @@
   const selectOf = ({ character }: SelectableCharacter) => {
     attemptOf(character);
     selection.value = [];
-    searchedCharacter.value = '';
+    search.value = '';
     isDisabled.value = true;
   };
+
+  onClickOutside(input, () => (isFocusActive.value = false));
 </script>
 
 <template>
   <div class="relative">
-    <AutoComplete
-      v-model="searchedCharacter"
-      :complete-on-focus="selection.length > 0"
-      :delay="0"
+    <input
+      ref="input"
+      v-model="search"
+      class="h-12 w-80 rounded-lg bg-slate-800 p-2 text-center font-[YoungSerif] text-xl text-slate-300 caret-slate-300 outline-hidden drop-shadow-[0_0_3px_#1e293b] placeholder:font-[BluuNext] placeholder:text-slate-500"
       :disabled="isDisabled || hasWon"
-      :empty-search-message="' '"
+      :maxlength="42"
       :placeholder="`「 ${$t('mhdle.search')} 」`"
-      :pt="{
-        overlay: {
-          class: [
-            'backdrop-blur-lg',
-            'backdrop-brightness-125',
-            'bg-slate-300',
-            'cursor-pointer',
-            'drop-shadow-lg',
-            'font-[YoungSerif]',
-            'mix-blend-multiply',
-            'mt-1',
-            'overflow-auto',
-            'rounded-lg',
-            'text-center',
-            'text-xl',
-          ],
-        },
-        pcInputText: {
-          root: {
-            class: [
-              'backdrop-blur-lg',
-              'backdrop-brightness-125',
-              'bg-slate-300',
-              'caret-slate-500',
-              'drop-shadow-lg',
-              'duration-300',
-              'focus:duration-200',
-              'focus:ring-[0.42px]',
-              'focus:ring-slate-600',
-              'focus:transition',
-              'font-[YoungSerif]',
-              'h-12',
-              'mix-blend-multiply',
-              'outline-hidden',
-              'placeholder:font-[BluuNext]',
-              'placeholder:text-slate-400',
-              'rounded-lg',
-              'text-center',
-              'text-xl',
-              'w-80',
-            ],
-            maxlength: 42,
-          },
-        },
-      }"
-      :scroll-height="`${Math.min(selection.length, 4) * 64}px`"
       :spellcheck="false"
-      :suggestions="selection"
-      @clear="selection = []"
-      @complete="searchOf($event.query)"
-      @option-select="selectOf($event.value)"
+      @click="isFocusActive = true"
+      @input="searchOf"
+    />
+    <div
+      v-if="selection.length && isFocusActive"
+      class="absolute z-10 mt-1 w-80 overflow-auto rounded-lg bg-slate-800 font-[YoungSerif] text-xl text-slate-300 drop-shadow-[0_0_3px_#1e293b]"
+      :style="{ height: `${Math.min(selection.length, 4) * 64}px` }"
     >
-      <template #option="{ option }">
-        <ClassicSearchOption :option />
-      </template>
-    </AutoComplete>
-    <ClassicHintsIcon />
+      <ClassicSearchOption
+        v-for="option in selection"
+        :key="option.character.id"
+        :option="option"
+        @click="selectOf(option)"
+      />
+    </div>
   </div>
 </template>
+
+<style scoped>
+  ::-webkit-scrollbar {
+    display: none;
+  }
+</style>
