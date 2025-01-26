@@ -1,25 +1,12 @@
 <script setup lang="ts">
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
-  import { computed } from 'vue';
-  import { useI18n } from 'vue-i18n';
-
+  import { useGameRoute } from '@/features/core/composables/game';
   import ClassicHintsText from '@/features/mhdle/components/ClassicHintsText.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
 
-  const { attempts, target } = useClassicStore<MHdleCharacter>();
-
-  const { t } = useI18n();
-
-  const averageSize = computed(() =>
-    target.value['average-size']?.toString().concat(' m'),
-  );
-
-  const colors = computed(() =>
-    target.value['colors']
-      ?.map((color) => t(`mhdle.colors.${color}`))
-      .join(', '),
-  );
+  const { attempts, hasWon } = useClassicStore<MHdleCharacter>();
+  const { game } = useGameRoute();
 </script>
 
 <template>
@@ -28,14 +15,17 @@
   >
     <div class="flex flex-col gap-1 font-[BagnardSans] text-sm text-slate-300">
       <ClassicHintsText
-        :is-countdown-ongoing="attempts.length < 5"
+        :is-hidden="!hasWon && attempts.length < 5"
         type="average-size"
-        :value="averageSize"
+        :value-of="(size) => size.toString().concat(' m')"
       />
       <ClassicHintsText
-        :is-countdown-ongoing="attempts.length < 10"
+        :is-hidden="!hasWon && attempts.length < 10"
         type="colors"
-        :value="colors"
+        :value-of="
+          (colors) =>
+            colors.map((color) => $t(`${game}.colors.${color}`)).join(', ')
+        "
       />
     </div>
   </div>

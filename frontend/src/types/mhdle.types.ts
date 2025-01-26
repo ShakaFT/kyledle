@@ -17,3 +17,5 @@ export type ArrayWithPictureLink = Array<{
   id: string;
   picture: string;
 }>;
+
+export type MHdleHint = 'average-size' | 'colors';

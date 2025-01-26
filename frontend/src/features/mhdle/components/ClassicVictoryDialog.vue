@@ -6,14 +6,32 @@
 
   import AppDialog from '@/features/core/components/AppDialog.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
+  import { useGameStore } from '@/stores/useGameStore';
 
+  const { isAnimationEnabled } = useGameStore();
   const { attempts, hasWon } = useClassicStore<MHdleCharacter>();
 
   const dialog = useTemplateRef('dialog');
 
-  watchDebounced(hasWon, () => dialog.value?.dialog?.showModal(), {
-    debounce: 3500,
-  });
+  watchDebounced(
+    hasWon,
+    (_hasWon) => {
+      if (_hasWon && isAnimationEnabled.value) {
+        dialog.value?.dialog?.showModal();
+      }
+    },
+    { debounce: 3500 },
+  );
+
+  watchDebounced(
+    hasWon,
+    (_hasWon) => {
+      if (_hasWon && !isAnimationEnabled.value) {
+        dialog.value?.dialog?.showModal();
+      }
+    },
+    { debounce: 100, immediate: true },
+  );
 </script>
 
 <template>
