@@ -1,27 +1,44 @@
 <script setup lang="ts">
-  import { useTemplateRef } from 'vue';
+  import { onClickOutside, onKeyStroke } from '@vueuse/core';
+  import { ref, useTemplateRef } from 'vue';
 
   import AppDialogButtonClose from '@/features/core/components/AppDialogButtonClose.vue';
 
   defineOptions({ inheritAttrs: false });
   defineProps<{ color: string }>();
 
+  const isOpen = ref(false);
   const dialog = useTemplateRef('dialog');
 
-  defineExpose({ dialog });
+  const show = () => (isOpen.value = true);
+  const close = () => (isOpen.value = false);
+
+  onClickOutside(dialog, close);
+  onKeyStroke('Escape', () => {
+    if (isOpen.value) close();
+  });
+
+  defineExpose({ show, close });
 </script>
 
 <template>
-  <slot :dialog name="open" />
-  <dialog
-    v-bind="$attrs"
-    ref="dialog"
-    class="pointer-events-none flex place-self-center justify-self-center rounded-lg bg-slate-800 opacity-0 transition-opacity duration-300 backdrop:bg-transparent open:pointer-events-auto open:opacity-100 open:drop-shadow-[0_0_3px_black]"
-  >
-    <div class="absolute top-1 right-2">
-      <AppDialogButtonClose :color @click="dialog?.close()" />
-    </div>
+  <slot name="to-open" />
+  <div class="absolute inset-0" :class="{ 'pointer-events-none': !isOpen }">
+    <div
+      ref="dialog"
+      v-bind="$attrs"
+      class="absolute inset-0 flex place-self-center justify-self-center rounded-lg bg-slate-800 transition-opacity duration-300"
+      :class="
+        isOpen
+          ? 'pointer-events-auto opacity-100 drop-shadow-[0_0_3px_black]'
+          : 'pointer-events-none opacity-0'
+      "
+    >
+      <div class="absolute top-1 right-2">
+        <AppDialogButtonClose :color @click="close" />
+      </div>
 
-    <slot />
-  </dialog>
+      <slot />
+    </div>
+  </div>
 </template>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { useTemplateRef } from 'vue';
+
   import AppDialog from '@/features/core/components/AppDialog.vue';
   import HomeCreditsIcon from '@/features/mhdle/components/HomeCreditsIcon.vue';
   import HomeCreditsTextAbout from '@/features/mhdle/components/HomeCreditsTextAbout.vue';
@@ -6,13 +8,15 @@
   import HomeCreditsTextDevelopment from '@/features/mhdle/components/HomeCreditsTextDevelopment.vue';
   import HomeDiscordIcon from '@/features/mhdle/components/HomeDiscordIcon.vue';
   import HomeTwitchIcon from '@/features/mhdle/components/HomeTwitchIcon.vue';
+
+  const dialog = useTemplateRef('dialog');
 </script>
 
 <template>
-  <AppDialog class="h-[50%] w-[60%]" color="#cbd5e1">
-    <template #open="{ dialog }">
+  <AppDialog ref="dialog" class="h-[50%] w-[60%]" color="#cbd5e1">
+    <template #to-open>
       <div class="flex items-center gap-4">
-        <HomeCreditsIcon @click="dialog?.showModal()" />
+        <HomeCreditsIcon @click="dialog?.show" />
         <HomeDiscordIcon />
         <HomeTwitchIcon />
       </div>

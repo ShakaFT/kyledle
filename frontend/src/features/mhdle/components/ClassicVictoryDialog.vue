@@ -17,7 +17,7 @@
     hasWon,
     (_hasWon) => {
       if (_hasWon && isAnimationEnabled.value) {
-        dialog.value?.dialog?.showModal();
+        dialog.value?.show();
       }
     },
     { debounce: 3500 },
@@ -27,7 +27,7 @@
     hasWon,
     (_hasWon) => {
       if (_hasWon && !isAnimationEnabled.value) {
-        dialog.value?.dialog?.showModal();
+        dialog.value?.show();
       }
     },
     { debounce: 100, immediate: true },
