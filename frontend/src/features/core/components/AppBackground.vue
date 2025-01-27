@@ -12,7 +12,7 @@
 <template>
   <div
     class="h-screen"
-    :style="{ background: `url(${url}) center/cover no-repeat, #0e141c` }"
+    :style="{ background: `url(${url}) center/contain no-repeat, #0e141c` }"
   >
     <slot />
   </div>
