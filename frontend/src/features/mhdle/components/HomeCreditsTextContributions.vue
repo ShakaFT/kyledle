@@ -40,7 +40,7 @@
       {
         slot: 'contributor1',
         tag: 'a',
-        href: 'https://www.patreon.com/c/abbbbbbk',
+        href: 'https://patreon.com/abbbbbbk',
         term: 'abbbbbbk',
       },
     ]"

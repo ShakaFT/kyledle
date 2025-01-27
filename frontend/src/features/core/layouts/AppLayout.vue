@@ -6,8 +6,8 @@
 </script>
 
 <template>
-  <AppBackground class="overflow-scroll">
-    <div class="my-10 grid justify-center justify-items-center">
+  <AppBackground class="overflow-y-scroll">
+    <div class="grid justify-center justify-items-center py-10">
       <AppLogo class="mb-10" @click="stopAnimation?.()" />
       <slot />
     </div>
