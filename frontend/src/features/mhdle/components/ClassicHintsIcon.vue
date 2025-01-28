@@ -2,7 +2,7 @@
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
   import { useElementHover } from '@vueuse/core';
-  import { ref, watch } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
 
   import { useGameRoute } from '@/features/core/composables/game';
   import { useModeRoute } from '@/features/core/composables/mode';
@@ -12,17 +12,26 @@
   const { game } = useGameRoute();
   const { mode } = useModeRoute();
 
-  const { attempts } = useClassicStore<MHdleCharacter>();
+  const { attempts, hasWon } = useClassicStore<MHdleCharacter>();
 
   const hoverable = ref();
   const isHovered = useElementHover(hoverable);
 
   const classes = ref('drop-shadow-[0_0_10px_black]');
 
-  watch(attempts.value, () => {
-    if (attempts.value.length === 5 || attempts.value.length === 10)
-      classes.value =
-        'drop-shadow-[0_0_10px_springgreen] duration-1000 ease-out delay-[3.5s]';
+  onMounted(() => {
+    watch(
+      attempts,
+      () => {
+        if (
+          !hasWon.value &&
+          (attempts.value.length === 5 || attempts.value.length === 10)
+        )
+          classes.value =
+            'drop-shadow-[0_0_10px_springgreen,0_0_5px_springgreen] duration-1000 ease-out delay-[3.5s]';
+      },
+      { deep: true },
+    );
   });
 
   watch(isHovered, () => {

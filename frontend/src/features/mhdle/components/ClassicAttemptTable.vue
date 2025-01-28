@@ -19,7 +19,7 @@
     :pt="{
       root: { class: 'mt-6' },
       tableContainer: { class: '!overflow-visible flex justify-center' },
-      table: { class: 'table-fixed w-[70%]' },
+      table: { class: 'table-fixed w-5xl' },
     }"
     :value="attempts"
   >

@@ -17,10 +17,10 @@
   <AppTableCell
     :class="
       isRight(target)
-        ? 'border-green-800 !bg-green-600'
+        ? 'border-green-800 bg-green-600'
         : isWrong(target)
-          ? 'border-red-800 !bg-red-600'
-          : 'border-yellow-800 !bg-yellow-600'
+          ? 'border-red-800 bg-red-600'
+          : 'border-yellow-800 bg-yellow-600'
     "
     :index
   >

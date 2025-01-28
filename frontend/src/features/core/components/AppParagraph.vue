@@ -21,12 +21,12 @@
 
 <template>
   <div :class="isLast ? 'mt-5' : 'my-5'">
-    <i18n-t v-if="args" :keypath :scope="`global`" tag="p">
+    <i18n-t v-if="args" :keypath scope="global" tag="p">
       <template v-for="translation in args" #[translation.slot]>
         <template v-if="translation.tag === 'a'">
           <a
             :key="translation.slot"
-            class="italic transition duration-300 hover:text-slate-500"
+            class="underline decoration-from-font transition duration-300 hover:text-slate-500"
             :href="translation.href"
             target="_blank"
           >
