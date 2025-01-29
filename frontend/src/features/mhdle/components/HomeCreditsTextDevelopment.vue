@@ -28,7 +28,8 @@
         term: 'shakaft',
       },
     ]"
-    is-last
-    keypath="mhdle.credits.development.description"
+    keypath="mhdle.credits.development.description1"
   />
+  <AppParagraph keypath="mhdle.credits.development.description2" />
+  <AppParagraph is-last keypath="mhdle.credits.development.description3" />
 </template>

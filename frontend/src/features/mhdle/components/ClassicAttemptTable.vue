@@ -30,7 +30,7 @@
       <template #body="{ data, field, index }">
         <ClassicAttemptTableCellIcon
           :key="`${data.id}-${field}`"
-          :data
+          :attempt="data"
           :index
         />
       </template>
@@ -43,8 +43,8 @@
       <template #body="{ data, field, index }">
         <ClassicAttemptTableCellUnit
           :key="`${data.id}-${field}`"
+          :attempt="data"
           class="animate-delay-[0.5s]"
-          :data
           :field="field as 'monster-type'"
           :index
         />
@@ -58,8 +58,8 @@
       <template #body="{ data, field, index }">
         <ClassicAttemptTableCellGroup
           :key="`${data.id}-${field}`"
+          :attempt="data"
           class="animate-delay-[1s]"
-          :data
           :field="field as 'elements'"
           :index
         />
@@ -73,8 +73,8 @@
       <template #body="{ data, field, index }">
         <ClassicAttemptTableCellGroup
           :key="`${data.id}-${field}`"
+          :attempt="data"
           class="animate-delay-[1.5s]"
-          :data
           :field="field as 'weaknesses'"
           :index
         />
@@ -88,8 +88,8 @@
       <template #body="{ data, field, index }">
         <ClassicAttemptTableCellGroup
           :key="`${data.id}-${field}`"
+          :attempt="data"
           class="animate-delay-[2s]"
-          :data
           :field="field as 'ailments'"
           :index
         />
@@ -103,8 +103,8 @@
       <template #body="{ data, field, index }">
         <ClassicAttemptTableCellUnit
           :key="`${data.id}-${field}`"
+          :attempt="data"
           class="animate-delay-[2.5s]"
-          :data
           :field="field as 'generation'"
           :index
         />
@@ -118,8 +118,8 @@
       <template #body="{ data, field, index }">
         <ClassicAttemptTableCellUnit
           :key="`${data.id}-${field}`"
+          :attempt="data"
           class="animate-delay-[3s]"
-          :data
           :field="field as 'is-subspecies'"
           :index
         />

@@ -7,19 +7,19 @@
 
   type UnitKeys<T> = keyof OmitMatching<T, unknown[]>;
 
-  const { field, data } = defineProps<{
+  const { field, attempt } = defineProps<{
     field: UnitKeys<MHdleCharacter>;
-    data: MHdleCharacter;
+    attempt: MHdleCharacter;
     index: number;
   }>();
 
   const { game } = useGameRoute();
 
   const isRightMatchingOf = (target: MHdleCharacter): boolean =>
-    data[field] === target[field];
+    attempt[field] === target[field];
 
   const isWrongMatchingOf = (target: MHdleCharacter): boolean =>
-    data[field] !== target[field];
+    attempt[field] !== target[field];
 </script>
 
 <template>
@@ -28,6 +28,6 @@
     :is-right="isRightMatchingOf"
     :is-wrong="isWrongMatchingOf"
   >
-    {{ $t(`${game}.${field}.${data[field]}`) }}
+    {{ $t(`${game}.${field}.${attempt[field]}`) }}
   </ClassicAttemptTableCell>
 </template>

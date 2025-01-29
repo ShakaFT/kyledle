@@ -35,7 +35,7 @@
         </template>
 
         <template v-if="translation.tag === 'span'">
-          <span :key="translation.slot" class="italic">
+          <span :key="translation.slot">
             {{ translation.term }}
           </span>
         </template>

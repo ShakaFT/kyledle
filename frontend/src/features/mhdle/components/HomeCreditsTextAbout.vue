@@ -19,5 +19,4 @@
     ]"
     keypath="mhdle.credits.about.description3"
   />
-  <AppParagraph keypath="mhdle.credits.about.description4" />
 </template>

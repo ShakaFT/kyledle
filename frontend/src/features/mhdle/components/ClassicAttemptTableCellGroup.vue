@@ -10,21 +10,30 @@
 
   type GroupKeys<T> = keyof PickMatching<T, ArrayWithPictureLink>;
 
-  const { field, data } = defineProps<{
+  const { field, attempt } = defineProps<{
     field: GroupKeys<MHdleCharacter>;
-    data: MHdleCharacter;
+    attempt: MHdleCharacter;
     index: number;
   }>();
 
   const { game } = useGameRoute();
 
-  const isRightMatchingOf = (target: MHdleCharacter): boolean =>
-    data[field].every((value) =>
-      target[field].map((unit) => unit.id).includes(value.id),
+  const isRightMatchingOf = (target: MHdleCharacter): boolean => {
+    const attemptGroup = attempt[field];
+    const targetGroup = target[field];
+
+    return (
+      attemptGroup.every((value) =>
+        targetGroup.map((unit) => unit.id).includes(value.id),
+      ) &&
+      targetGroup.every((value) =>
+        attemptGroup.map((unit) => unit.id).includes(value.id),
+      )
     );
+  };
 
   const isWrongMatchingOf = (target: MHdleCharacter): boolean =>
-    !data[field].some((value) =>
+    !attempt[field].some((value) =>
       target[field].map((unit) => unit.id).includes(value.id),
     );
 </script>
@@ -36,7 +45,7 @@
     :is-wrong="isWrongMatchingOf"
   >
     {{
-      data[field].map((unit) => $t(`${game}.${field}.${unit.id}`)).join(', ')
+      attempt[field].map((unit) => $t(`${game}.${field}.${unit.id}`)).join(', ')
     }}
   </ClassicAttemptTableCell>
 </template>
