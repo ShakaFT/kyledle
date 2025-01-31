@@ -77,7 +77,7 @@
     <input
       ref="input"
       v-model="search"
-      class="h-12 w-80 rounded-lg bg-slate-800 p-2 text-center font-[YoungSerif] text-xl text-slate-300 caret-slate-300 outline-hidden drop-shadow-[0_0_3px_#1e293b] placeholder:font-[BluuNext] placeholder:text-slate-500"
+      class="h-12 w-80 rounded-lg bg-slate-800 p-2 text-center font-[YoungSerif] text-xl text-slate-300 caret-slate-500 outline-hidden drop-shadow-[0_0_3px_#1e293b] placeholder:font-[BluuNext] placeholder:text-slate-600"
       :disabled="isDisabled || hasWon"
       :maxlength="42"
       :placeholder="`「 ${$t('mhdle.search')} 」`"

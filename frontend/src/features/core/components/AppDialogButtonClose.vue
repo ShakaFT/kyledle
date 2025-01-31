@@ -1,14 +1,15 @@
 <script setup lang="ts">
   defineProps<{ color: string }>();
-
-  const icon = '✖️';
 </script>
 
 <template>
-  <button
-    class="hover:animate-jump hover:animate-duration-500 hover:animate-once text-xl text-transparent opacity-85 outline-hidden"
-    :style="`text-shadow: 0 0 0 ${color}`"
+  <svg
+    class="hover:animate-jump hover:animate-duration-500 size-5 cursor-pointer opacity-85"
+    :stroke="color"
+    stroke-width="3"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
   >
-    {{ icon }}
-  </button>
+    <path d="M6 18 18 6M6 6l12 12" />
+  </svg>
 </template>

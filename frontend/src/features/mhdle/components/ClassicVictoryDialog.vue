@@ -38,7 +38,7 @@
   <AppDialog
     ref="dialog"
     :class="Math.random() < 0.5 ? `-rotate-3` : `rotate-3`"
-    color="#4ade80"
+    close-icon-color="#4ade80"
   >
     <div class="p-12 text-center text-green-400">
       <h1 class="font-[YoungSerif] text-5xl">
