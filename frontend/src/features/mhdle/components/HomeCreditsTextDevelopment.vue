@@ -1,18 +1,13 @@
 <script setup lang="ts">
   import AppParagraph from '@/features/core/components/AppParagraph.vue';
   import AppTitle from '@/features/core/components/AppTitle.vue';
-
-  const version = APP_VERSION;
+  import AppVersionCode from '@/features/core/components/AppVersionCode.vue';
 </script>
 
 <template>
   <div class="my-6 flex place-items-center gap-4">
     <AppTitle keypath="mhdle.credits.development" />
-    <code
-      class="mt-[5px] rounded-[4px] bg-slate-900 px-1 font-[courier_,_monospace] text-base text-slate-500"
-    >
-      {{ version }}
-    </code>
+    <AppVersionCode />
   </div>
 
   <AppParagraph

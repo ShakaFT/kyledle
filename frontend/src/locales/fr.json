@@ -1,4 +1,8 @@
 {
+  "core.changelog.description1": "Bienvenue sur la nouvelle version de MHdle !",
+  "core.changelog.description2": "Le site a été entièrement retravaillé, afin de vous proposer une expérience digne de ce nom. Vous pourrez donc de nouveau vous confronter au mode Classique, où votre quête sera de déceler le terrible monstre du jour.",
+  "core.changelog.description3": "En ce moment, nous travaillons activement à vous faire découvrir de futurs modes de jeu, alors restez aux aguets, chasseurs !",
+  "core.changelog": "Nouveautés 🎉",
   "mhdle.ailments.blastblight": "Explosion",
   "mhdle.ailments.bleeding": "Hémorragie",
   "mhdle.ailments.bloodblight": "Anomalie",
