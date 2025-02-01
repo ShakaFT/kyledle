@@ -27,5 +27,8 @@ export default defineConfig(({ mode }) => {
     server: {
       port: +env.FRONTEND_PORT,
     },
+    define: {
+      APP_VERSION: JSON.stringify(`v${process.env.npm_package_version}`),
+    },
   };
 });

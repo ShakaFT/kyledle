@@ -1,6 +1,8 @@
 <script setup lang="ts">
   import AppParagraph from '@/features/core/components/AppParagraph.vue';
   import AppTitle from '@/features/core/components/AppTitle.vue';
+
+  const version = APP_VERSION;
 </script>
 
 <template>
@@ -9,7 +11,7 @@
     <code
       class="mt-[5px] rounded-[4px] bg-slate-900 px-1 font-[courier_,_monospace] text-base text-slate-500"
     >
-      {{ 'v2.0.0' }}
+      {{ version }}
     </code>
   </div>
 
@@ -30,6 +32,5 @@
     ]"
     keypath="mhdle.credits.development.description1"
   />
-  <AppParagraph keypath="mhdle.credits.development.description2" />
-  <AppParagraph is-last keypath="mhdle.credits.development.description3" />
+  <AppParagraph is-last keypath="mhdle.credits.development.description2" />
 </template>

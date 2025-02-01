@@ -2,7 +2,7 @@
   import type { MHdleCharacter } from '@/types/mhdle.types';
 
   import { useElementHover } from '@vueuse/core';
-  import { ref, watch } from 'vue';
+  import { ref, useTemplateRef, watch } from 'vue';
 
   import { useGameRoute } from '@/features/core/composables/game';
   import { useModeRoute } from '@/features/core/composables/mode';
@@ -14,7 +14,7 @@
 
   const { attempts, hasWon } = useClassicStore<MHdleCharacter>();
 
-  const hoverable = ref();
+  const hoverable = useTemplateRef('hoverable');
   const isHovered = useElementHover(hoverable);
 
   const classes = ref('drop-shadow-[0_0_10px_black]');
@@ -46,10 +46,9 @@
 <template>
   <img
     ref="hoverable"
-    class="absolute top-0 -right-[58px]"
+    class="absolute top-0 -right-[58px] w-[50px]"
     :class="classes"
     :src
-    width="50"
   />
   <ClassicHintsTooltip :class="isHovered ? 'opacity-100' : 'opacity-0'" />
 </template>
