@@ -5,7 +5,6 @@
   import AppDialogButtonClose from '@/features/core/components/AppDialogButtonClose.vue';
 
   defineOptions({ inheritAttrs: false });
-  defineProps<{ closeIconColor: string }>();
 
   const isOpen = ref(false);
   const dialog = useTemplateRef('dialog');
@@ -35,7 +34,7 @@
       "
     >
       <div class="absolute top-2 right-2">
-        <AppDialogButtonClose :color="closeIconColor" @click="close" />
+        <AppDialogButtonClose color="#cbd5e1" @click="close" />
       </div>
 
       <slot />

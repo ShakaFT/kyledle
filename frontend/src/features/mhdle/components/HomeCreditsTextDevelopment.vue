@@ -1,13 +1,13 @@
 <script setup lang="ts">
   import AppParagraph from '@/features/core/components/AppParagraph.vue';
   import AppTitle from '@/features/core/components/AppTitle.vue';
-  import AppVersionCode from '@/features/core/components/AppVersionCode.vue';
+  import AppCodeVersion from '@/features/core/extensions/AppCodeVersion.vue';
 </script>
 
 <template>
   <div class="my-6 flex place-items-center gap-4">
     <AppTitle keypath="mhdle.credits.development" />
-    <AppVersionCode />
+    <AppCodeVersion />
   </div>
 
   <AppParagraph

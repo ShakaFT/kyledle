@@ -5,7 +5,7 @@
   import AppDialog from '@/features/core/components/AppDialog.vue';
   import AppParagraph from '@/features/core/components/AppParagraph.vue';
   import AppTitle from '@/features/core/components/AppTitle.vue';
-  import AppVersionCode from '@/features/core/components/AppVersionCode.vue';
+  import AppCodeVersion from '@/features/core/extensions/AppCodeVersion.vue';
 
   const dialog = useTemplateRef('dialog');
   const storage = useLocalStorage('app', { version: APP_VERSION });
@@ -23,11 +23,11 @@
 </script>
 
 <template>
-  <AppDialog ref="dialog" class="h-auto w-[50%]" close-icon-color="#cbd5e1">
+  <AppDialog ref="dialog" class="h-auto w-[50%]">
     <div class="p-12 font-[BagnardSans] text-slate-300">
       <div class="mb-6 flex place-items-center gap-4">
         <AppTitle keypath="core.changelog" />
-        <AppVersionCode class="text-lg" />
+        <AppCodeVersion class="text-lg" />
       </div>
 
       <AppParagraph keypath="core.changelog.description1" />

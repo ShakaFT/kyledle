@@ -6,6 +6,7 @@
   import { ref, useTemplateRef } from 'vue';
   import { useI18n } from 'vue-i18n';
 
+  import { useDailyCountdown } from '@/features/core/composables/dailyCountdown';
   import { useGameRoute } from '@/features/core/composables/game';
   import ClassicSearchOption from '@/features/mhdle/components/ClassicSearchOption.vue';
   import { useClassicStore } from '@/stores/useClassicStore';
@@ -14,6 +15,7 @@
 
   const { t } = useI18n();
   const { game } = useGameRoute();
+  const { countdown } = useDailyCountdown();
 
   const input = useTemplateRef('input');
   const isFocusActive = ref(false);
@@ -78,9 +80,16 @@
       ref="input"
       v-model="search"
       class="h-12 w-80 rounded-lg bg-slate-800 p-2 text-center font-[YoungSerif] text-xl text-slate-300 caret-slate-500 outline-hidden drop-shadow-[0_0_3px_#1e293b] placeholder:font-[BluuNext] placeholder:text-slate-600"
+      :class="{
+        'placeholder:font-[courier_,_monospace]': hasWon && !isDisabled,
+      }"
       :disabled="isDisabled || hasWon"
       :maxlength="42"
-      :placeholder="`「 ${$t('mhdle.search')} 」`"
+      :placeholder="
+        hasWon && !isDisabled
+          ? `「 ${countdown} 」`
+          : `「 ${$t('mhdle.search')} 」`
+      "
       :spellcheck="false"
       @click="isFocusActive = true"
       @input="searchOf"

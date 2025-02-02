@@ -13,7 +13,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@vueuse/core": "^11.3.0",
+    "@formkit/tempo": "^0.1.2",
+    "@vueuse/core": "^12.5.0",
     "pinia": "^2.3.0",
     "primevue": "^4.2.5",
     "vue": "^3.4.29",
