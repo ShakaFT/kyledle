@@ -20,7 +20,7 @@
   },
   "editor.formatOnSave": true,
   "editor.quickSuggestions": {
-    "strings": true
+    "strings": "on"
   },
   "editor.tabSize": 2,
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],

@@ -4,8 +4,8 @@ import { useFetch, useLocalStorage, watchOnce } from '@vueuse/core';
 import { defineStore, storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 
-import { useCurrentGame } from '@/core/composables/useCurrentGame';
-import { useCurrentMode } from '@/core/composables/useCurrentMode';
+import { useGameRoute } from '@/features/core/composables/game';
+import { useModeRoute } from '@/features/core/composables/mode';
 import { useGameStore } from '@/stores/useGameStore';
 
 export const useClassicStore = <
@@ -14,8 +14,8 @@ export const useClassicStore = <
 >() => {
   const { characters, isAnimationEnabled } = useGameStore<T, U>();
 
-  const { game } = useCurrentGame();
-  const { mode } = useCurrentMode();
+  const { game } = useGameRoute();
+  const { mode } = useModeRoute();
 
   const useDataStore = defineStore(`${game.value}/${mode.value}`, () => {
     const { data } = useFetch(

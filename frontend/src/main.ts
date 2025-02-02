@@ -6,7 +6,7 @@ import i18n from '@/plugins/i18n';
 import pinia from '@/plugins/pinia';
 import router from '@/plugins/router';
 
-import './style.css';
+import '@/assets/styles/main.css';
 
 createApp(App)
   .use(i18n)
