@@ -8,7 +8,7 @@
   import AppCodeVersion from '@/features/core/extensions/AppCodeVersion.vue';
 
   const dialog = useTemplateRef('dialog');
-  const storage = useLocalStorage('app', { version: APP_VERSION });
+  const storage = useLocalStorage('app', { version: '0.0.0' });
 
   watchDebounced(
     dialog,
