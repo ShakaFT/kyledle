@@ -79,10 +79,8 @@
     <input
       ref="input"
       v-model="search"
-      class="h-12 w-80 rounded-lg bg-slate-800 p-2 text-center font-[YoungSerif] text-xl text-slate-300 caret-slate-500 outline-hidden drop-shadow-[0_0_3px_#1e293b] placeholder:font-[BluuNext] placeholder:text-slate-600"
-      :class="{
-        'placeholder:font-[courier_,_monospace]': hasWon && !isDisabled,
-      }"
+      class="h-12 w-80 rounded-lg bg-slate-800 p-2 text-center font-[YoungSerif] text-xl text-slate-300 caret-slate-500 outline-hidden drop-shadow-[0_0_3px_#1e293b] placeholder:font-[BluuNext] placeholder:font-medium placeholder:text-slate-600"
+      :class="{ 'placeholder:font-mono': hasWon && !isDisabled }"
       :disabled="isDisabled || hasWon"
       :maxlength="42"
       :placeholder="
@@ -91,6 +89,10 @@
           : `「 ${$t('mhdle.search')} 」`
       "
       :spellcheck="false"
+      style="
+        text-shadow: 0 0.06em 0.06em rgba(0, 0, 0, 0.1);
+        -webkit-text-stroke: 0.2px;
+      "
       @click="isFocusActive = true"
       @input="searchOf"
     />

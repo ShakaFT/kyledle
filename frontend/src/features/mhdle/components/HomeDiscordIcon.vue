@@ -4,7 +4,7 @@
 
 <template>
   <a
-    class="mt-3 drop-shadow-[0_0_5px_#1e293b] duration-200 hover:scale-105"
+    class="mt-3 drop-shadow-[0_0_5px_#1e293b] duration-200 will-change-transform hover:scale-105"
     href="https://discord.gg/a9dPB2HrNH"
     target="_blank"
   >

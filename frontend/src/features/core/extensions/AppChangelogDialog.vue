@@ -23,8 +23,8 @@
 </script>
 
 <template>
-  <AppDialog ref="dialog" class="h-auto w-[50%]">
-    <div class="p-12 font-[BagnardSans] text-slate-300">
+  <AppDialog ref="dialog" class="max-h-[32rem] w-3xl">
+    <div class="overflow-scroll p-12 font-[BagnardSans] text-slate-300">
       <div class="mb-6 flex place-items-center gap-4">
         <AppTitle keypath="core.changelog" />
         <AppCodeVersion class="text-lg" />
@@ -36,3 +36,9 @@
     </div>
   </AppDialog>
 </template>
+
+<style scoped>
+  ::-webkit-scrollbar {
+    display: none;
+  }
+</style>

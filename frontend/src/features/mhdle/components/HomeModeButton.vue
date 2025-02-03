@@ -11,7 +11,7 @@
 
 <template>
   <RouterLink
-    class="relative m-2 duration-300 hover:scale-105"
+    class="relative m-2 duration-300 will-change-transform hover:scale-105"
     :to="`/${game}/${mode}`"
   >
     <button

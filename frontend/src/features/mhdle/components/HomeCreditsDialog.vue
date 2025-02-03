@@ -13,7 +13,7 @@
 </script>
 
 <template>
-  <AppDialog ref="dialog" class="h-[50%] w-[60%]">
+  <AppDialog ref="dialog" class="h-[32rem] w-3xl">
     <template #to-open>
       <div class="flex items-center gap-4">
         <HomeCreditsIcon @click="dialog?.show" />

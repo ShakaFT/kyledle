@@ -51,7 +51,7 @@
 
       <div class="my-3">
         <img class="m-auto h-20" :src="target.picture" />
-        <p class="font-[YoungSerif] text-xl text-slate-400">
+        <p v-if="hasWon" class="font-[YoungSerif] text-xl text-slate-400">
           【 {{ $t(`${game}.id.${target.id}`) }} 】
         </p>
       </div>
@@ -63,7 +63,7 @@
         tag="p"
       >
         <template #count>
-          <code class="font-[courier_,_monospace] text-2xl text-amber-400">
+          <code class="font-mono text-xl text-amber-400">
             {{ attempts.length }}
           </code>
         </template>
