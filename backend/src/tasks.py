@@ -2,13 +2,14 @@
 This module contains tasks.
 """
 
+import logging
 import random
 from collections import defaultdict
 from datetime import timedelta
 
 from config import redis
 from utils.celery_task import celery_task
-from utils.date import to_string_date, utc_now
+from utils.date import to_string_date, get_now
 from utils.redis_decode import decode_from_redis
 
 
@@ -17,7 +18,7 @@ def schedule_levels(tomorrow=True):
     """
     This endpoint schedules levels.
     """
-    now = utc_now()
+    now = get_now()
     date_to_schedule = to_string_date(now + timedelta(days=1) if tomorrow else now)
 
     if redis.keys(f"history:{date_to_schedule}:*"):
@@ -44,3 +45,10 @@ def schedule_levels(tomorrow=True):
             f"history:{date_to_schedule}:{game}:{mode}",
             mapping={"target": random.choice(characters)},
         )
+
+
+@celery_task
+def debug():
+    """debug"""
+    logging.error("Ta mère")
+    logging.error(get_now())

@@ -2,14 +2,14 @@
 This module contains utility function to handle datetime
 """
 
-from datetime import datetime, timezone
+from datetime import datetime
 
 
-def utc_now() -> datetime:
+def get_now() -> datetime:
     """
-    This method returns UTC now.
+    This method returns now in local time.
     """
-    return datetime.now(timezone.utc)
+    return datetime.now()
 
 
 def to_string_date(date: datetime) -> str:

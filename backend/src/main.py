@@ -7,7 +7,7 @@ from datetime import datetime
 from flask import jsonify
 
 from config import app, redis
-from utils.date import to_string_date, utc_now
+from utils.date import to_string_date, get_now
 from utils.redis_decode import decode_from_redis
 
 
@@ -38,7 +38,7 @@ def get_mode_config(game: str, mode: str):
     """
     This endpoint returns mode config.
     """
-    today_date = utc_now()
+    today_date = get_now()
     today = to_string_date(today_date)
 
     # Fetch config
