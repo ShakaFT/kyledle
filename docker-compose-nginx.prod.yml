@@ -1,0 +1,17 @@
+services:
+  nginx:
+    container_name: ${PROJECT_NAME}_${ENVIRONMENT}_nginx
+    image: nginx:alpine
+    networks:
+      - nginx_network
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+
+networks:
+  nginx_network:
+    external: true
+    name: $NGINX_NETWORK

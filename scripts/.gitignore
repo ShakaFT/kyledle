@@ -1,3 +1,7 @@
+# Python
 **/__pycache__
-**/assets/
 **/.venv
+
+# Secrets
+**/.env
+credentials_kyledle.json

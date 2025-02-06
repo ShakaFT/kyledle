@@ -2,77 +2,62 @@
 This module contains main endpoints of default services.
 """
 
-from datetime import datetime, timedelta
-import os
-import random
+from datetime import datetime
 
-from flask import jsonify, request
+from flask import jsonify
 
-from restAPI.FlaskApp import FlaskApp
-
-from models.History import HistoryItem
-from models.KyledleData import KyledleData
+from config import app, redis
+from utils.date import to_string_date, get_now
+from utils.redis_decode import decode_from_redis
 
 
-app = FlaskApp(
-    "default",
-    os.environ["GOOGLE_CLOUD_PROJECT"],
-    allowed_origins=["https://kyledle.web.app"],
-    allowed_headers=[os.environ["KYLEDLE_API_KEY_HEADER"]],
-)
-app.api_key(os.environ["KYLEDLE_API_KEY_HEADER"], os.environ["KYLEDLE_API_KEY"])
+@app.get("/")
+def hello():
+    """hello"""
+    return "Hello World"
 
 
-@app.get("/data")
-def get_data():
+@app.get("/config/<game>")
+def get_game_config(game: str):
     """
-    This endpoints returns data.
+    This endpoint returns game config.
     """
-    args = dict(request.args)
-    try:
-        game = args["game"]
-        mode = args["mode"]
-    except KeyError as e:
-        return jsonify(error=f"Invalid args: missing {e}"), 400
+    # Fetch characters
+    keys = redis.keys(f"{game}:character:*")
+    characters = [decode_from_redis(redis.hgetall(key)) for key in keys]  # type: ignore
 
-    data = KyledleData.from_database(game, mode)
-    item = HistoryItem.from_database(datetime.now())
-    assert item, "Missing History Item!"
-
-    return jsonify(data=data.to_dict(), target=item.target(game, mode))
+    # Fetch modes
+    keys = redis.keys(f"{game}:mode:*")
+    modes = [decode_from_redis(redis.hgetall(key)) for key in keys]  # type: ignore
+    modes.sort(key=lambda m: m["order"])
+    return jsonify(characters=characters, modes=[mode["id"] for mode in modes])
 
 
-@app.post("/schedule")
-def schedule():
+@app.get("/config/<game>/<mode>")
+def get_mode_config(game: str, mode: str):
     """
-    This endpoint schedules levels.
+    This endpoint returns mode config.
     """
-    now = datetime.now()
-    tomorrow = now + timedelta(days=1)
+    today_date = get_now()
+    today = to_string_date(today_date)
 
-    if HistoryItem.from_database(tomorrow):
-        raise ValueError(f"{tomorrow} already scheduled!")
+    # Fetch config
+    config = decode_from_redis(redis.hgetall(f"{game}:mode:{mode}"))  # type: ignore
 
-    game = "mhdle"
-    mode = "classic"
+    # Fetch target
+    today_target = decode_from_redis(
+        redis.hgetall(f"history:{today}:{game}:{mode}")  # type: ignore
+    )
+    assert today_target, "Missing History Item!"
 
-    kyledle_data = KyledleData.from_database(game, mode)
-
-    already_scheduled_characters = []
-    for i in range(5):
-        if item := HistoryItem.from_database(now - timedelta(days=i)):
-            already_scheduled_characters.append(item.target(game, mode))
-
-    characters = [
-        character
-        for character in kyledle_data.characters
-        if character not in already_scheduled_characters
-    ]
-
-    history_item = HistoryItem(tomorrow, {game: {mode: random.choice(characters)}})
-    history_item.update_database()
-    return jsonify(), 204
-
-
-if __name__ == "__main__":
-    app.run(host="localhost", port=8080, debug=True)
+    return jsonify(
+        config=config,
+        target=decode_from_redis(
+            redis.hgetall(f"{game}:character:{today_target['target']}")  # type: ignore
+        ),
+        timestamp=int(
+            datetime(
+                year=today_date.year, month=today_date.month, day=today_date.day
+            ).timestamp()
+        ),
+    )

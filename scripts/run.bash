@@ -21,9 +21,10 @@ if [ -z $1 ]; then
 fi
 
 current_directory=$(dirname $(readlink -f $0))
-export GOOGLE_APPLICATION_CREDENTIALS=$KYLEDLE_GCP
-export PYTHONPATH=$PYTHONPATH:$current_directory/python_utils  # Use to import python_utils module
-export RELATIVE_SCRIPT_PATH=$1
+export GOOGLE_APPLICATION_CREDENTIALS="$current_directory/credentials_kyledle.json"
 export SCRIPT_PATH=$(dirname $current_directory/$1)
+
+export BACKEND_PATH="../backend"
+export FRONTEND_PATH="../frontend"
 
 python "$@"

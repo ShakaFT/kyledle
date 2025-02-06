@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "bradlc.vscode-tailwindcss",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "lokalise.i18n-ally",
+    "stivo.tailwind-fold",
+    "usernamehw.errorlens",
+    "Vue.volar",
+    "YoavBls.pretty-ts-errors"
+  ]
+}
