@@ -3,20 +3,13 @@ This module contains main endpoints of default services.
 """
 
 from datetime import datetime
-import logging
 
 from flask import jsonify
 
+import tasks
 from config import app, redis
 from utils.date import to_string_date, get_now
 from utils.redis_decode import decode_from_redis
-
-
-@app.get("/")
-def hello():
-    """hello"""
-    logging.error(get_now())
-    return "Hello World"
 
 
 @app.get("/config/<game>")
@@ -63,3 +56,9 @@ def get_mode_config(game: str, mode: str):
             ).timestamp()
         ),
     )
+
+
+@app.post("/debug")
+def debug():
+    """debug"""
+    tasks.schedule_levels()
