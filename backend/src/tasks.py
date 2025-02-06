@@ -2,7 +2,6 @@
 This module contains tasks.
 """
 
-import logging
 import random
 from collections import defaultdict
 from datetime import timedelta
@@ -45,10 +44,3 @@ def schedule_levels(tomorrow=True):
             f"history:{date_to_schedule}:{game}:{mode}",
             mapping={"target": random.choice(characters)},
         )
-
-
-@celery_task
-def debug():
-    """debug"""
-    logging.error("Ta mère")
-    logging.error(get_now())

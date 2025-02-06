@@ -3,6 +3,7 @@ This module contains main endpoints of default services.
 """
 
 from datetime import datetime
+import logging
 
 from flask import jsonify
 
@@ -14,6 +15,7 @@ from utils.redis_decode import decode_from_redis
 @app.get("/")
 def hello():
     """hello"""
+    logging.error(get_now())
     return "Hello World"
 
 

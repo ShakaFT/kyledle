@@ -81,10 +81,9 @@ celery = Celery(app.name, task_cls=_FlaskTask)
 celery.conf.broker_connection_retry_on_startup = True
 
 celery.conf.imports = ("tasks",)
-celery.conf.timezone = "Europe/Paris"
+celery.conf.timezone = constants.TIMEZONE
 celery.conf.enable_utc = False
 celery.conf.beat_schedule = {
-    "debug": {"task": "tasks.debug", "schedule": crontab("57", "13")},
     "schedule-levels": {"task": "tasks.schedule_levels", "schedule": crontab("0", "0")},
 }
 
