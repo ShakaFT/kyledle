@@ -6,10 +6,15 @@ from datetime import datetime
 
 from flask import jsonify
 
-import tasks
 from config import app, redis
-from utils.date import to_string_date, get_now
+from utils.date import to_string_date, utc_now
 from utils.redis_decode import decode_from_redis
+
+
+@app.get("/")
+def hello():
+    """hello"""
+    return "Hello World"
 
 
 @app.get("/config/<game>")
@@ -33,7 +38,7 @@ def get_mode_config(game: str, mode: str):
     """
     This endpoint returns mode config.
     """
-    today_date = get_now()
+    today_date = utc_now()
     today = to_string_date(today_date)
 
     # Fetch config
@@ -56,9 +61,3 @@ def get_mode_config(game: str, mode: str):
             ).timestamp()
         ),
     )
-
-
-@app.post("/debug")
-def debug():
-    """debug"""
-    tasks.schedule_levels()
